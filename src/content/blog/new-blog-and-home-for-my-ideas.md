@@ -25,8 +25,8 @@ To Share. And to grow, with all of you.
 
 ## The New Blog Space - Welcome in traveler!
 
-talk about astro and theme and making new site
+Currently editing...
 
 ## The Start of Building a Community
 
-talk about sharing projects and making discord later
+Currently editing...
