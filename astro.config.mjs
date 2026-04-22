@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://DevTarlow.github.io',
-  base: '/my-astro-site',
+  site: 'https://tarlow.space',
+  base: '/',
   trailingSlash: 'always',
   integrations: [mdx(), sitemap()],
   // ADD THIS SECTION:
