@@ -8,4 +8,8 @@ export default defineConfig({
   base: '/my-astro-site',
   trailingSlash: 'always',
   integrations: [mdx(), sitemap()],
+  // ADD THIS SECTION:
+  build: {
+    assets: '_assets' 
+  }
 });
