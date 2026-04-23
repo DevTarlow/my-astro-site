@@ -37,6 +37,7 @@ const otherProjects = allProjects.filter(p => !p.data.featured);
                 github={project.data.github}
                 tags={project.data.tags}
                 featured={true}
+                slug={project.id}
               />
             ))}
           </div>
@@ -55,6 +56,7 @@ const otherProjects = allProjects.filter(p => !p.data.featured);
                 link={project.data.link}
                 github={project.data.github}
                 tags={project.data.tags}
+                slug={project.id}
               />
             ))}
           </div>

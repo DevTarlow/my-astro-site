@@ -2,6 +2,9 @@
 dist/
 .output/
 .astro/
+.claude/
+.github/
+.serena/
 
 # dependencies
 node_modules/
