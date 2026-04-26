@@ -16,92 +16,43 @@ const base = import.meta.env.BASE_URL;
         <section class="content-section intro-section">
           <h2>Hello, I'm Tarlow</h2>
           <p>
-            I am a developer and modern web enthusiast dedicated to building fast,
-            focused, and aesthetically clean digital experiences. I believe in the
-            power of the open web and enjoy the process of bringing ideas to life
-            from the ground up using modern tools like Astro and AI-assisted coding.
+            I have always been a tinkerer and explorer. Since I was young I always had a fascination with building gadgets and tools, diving deep into learning, and finding ways to put my own creative touch on whatever was in front of me.
           </p>
           <p>
-            This blog serves as a personal repository for my projects
-            and a platform to document my journey through the ever-evolving
-            landscape of web development. Outside of writing code, I’m passionate
-            about the "behind-the-scenes" mechanics of the web—from automating seamless
-            deployments with GitHub Actions to fine-tuning the performance of a live site.
+            These days, I am doing much of the same but now I get to help other people's ideas and dreams become a reality.
           </p>
         </section>
 
         <section class="content-section">
           <h2>What I Do</h2>
-          <div class="what-i-do-grid">
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="12" r="6"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
-                </svg>
-              </div>
-              <h3>Creative Development</h3>
-              <p>Building unique web experiences with Three.js, WebGL, and advanced CSS animations.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-              </div>
-              <h3>Performance Optimization</h3>
-              <p>Ensuring smooth 60fps animations and optimal loading times with modern tooling.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-              </div>
-              <h3>3D Graphics</h3>
-              <p>Creating particle systems, geometric patterns, and interactive 3D elements for the web.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-              </div>
-              <h3>Dark UI Design</h3>
-              <p>Designing beautiful dark-themed interfaces with carefully crafted color palettes.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="content-section">
-          <h2>My Approach</h2>
           <p>
-            I believe that motion is emotion. Every animation, every transition, every particle movement
-            should have a purpose—to guide, to delight, or to immerse. I'm constantly pushing the boundaries
-            of what's possible on the web, experimenting with new techniques and technologies.
+            I’m a developer focused on bridging the gap between great business ideas and automated solutions. Too often, companies have powerful processes that get hampered by clunky technology, slow websites, or manual workflow gaps.
           </p>
           <p>
-            Whether it's a personal blog, a portfolio site, or a complex web application, I approach each
-            project with the same goal: create something that stands out, performs well, and provides an
-            unforgettable user experience.
+            My job is to fix those disconnects. I specialize in building custom tailored systems, from designing creative user experiences to automating your backend operations with smart AI logic and custom developed apps. I thrive on taking complexity and making it look effortless for you. If you have a big idea that needs structure or automation, let’s talk.
           </p>
         </section>
 
         <section class="content-section cta-section">
           <h2>Let's Connect</h2>
-          <p>Interested in working together or just want to chat about web animations and dark design?</p>
+          <p>Interested in working together or just want to chat about automation and AI?</p>
           <div class="contact-buttons">
-            <a href={`${base}projects/`} class="btn btn-primary">
-              View My Work
+            <a href="mailto:im@tarlow.space" class="btn btn-primary">
+              Send me an Email
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
             <a href={`${base}blog/`} class="btn btn-secondary">Read My Blog</a>
+          </div>
+        </section>
+
+        <section class="content-section cta-section">
+          <h2>Join The Space</h2>
+          <p>Connect with like-minded people and stay updated on the latest in automation and AI.</p>
+          <div class="contact-buttons">
+            <a href="https://discord.gg/your-invite" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Join Discord</a>
           </div>
         </section>
       </div>
@@ -212,7 +163,7 @@ const base = import.meta.env.BASE_URL;
     text-align: center;
   }
 
-  .cta-section p {
+  .cta-section p:last-of-type {
     margin-bottom: 1.5rem;
   }
 
