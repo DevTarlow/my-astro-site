@@ -85,6 +85,10 @@ I built this project from the ground up using modern tools and AI, allowing me t
 
 **Local AI Integration**: To keep your data private and ensure maximum speed, I integrated local Large Language Models (LLMs). This means the AI processing runs directly within your environment, keeping your information secure, offline-capable, and giving you a truly autonomous experience without relying on external cloud APIs/storage.
 
+## Recent Updates:
+
+- 4/26/2026 | Initial 1.0.0 release.
+
 ## Get the Project
 
 Sunshine Family Dashboard is open-source and free to use. Download it from GitHub and run it on your own server.
