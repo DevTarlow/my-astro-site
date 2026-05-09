@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ProjectCard from '../../components/ProjectCard.astro'
+import { getCollection } from 'astro:content'
+const projects = await getCollection('projects')
+projects.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+
+const latestImage = projects[0]?.data.image
+
+const launched = projects.filter((p) => p.data.category === 'Launched')
+const development = projects.filter((p) => p.data.category === 'Development')
+---
+
+<BaseLayout title="Projects" description="Building the next big thing — showcase of launched and in-development projects." image={latestImage}>
+  <main class="mx-auto max-w-[90rem] px-6 py-20">
+    <header class="mb-16 text-center">
+      <h1 class="font-serif text-5xl font-semibold tracking-tight leading-tight">
+        Projects
+      </h1>
+      <p class="mt-4 text-lg text-ink/60 font-sans">
+        Building the next big thing.
+      </p>
+      <div class="mx-auto mt-6 h-0.5 w-12 rounded bg-terracotta"></div>
+    </header>
+
+    {
+      launched.length > 0 && (
+        <section class="mb-16">
+          <h2 class="font-serif text-3xl font-semibold tracking-tight text-center">
+            Launched
+          </h2>
+          <div class="mx-auto mt-3 h-0.5 w-10 rounded bg-terracotta/60"></div>
+          <div class="mt-10 flex flex-wrap justify-center gap-6">
+            {launched.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      development.length > 0 && (
+        <section class="mb-16">
+          <h2 class="font-serif text-3xl font-semibold tracking-tight text-center">
+            Development
+          </h2>
+          <div class="mx-auto mt-3 h-0.5 w-10 rounded bg-terracotta/60"></div>
+          <div class="mt-10 flex flex-wrap justify-center gap-6">
+            {development.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>

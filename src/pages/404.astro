@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout title="404">
+  <main class="mx-auto max-w-[65ch] px-6 py-20">
+    <div class="border border-terracotta/30 rounded-lg p-8 md:p-12 text-center">
+      <h1 class="font-serif text-7xl md:text-8xl font-semibold tracking-tight text-terracotta leading-none">
+        404
+      </h1>
+      <div class="mx-auto mt-6 h-0.5 w-12 rounded bg-terracotta"></div>
+
+      <p class="mt-8 text-[1.0625rem] leading-relaxed text-ink/80 max-w-sm mx-auto">
+        Looks like this page hasn't been built yet. Maybe it's still on the workbench.
+      </p>
+
+      <div class="mt-10 flex items-center justify-center gap-6 flex-wrap">
+        <a
+          href="/"
+          class="font-serif text-lg tracking-tight text-terracotta no-underline transition-opacity hover:opacity-80 border-b-2 border-terracotta pb-0.5"
+        >
+          Home
+        </a>
+        <a
+          href="/blog"
+          class="font-serif text-lg tracking-tight text-ink/60 no-underline transition-colors hover:text-terracotta border-b-2 border-transparent hover:border-terracotta pb-0.5"
+        >
+          Blog
+        </a>
+        <a
+          href="/projects"
+          class="font-serif text-lg tracking-tight text-ink/60 no-underline transition-colors hover:text-terracotta border-b-2 border-transparent hover:border-terracotta pb-0.5"
+        >
+          Projects
+        </a>
+        <a
+          href="/about"
+          class="font-serif text-lg tracking-tight text-ink/60 no-underline transition-colors hover:text-terracotta border-b-2 border-transparent hover:border-terracotta pb-0.5"
+        >
+          About
+        </a>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-terracotta/10">
+        <a
+          href="/"
+          class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
+        >
+          ← Head back home
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

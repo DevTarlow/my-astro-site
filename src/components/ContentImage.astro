@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets'
+import sharp from 'sharp'
+import path from 'path'
+
+export interface Props {
+  src: string
+  alt: string
+  class?: string
+}
+
+const { src, alt, class: className } = Astro.props
+
+const cleanSrc = src.replace(/^\//, '')
+const filePath = path.join(process.cwd(), 'public', cleanSrc)
+const { width, height } = await sharp(filePath).metadata()
+---
+
+<Image
+  src={src}
+  width={width}
+  height={height}
+  alt={alt}
+  class={className}
+  decoding="async"
+/>

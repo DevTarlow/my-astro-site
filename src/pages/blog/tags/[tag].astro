@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { excerpt } from '../../../lib/excerpt'
+import ContentImage from '../../../components/ContentImage.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  const tags = new Set<string>()
+  for (const post of posts) {
+    for (const tag of post.data.tags ?? []) {
+      tags.add(tag)
+    }
+  }
+  return [...tags].map((tag) => ({
+    params: { tag },
+  }))
+}
+
+const tag = Astro.params.tag!
+const posts = await getCollection('blog')
+const filtered = posts
+  .filter((post) => (post.data.tags ?? []).includes(tag))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+---
+
+<BaseLayout title={`#${tag}`} description={`Posts tagged with "${tag}".`}>
+  <main class="mx-auto max-w-[65ch] px-6 py-20">
+    <header class="mb-12">
+      <a
+        href="/blog/tags/"
+        class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
+      >
+        ← All Tags
+      </a>
+      <h1 class="font-serif text-3xl font-semibold tracking-tight">
+        #<span class="text-terracotta">{tag}</span>
+      </h1>
+      <p class="mt-2 text-sm text-ink/60">
+        {filtered.length} {filtered.length === 1 ? 'post' : 'posts'}
+      </p>
+      <div class="mt-4 h-0.5 w-12 rounded bg-terracotta"></div>
+    </header>
+
+    <ul class="space-y-12">
+      {
+        filtered.map((post) => (
+          <li>
+            <article>
+              {
+                post.data.featuredimage && (
+                  <a href={`/blog/${post.id}/`}>
+                    <ContentImage
+                      src={post.data.featuredimage}
+                      alt=""
+                      class="w-full h-36 object-cover rounded-lg mb-3"
+                    />
+                  </a>
+                )
+              }
+              <time class="block text-sm text-ink/40 mb-1.5">
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <a
+                href={`/blog/${post.id}/`}
+                class="font-serif text-xl text-ink no-underline hover:text-terracotta transition-colors"
+              >
+                {post.data.title}
+              </a>
+              <p class="mt-2 text-sm text-ink/60 leading-relaxed">
+                {excerpt(post.body ?? '', 250)}
+              </p>
+              <a
+                href={`/blog/${post.id}/`}
+                class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
+              >
+                Read More →
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>
