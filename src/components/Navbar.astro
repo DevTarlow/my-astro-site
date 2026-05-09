@@ -1,0 +1,55 @@
+---
+const path = Astro.url.pathname
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+]
+---
+
+<nav class="flex items-center justify-center gap-6 xl:gap-8 border-b border-terracotta/10 py-5 px-4">
+  <button
+    data-menu-trigger
+    class="xl:hidden inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer"
+    aria-label="Open menu"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  {
+    links.map(({ href, label }) => {
+      const isActive = path === href || (href !== '/' && path.startsWith(href))
+      return (
+        <a
+          href={href}
+          class={`
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            ${isActive
+              ? 'text-terracotta border-terracotta'
+              : 'text-ink border-transparent hover:text-terracotta hover:border-terracotta'
+            }
+          `}
+        >
+          {label}
+        </a>
+      )
+    })
+  }
+  <button
+    data-bluesky-trigger
+    class="inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer"
+    aria-label="Bluesky posts"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" class="h-[0.875em] w-auto" fill="currentColor">
+      <path d="M135.72 44.03C202.216 93.951 274.842 195.287 300 249.844c25.158-54.557 97.784-155.893 164.28-205.814C512.227 1.244 600-26.116 600 59.393c0 19.285-11.292 161.953-17.918 185.119-23.002 80.367-106.823 100.882-181.354 88.453 130.324 22.186 163.455 95.542 91.884 168.936-135.943 139.324-195.473-34.988-210.777-79.592-2.824-8.256-4.147-12.115-4.147-8.772 0-3.343-1.323-.516-4.147 8.772-15.304 44.604-74.834 218.916-210.777 79.592-71.571-73.394-38.44-146.75 91.884-168.936-74.531 12.429-158.352-8.086-181.354-88.453C11.292 221.346 0 78.678 0 59.393 0-26.116 87.773-1.244 135.72 44.03Z"/>
+    </svg>
+  </button>
+</nav>

@@ -1,0 +1,236 @@
+---
+import { getCollection } from 'astro:content'
+
+const posts = await getCollection('blog')
+
+const sorted = [...posts].sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+)
+
+const recent = sorted.slice(0, 5)
+
+const path = Astro.url.pathname
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+]
+
+const postsData = posts.map(p => ({
+  id: p.id,
+  title: p.data.title,
+  description: p.data.description,
+  pubDate: p.data.pubDate.toISOString(),
+  tags: p.data.tags ?? [],
+}))
+---
+
+<div
+  id="mobile-panel-overlay"
+  class="fixed inset-0 z-40 bg-ink/60 opacity-0 pointer-events-none transition-opacity duration-300"
+></div>
+
+<div
+  id="mobile-panel"
+  class="fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-paper border-l border-terracotta/10 shadow-xl translate-x-full transition-transform duration-300 overflow-y-auto"
+>
+  <div class="sticky top-0 z-10 flex items-center justify-between bg-paper border-b border-terracotta/10 px-4 py-3">
+    <h2 class="font-serif text-sm font-semibold text-ink tracking-tight">
+      Menu
+    </h2>
+    <button
+      id="mobile-panel-close"
+      class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta"
+      aria-label="Close menu"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="p-4 flex flex-col gap-4">
+    <nav class="flex flex-col gap-1 border-b border-terracotta/10 pb-4">
+      {
+        links.map(({ href, label }) => {
+          const isActive = path === href || (href !== '/' && path.startsWith(href))
+          return (
+            <a
+              href={href}
+              class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"
+            >
+              <span class={isActive ? 'text-terracotta' : 'text-ink group-hover:text-terracotta transition-colors'}>
+                {label}
+              </span>
+              {isActive && <span class="text-terracotta text-xs">→</span>}
+            </a>
+          )
+        })
+      }
+    </nav>
+    <aside class="border border-terracotta/30 rounded-lg p-4 bg-paper/90">
+      <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+        Search
+      </h2>
+      <form id="mobile-search-form" class="flex gap-2">
+        <input
+          type="search"
+          id="mobile-search-input"
+          placeholder="Search posts..."
+          class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-ink/30 focus:outline-none focus:border-terracotta transition-colors"
+        />
+        <button
+          type="submit"
+          class="shrink-0 bg-terracotta text-paper text-sm rounded px-4 py-2 hover:opacity-90 transition-opacity font-medium"
+        >
+          Search
+        </button>
+      </form>
+      <div id="mobile-default-content">
+        <aside class="mt-4">
+          <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+            Recent Posts
+          </h2>
+          <ul class="space-y-3">
+            {
+              recent.map((post) => (
+                <li>
+                  <a href={`/blog/${post.id}/`} class="group block no-underline">
+                    <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug">
+                      {post.data.title}
+                    </span>
+                    <time class="block text-[10px] text-ink/40 mt-0.5">
+                      {post.data.pubDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </time>
+                    <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2">
+                      {post.data.description}
+                    </span>
+                    <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+                      Read More →
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </aside>
+      </div>
+      <div id="mobile-search-results" class="hidden"></div>
+    </aside>
+  </div>
+</div>
+
+<script define:vars={{ postsData }} is:inline>
+  const overlay = document.getElementById('mobile-panel-overlay')
+  const panel = document.getElementById('mobile-panel')
+  const closeBtn = document.getElementById('mobile-panel-close')
+  const searchForm = document.getElementById('mobile-search-form')
+  const searchInput = document.getElementById('mobile-search-input')
+  const defaultContent = document.getElementById('mobile-default-content')
+  const searchResults = document.getElementById('mobile-search-results')
+
+  function openPanel () {
+    overlay.classList.remove('opacity-0', 'pointer-events-none')
+    panel.classList.remove('translate-x-full')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closePanel () {
+    overlay.classList.add('opacity-0', 'pointer-events-none')
+    panel.classList.add('translate-x-full')
+    document.body.style.overflow = ''
+  }
+
+  document.addEventListener('click', function (e) {
+    const trigger = e.target.closest('[data-menu-trigger]')
+    if (trigger) {
+      e.stopPropagation()
+      openPanel()
+    }
+  })
+
+  closeBtn.addEventListener('click', closePanel)
+  overlay.addEventListener('click', closePanel)
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePanel()
+  })
+
+  searchForm.addEventListener('submit', function (e) {
+    e.preventDefault()
+    const query = searchInput.value.trim().toLowerCase()
+    if (!query) {
+      clearMobileSearch()
+      return
+    }
+
+    const words = query.split(/\s+/)
+    const matches = postsData.filter(function (post) {
+    return words.every(function (word) {
+      return post.title.toLowerCase().includes(word) ||
+        post.description.toLowerCase().includes(word)
+    })
+  })
+
+    if (matches.length === 0) {
+      searchResults.innerHTML =
+        '<div class="space-y-4">' +
+        '<div class="flex items-center justify-between">' +
+        '<p class="text-sm text-ink/60">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
+        '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+        '</div>' +
+        '</div>'
+    } else {
+      let html = ''
+      html += '<div class="flex items-center justify-between mb-2">'
+      html += '<p class="text-sm text-ink/60">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+      html += '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>'
+      html += '</div>'
+
+      html += '<ul class="space-y-4">'
+      matches.forEach(function (post) {
+        html += '<li>' +
+          '<article>' +
+          '<time class="block text-xs text-ink/40 mb-1">' + new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</time>' +
+          '<a href="/blog/' + post.id + '/" class="text-sm font-serif text-ink no-underline hover:text-terracotta transition-colors">' + escapeHtml(post.title) + '</a>' +
+          '<p class="mt-1 text-xs text-ink/60 leading-relaxed">' + escapeHtml(post.description) + '</p>' +
+          '<a href="/blog/' + post.id + '/" class="mt-1 inline-block text-xs text-terracotta no-underline hover:opacity-80 transition-opacity">Read More →</a>' +
+          '</article>' +
+          '</li>'
+      })
+      html += '</ul>'
+
+      searchResults.innerHTML = html
+    }
+
+    defaultContent.classList.add('hidden')
+    searchResults.classList.remove('hidden')
+
+    searchResults.addEventListener('click', function (e) {
+      if (e.target.closest('[data-clear]')) clearMobileSearch()
+    })
+  })
+
+  function clearMobileSearch () {
+    searchInput.value = ''
+    searchResults.classList.add('hidden')
+    defaultContent.classList.remove('hidden')
+    searchResults.innerHTML = ''
+  }
+
+  function escapeHtml (str) {
+    if (!str) return ''
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+</script>

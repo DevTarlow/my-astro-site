@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { excerpt } from '../lib/excerpt'
+import ContentImage from '../components/ContentImage.astro'
+
+const posts = await getCollection('blog')
+posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+---
+
+<BaseLayout description="A corner of the web built with intention. Here you'll find posts about my latest projects and research.">
+  <main class="mx-auto max-w-[65ch] px-6 py-20">
+    <section class="mb-20 text-center">
+      <h1 class="font-serif text-5xl font-semibold tracking-tight leading-tight">
+        Tarlow<span class="text-3xl text-ink/60">.space</span>
+      </h1>
+      <p class="mt-4 text-lg text-ink/60 font-sans">
+        <strong>Developer & Creative Builder</strong>
+      </p>
+      <div class="mx-auto mt-6 h-0.5 w-12 rounded bg-terracotta"></div>
+
+      <p class="mt-10 text-sm text-ink/60 leading-relaxed max-w-prose mx-auto">
+        A corner of the web built with intention.<br /><br />
+        Here you'll find posts about my latest projects and research.
+      </p>
+    </section>
+
+    <h2 class="font-serif text-2xl font-semibold tracking-tight mb-8">
+      Latest Posts
+    </h2>
+
+    <ul class="space-y-12">
+      {
+        posts.slice(0, 3).map((post) => (
+          <li>
+            <article>
+              {
+                  post.data.featuredimage && (
+                  <a href={`/blog/${post.id}/`}>
+                    <ContentImage
+                      src={post.data.featuredimage}
+                      alt=""
+                      class="w-full h-36 object-cover rounded-lg mb-3"
+                    />
+                  </a>
+                )
+              }
+              <time class="block text-sm text-ink/40 mb-1.5">
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <a
+                href={`/blog/${post.id}/`}
+                class="font-serif text-xl text-ink no-underline hover:text-terracotta transition-colors"
+              >
+                {post.data.title}
+              </a>
+                <p class="mt-2 text-sm text-ink/60 leading-relaxed">
+                  {excerpt(post.body ?? '', 250)}
+                </p>
+                <a
+                  href={`/blog/${post.id}/`}
+                  class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
+                >
+                  Read More →
+                </a>
+              </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-14 text-center">
+      <a
+        href="/blog/"
+        class="font-serif text-lg text-terracotta no-underline transition-opacity hover:opacity-80 border-b-2 border-terracotta pb-0.5"
+      >
+        Read More →
+      </a>
+    </div>
+  </main>
+</BaseLayout>
