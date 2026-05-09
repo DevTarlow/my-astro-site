@@ -52,7 +52,7 @@ function absUrl(src: string | undefined): string | undefined {
     <meta name="twitter:description" content={pageDesc} />
     {image && <meta name="twitter:image" content={absUrl(image)} />}
   </head>
-  <body>
+  <body class="bg-paper">
     <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen">
       <Navbar />
       <BlueskyOverlay />
