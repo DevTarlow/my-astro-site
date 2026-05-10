@@ -42,6 +42,10 @@ My setup and flow for this one were simple:
 4. Then do the same thing we did using Gemini but in OpenCode and with our codebase, refine and optimize by asking questions about the project so it can point out what is missing before I push it live.
 5. Pushed the site live to github pages, and now we have the site you are seeing today.
 
+> Best of all the whole site build out from plan to live would have costs $0.68. That's how much in "credits" I used on OpenCode's Go plan. I will do a whole write up about this, and the model DeepSeekv4 Flash I have been using. It's been a great experience so far.
+>
+>It's $5 for the 1st month and $10 thereafter, for up to $60 worth in monthly usage with hourly/weekly/monthly limits. With a model like this, I have been vibe coding all day with a steady pace of not capping out quotas. It's been a relief because I had to find an alternative to Github Copilot.
+
 ### What's Next?
 
 Site tweaks, new content and guides, and some much needed relaxation time with my dog, Sunshine.
