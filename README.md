@@ -54,4 +54,4 @@ Blog posts and project pages are managed via Astro content collections as Markdo
 |---|---|
 | `npm run dev` | Start dev server at `localhost:4321` |
 | `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview build locally |
+| `npm run preview` | Preview build |
