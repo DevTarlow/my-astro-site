@@ -12,7 +12,7 @@ Not long ago, my coding journey felt like a manual labor project. I was deep in 
 
 ##   How the Tools Disappear while You Create the Solution
 
-I am sure you know the frustration. The endless loops, the debugging rabbit holes, the moments you feel like you’re drowning in code. It’s what I remember most about my early days. But that’s the old way. Painstakingly writing every single line of code by hand.
+I'm sure you know the frustration. The endless loops, the debugging rabbit holes, the moments you feel like you’re drowning in code. It’s what I remember most about my early days. But that’s the old way. Painstakingly writing every single line of code by hand.
 
 But the landscape has shifted.
 
@@ -22,18 +22,18 @@ I’ve started to realize that the AI tools aren’t meant to replace us; they a
 
 When I talk about "**Vibe Coding**", I’m not talking about coding without thought. I’m talking about the process where the tools become so seamless, so deeply integrated into the creative workflow, that they essentially vanish. You aren't thinking about the specific function call or class; you are thinking about the _solution_. You are thinking about the problem you want to solve, whether it’s building a private, local dashboard for your family like the [Sunshine Family Dashboard](/projects/sunshine-family-dashboard/) or [creating an Astro site from scratch](/blog/hello-world-new-theme-new-vibe).
 
-**The process looks something like this**: I define the vision. I talk to an AI agent, whether it's using Gemini to help refine the master prompt, or using my my LLM to keep things private. I delegate the heavy lifting. The AI takes the wheel, generating code, suggesting optimizations, and handling the initial blueprint.
+**The process looks something like this**: I define the vision. I talk to an AI agent, whether it's using Gemini to help refine the master prompt, or using my LLM to keep things private. I delegate the heavy lifting. The AI takes the wheel, generating code, suggesting optimizations, and handling the initial blueprint.
 
 The over complexity fades away, and what was once overwhelming is now manageable. It's not that I'm not coding; it's that my job has transformed from being the manual laborer typing lines of code to being the strategic guide. The technology becomes the invisible force that accelerates the creation, allowing my brain to focus on the big picture: *"Like what should the app look and feel like? or what features it should have? or even better, how am I going to make that?"*
 
 ## Diving into My Current Setup For Vibe Coding
-The reason I titled this post "**Vibe Coding Setup May 2026 - My Go-To Stack for AI Development**" was because my Vibe Coding stack changes, as we are in a niche that is rapidly evolving. Just last month I was using Github Copilot in VS Code for all of my Vibe Coding, and just before they pulled the rug (for [pricing changes](https://github.blog/news-insights/company-news/changes-to-github-copilot-individual-plans/)) on their individual plans I cancelled mine.
+The reason I titled this post "**Vibe Coding Setup May 2026 - My Go-To Stack for AI Development**" was because my Vibe Coding stack changes, as we are in a niche that is rapidly evolving. Just last month I was using Github Copilot in VS Code for all of my Vibe Coding, and just before they pulled the rug (for [pricing changes](https://github.blog/news-insights/company-news/changes-to-github-copilot-individual-plans/)) on their individual plans, so I canceled my plan.
 
 I had a feeling the landscape was changing. And it was, major providers were switching the way their models were priced and people were scrambling to find a new home.
 
 ### The Scramble for the Right Tools
 
-For a little while, I started using [RooCode](https://roocode.com/) with [OpenRouter](https://openrouter.ai/) API using mainly DeepSeek V3.2 and it was amazing but  not sustainable for me as I calculated costs over the month of continuous use and  it would be too much for me personally to pursue my projects.
+For a little while, I started using [RooCode](https://roocode.com/) with [OpenRouter](https://openrouter.ai/) API using mainly DeepSeek V3.2 and it was amazing but not sustainable for me as I calculated costs over the month of continuous use and it would be too much for me personally to pursue my projects.
 
 Then RooCode said they were stopping development on their VS Code extension and shifting their energy and focus on their new product [RooMote](https://roomote.dev/).
 
@@ -43,11 +43,11 @@ Then RooCode said they were stopping development on their VS Code extension and 
 
 After checking out their plans and seeing their **OpenCode** Go plan was $5 for the first month and $10 after, with up to $60 of usage allotted per month. I figured what could I lose, and jumped right in. The first few days I used models I was used to like **Qwen 3.6 Plus** and it performed great, however with the way I was running I was set to run our of my usage before the month was up.
 
-There I was hesitant and unsure, should I keep going? Or swap to a different model and risk breaking code on the project I was working on. I decided, backup the project and test out the model you have been hearing about; **Deepseek V4**.
+There I was hesitant and unsure, should I keep going? Or swap to a different model and risk breaking code on the project I was working on. I decided, to back-up the project and test out the model you have been hearing about; **Deepseek V4**.
 
 Since then, I have been using **DeepSeek V4 Flash** as my go to on OpenCode with it's reasoning set on high it's been amazing. Often times it one-shots features for me and saves me a ton of time and money.
 
-My usual full Vibe Coding days I am doing like 6-10hrs and only use around a low rate of $0.30 to $1.00 per day which keeps me under the monthly total cap, no problem. Simply, amazing & cheap.
+My usual full Vibe Coding days I am doing like 6-10 hours and only use around a low rate of $0.30 to $1.00 per day which keeps me under the monthly total cap, no problem. Simply, amazing & cheap.
 
 **My core setup for Vibe Coding as of May 2026 includes**:
 - **[Gemini](https://gemini.google.com/app)**: The idea refiner, the strategist, the chief visionary.

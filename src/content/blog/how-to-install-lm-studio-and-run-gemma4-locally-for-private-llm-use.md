@@ -8,13 +8,13 @@ featuredimage: /images/how-to-install-lm-studio-and-run-gemma4-locally.png
 
 ## Why Local LLMs Matter (Privacy & Control)
 
-Having piece of mind that you are the one in control of your data is really a liberating feeling.
+Having peace of mind that you are the one in control of your data is really a liberating feeling.
 
 And one of the most freeing aspects of running your own LLM locally is that the data never leaves your computer. This can give you peace of mind knowing that your data is yours for evaluation, and this is especially critical for sensitive information.
 
 Another benefit to running your own LLM is the ability to use it without an internet connection. I have local models on my main pc, laptop, and phone. Just in case I ever need to ask a question I just might not know the answer to.
 
-Are they the best running models? No. but we as consumers don't have the capability to run the frontier models the big companies run.
+Are they the best running models? No. But we as consumers don't have the capability to run the frontier models the big companies run.
 
 Fortunately, there are advancements in AI every single day. And, if you are keeping up with the trends then you can spot some really capable local models that perform a variety of different tasks very well.
 
@@ -24,9 +24,9 @@ One model I have been specifically been using is the new Gemma4 model from Googl
 
 Running a LLM on your local hardware is not as far out there as you may think. As I was saying above, each day they are making models that can run on consumer grade hardware.
 
-What was once a dream, can now become a reality within a few minutes. And best of all, it can all run on a device that you most likely already own. That device could be a phone, laptop, or your desktop computer. I personally use my desktop for most of my local LLM processing.
+What was once a dream, can now become a reality within a few minutes. And best of all, it can all run on a device that you already own. That device could be a phone, laptop, or your desktop computer. I personally use my desktop for most of my local LLM processing.
 
-One important thing to note is the model file size it's self and the number of parameters the model has. You can think of the parameters as essentially the size of it's brain.
+One important thing to note is the model file size it's self and the number of parameters the model has. You can think of the parameters as essentially the size of its brain.
 
 And, for the most part you can think bigger is better but that is not always the case as seen when comparing some newer models to older ones.
 
@@ -93,7 +93,7 @@ If you are confused with which models will run then rest assured because another
 
 Congrats! If you made it this far you most likely got the hard part done, the install.
 
-Now you can get to the fun parts. Asking the your LLM to do stuff for you. Try one of these simple tasks to get started:
+Now you can get to the fun parts. Asking your LLM to do the hard stuff for you. Try one of these simple tasks to get started:
 
 1. **Create a summary from a personal article you are drafting**. Just copy/paste into LM Studio chat and get your summary within seconds. For even more control on the outputs, you can adjust the main system prompt on the right sidebar for the chat. This is the message/instructions the LLM see's before everything else.
 
