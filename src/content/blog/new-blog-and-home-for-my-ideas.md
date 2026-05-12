@@ -29,8 +29,8 @@ To Share. And to grow, with all of you.
 
 ### So, what comes next?
 
-Over the next week I will be working on fine tuning my new blog and getting some of my projects finished and ready to list over on github.
+Over the next week I will be working on fine tuning my new blog and getting some of my projects finished and ready to list over on GitHub.
 
 I have been diving deep into developing local-first apps that utilize local LLMs and have been very useful for my and my wife, so I figured they would be useful for some of you. Most importantly, I feel that sharing the idea and methods are the bread and butter. Then you can take those findings and develop or incorporate your own systems.
 
-Until the next post, keep dreaming, keep creating, and most of all.. Don't stop being, you.
+Until the next post, keep dreaming, keep creating, and most of all. Don't stop being, you.
