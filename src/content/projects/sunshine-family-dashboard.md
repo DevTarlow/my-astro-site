@@ -11,6 +11,8 @@ pubDate: 2026-04-15
 
 ![Screenshot](/images/sunshine-family-dashboard-screenshot.jpg)
 
+> Major update & rework right now. I will post changelog soon! - 5/18/2026
+
 The **Sunshine Family Dashboard** is a lightweight, local-first web app designed to be a simple but effective home dashboard.
 
 Packaged in a single Docker container and built with Next.js and SQLite, it allows your family to manage weekly dinner menus, shared grocery lists, daily to-dos, keep track of fitness days, track eating out costs, and take sticky notes.
