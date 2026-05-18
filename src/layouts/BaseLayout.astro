@@ -14,8 +14,8 @@ export interface Props {
 const { title, description, image, ogType = 'website' } = Astro.props
 
 const siteUrl = 'https://tarlow.space'
-const pageTitle = title ? `${title} — Tarlow.space | Tester` : 'Tarlow.space | Tester'
-const defaultDesc = 'A corner of the web built with intention — projects, local-first tools, and AI exploration.'
+const pageTitle = title ? `${title} — Tarlow.space | Vibe-Coder and Developer` : 'Tarlow.space | Vibe-Coder & Developer'
+const defaultDesc = 'A corner of the web built with intention — A blog about Tarlows projects, local-first tools, and AI exploration.'
 const pageDesc = description || defaultDesc
 
 function absUrl(src: string | undefined): string | undefined {
@@ -30,7 +30,7 @@ function absUrl(src: string | undefined): string | undefined {
   <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM"></script>
-    <script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
