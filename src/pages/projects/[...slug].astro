@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { render } from 'astro:content'
 import '../../styles/prose.css'
+import ContentImage from '../../components/ContentImage.astro'
+import ImageZoom from '../../components/ImageZoom.astro'
 import { getPublicProjects } from '../../lib/posts'
 
 export async function getStaticPaths() {
@@ -22,6 +24,15 @@ const { Content } = await render(project)
 
 <BaseLayout title={project.data.title} description={project.data.description} image={project.data.image} ogType="article">
   <article class="mx-auto max-w-[65ch] px-6 py-20">
+    {
+      project.data.image && (
+        <ContentImage
+          src={project.data.image}
+          alt=""
+          class="w-full h-48 object-cover rounded-lg mb-8"
+        />
+      )
+    }
     <header class="mb-12">
       <h1 class="font-serif text-3xl font-semibold leading-tight">
         {project.data.title}
@@ -87,6 +98,7 @@ const { Content } = await render(project)
       </a>
     </footer>
   </article>
+  <ImageZoom />
 </BaseLayout>
 
 
