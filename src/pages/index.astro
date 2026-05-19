@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import { getCollection } from 'astro:content'
+import { getPublicBlog } from '../lib/posts'
 import { excerpt } from '../lib/excerpt'
 import ContentImage from '../components/ContentImage.astro'
 
-const posts = await getCollection('blog')
+const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 ---
 
@@ -36,7 +36,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
           <li>
             <article>
               {
-                  post.data.featuredimage && (
+                post.data.featuredimage && (
                   <a href={`/blog/${post.id}/`}>
                     <ContentImage
                       src={post.data.featuredimage}
@@ -59,16 +59,16 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
               >
                 {post.data.title}
               </a>
-                <p class="mt-2 text-sm text-ink/60 leading-relaxed">
-                  {excerpt(post.body ?? '', 250)}
-                </p>
-                <a
-                  href={`/blog/${post.id}/`}
-                  class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
-                >
-                  Read More →
-                </a>
-              </article>
+              <p class="mt-2 text-sm text-ink/60 leading-relaxed">
+                {excerpt(post.body ?? '', 250)}
+              </p>
+              <a
+                href={`/blog/${post.id}/`}
+                class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
+              >
+                Read More →
+              </a>
+            </article>
           </li>
         ))
       }

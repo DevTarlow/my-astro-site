@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
 import '../../styles/prose.css'
+import { getPublicProjects } from '../../lib/posts'
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects')
+  const projects = await getPublicProjects()
   return projects.map((project) => ({
     params: { slug: project.id },
     props: { project },

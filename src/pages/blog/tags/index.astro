@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro'
-import { getCollection } from 'astro:content'
+import { getPublicBlog } from '../../../lib/posts'
 
-const posts = await getCollection('blog')
+const posts = await getPublicBlog()
 
 const tagCounts = new Map<string, number>()
 for (const post of posts) {

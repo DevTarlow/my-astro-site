@@ -1,7 +1,7 @@
 ---
-import { getCollection } from 'astro:content'
+import { getPublicBlog } from '../lib/posts'
 
-const posts = await getCollection('blog')
+const posts = await getPublicBlog()
 
 const sorted = [...posts].sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),

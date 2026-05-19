@@ -2,19 +2,19 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro'
 import Sidebar from '../../../components/Sidebar.astro'
 import Pagination from '../../../components/Pagination.astro'
-import { getCollection } from 'astro:content'
+import { getPublicBlog } from '../../../lib/posts'
 import { excerpt } from '../../../lib/excerpt'
 import ContentImage from '../../../components/ContentImage.astro'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog')
+  const posts = await getPublicBlog()
   const totalPages = Math.ceil(posts.length / 5)
   return Array.from({ length: totalPages - 1 }, (_, i) => ({
     params: { page: String(i + 2) },
   }))
 }
 
-const posts = await getCollection('blog')
+const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 
 const latestImage = posts[0]?.data.featuredimage
