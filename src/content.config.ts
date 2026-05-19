@@ -10,6 +10,7 @@ const blog = defineCollection({
     description: z.string(),
     tags: z.array(z.string()),
     featuredimage: z.string().optional(),
+    draft: z.boolean().optional(),
   }),
 })
 
@@ -23,6 +24,7 @@ const projects = defineCollection({
     image: z.string().optional(),
     github: z.string().optional(),
     featured: z.boolean().optional(),
+    draft: z.boolean().optional(),
     category: z.enum(['Launched', 'Development']),
   }),
 })

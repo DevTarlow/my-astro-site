@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro'
-import { getCollection } from 'astro:content'
 import { excerpt } from '../../../lib/excerpt'
 import ContentImage from '../../../components/ContentImage.astro'
+import { getPublicBlog } from '../../../lib/posts'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog')
+  const posts = await getPublicBlog()
   const tags = new Set<string>()
   for (const post of posts) {
     for (const tag of post.data.tags ?? []) {
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const tag = Astro.params.tag!
-const posts = await getCollection('blog')
+const posts = await getPublicBlog()
 const filtered = posts
   .filter((post) => (post.data.tags ?? []).includes(tag))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
