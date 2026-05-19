@@ -1,7 +1,7 @@
 ---
 title: Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow
 pubDate: 2026-05-18T00:00:00.000Z
-draft: true
+draft: false
 tags:
   - astro
   - markdown
