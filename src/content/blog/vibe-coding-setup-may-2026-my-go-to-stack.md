@@ -41,7 +41,7 @@ Then RooCode said they were stopping development on their VS Code extension and 
 >
 > But not for long! Someone in the RooCode Discord mentioned they were using OpenCode and loving it.
 
-After checking out their plans and seeing their **OpenCode** Go plan was $5 for the first month and $10 after, with up to $60 of usage allotted per month. I figured what could I lose, and jumped right in. The first few days I used models I was used to like **Qwen 3.6 Plus** and it performed great, however with the way I was running I was set to run our of my usage before the month was up.
+After checking out their plans and seeing their [**OpenCode**](https://opencode.ai/go?ref=GVKPC6ZTYN) Go plan was $5 for the first month and $10 after, with up to $60 of usage allotted per month. I figured what could I lose, and jumped right in. The first few days I used models I was used to like **Qwen 3.6 Plus** and it performed great, however with the way I was running I was set to run our of my usage before the month was up.
 
 There I was hesitant and unsure, should I keep going? Or swap to a different model and risk breaking code on the project I was working on. I decided, to back-up the project and test out the model you have been hearing about; **Deepseek V4**.
 
@@ -51,7 +51,7 @@ My usual full Vibe Coding days I am doing like 6-10 hours and only use around a 
 
 **My core setup for Vibe Coding as of May 2026 includes**:
 - **[Gemini](https://gemini.google.com/app)**: The idea refiner, the strategist, the chief visionary.
-- **[OpenCode Go Plan](https://opencode.ai/go)** (I use the Desktop version): The engine. This is where the code actually gets written and executed by the AI agents. 
+- **[OpenCode Go Plan](https://opencode.ai/go?ref=GVKPC6ZTYN)** (I use the Desktop version): The engine. This is where the code actually gets written and executed by the AI agents. 
 - **[VS Code](https://code.visualstudio.com/)**: The workbench. The IDE where I monitor, tweak, and push the final product live.
 
 But it's not just about having these tools; it's about the flow, how I weave them together to move from an idea to a working feature in what feels like minutes. This workflow is essentially a layered delegation system. And it works:
