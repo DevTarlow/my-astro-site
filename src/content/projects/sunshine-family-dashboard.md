@@ -28,13 +28,13 @@ This is something my wife and I use daily, so I figured some of you may too. Giv
 
 ![Screenshot](/images/sunshine-family-dashboard-dinners-fitness.jpg)
 
-One of my favorite features of the dashboard is the **Weekly Dinners** section. You can keep track of what's for dinner so the whole family knows what's for dinner! You can also drag to re-arrange dinner days or leave comments.
+One of my favorite features of the dashboard is the **Weekly Dinners** section. You can keep track of what's for dinner so the whole family knows what's for dinner! You can also drag to rearrange dinner days or leave comments.
 
 Get a little boost of inspiration with the **Weekly Fitness** tracker where you can easily log the days you did your workout, get achievements, and inspire the other members in the family.
 
 ![Screenshot](/images/sunshine-family-dashboard-dining-out-to-do-grocery-list.jpg)
 
-The **Dining Out** section let's you track the total amount you are spending on eating out each month. You can also see how much each family member is spending, this helps keep everyone accountable and shed some light on how much you are spending each month eating out.
+The **Dining Out** section lets you track the total amount you are spending on eating out each month. You can also see how much each family member is spending, this helps keep everyone accountable and shed some light on how much you are spending each month eating out.
 
 Need to keep track of things to do? Use the **To-Do List** to log your tasks and simply remove them when you are done to get a fun message.
 
@@ -48,12 +48,12 @@ The **Meal Prep Fridge** panel is another favorite of mine. Here is where you ca
 
 Similar to the shared notes panel but offering more options for links I added the **Shared Links** panel. This is where you can share important web links with the whole family.
 
-Lot's of the features can but adjusted and setup through the settings panel which is accessed on the top navigation by clicking the cog wheel icon.
+Lot's of the features can but adjusted and set up through the settings panel which is accessed on the top navigation by clicking the cogwheel icon.
 
 ## Features
 
 - Local Member login / profile with per‑member theme and background
-- Utilizes your local LLM server via LM Stuido/Ollama/etc.
+- Utilizes your local LLM server via LM Studio/Ollama/etc.
 - Real‑time presence & activity feed
 - Weather widget *(OpenWeatherMap API)*
 - Vibe‑of‑the‑Day AI message
