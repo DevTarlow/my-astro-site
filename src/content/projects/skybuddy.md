@@ -12,7 +12,7 @@ tags:
   - tool
 description: >-
   A Chrome extension for Bluesky that highlights keywords, filters noise, and
-  drafts AI-powered replies using a local LLM — all privacy-first.
+  drafts AI-powered replies using a local LLM - all privacy-first.
 image: /images/skybuddy-magic-reply.png
 github: https://github.com/DevTarlow/SkyBuddy
 ---
@@ -61,11 +61,11 @@ This is what led me to build the extension.
 | DOM Observation | MutationObserver (rAF-throttled) |
 | Styling | CSS custom properties, inline popup styles |
 | LLM APIs | OpenAI-compatible `/v1/chat/completions` + Ollama `/api/chat` |
-| Build | None — loaded unpacked, no bundler |
+| Build | None - loaded unpacked, no bundler |
 
 ## Recent Updates:
 
-- 7/4/2026 | v1.0.0 alpha — Keyword highlighting, negative filtering, Magic Reply with 5 tones, right-click integration, export/import, and full LLM backend support.
+- 7/4/2026 | v1.0.0 alpha - Keyword highlighting, negative filtering, Magic Reply with 5 tones, right-click integration, export/import, and full LLM backend support.
 
 ## Get the Project
 
