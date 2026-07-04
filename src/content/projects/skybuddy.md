@@ -13,7 +13,7 @@ tags:
 description: >-
   A Chrome extension for Bluesky that highlights keywords, filters noise, and
   drafts AI-powered replies using a local LLM — all privacy-first.
-image: /images/bskybuddy.png
+image: /images/skybuddy-magic-reply.png
 github: https://github.com/DevTarlow/SkyBuddy
 ---
 
@@ -23,21 +23,33 @@ This is what led me to build the extension.
 
 **SkyBuddy** is a Chrome extension that runs on `bsky.app` and watches for posts matching your keywords. The matching posts get a configurable glow highlight so they stand out from the other posts. Posts you don't want to see get hidden entirely. And when you want to join the conversation, there's a Magic Reply button that drafts replies through your own local LLM.
 
-PLACEHOLDER_SCREENSHOT
 
 ## Features:
 
-**Keyword Monitoring** — two independent keyword lists with toggles. Positive keywords give posts a configurable glow color (default blue). Negative keywords hide posts entirely with `display: none`. Each list has its own search, pagination, and clear button. Keywords are matched case-insensitively via substring.
+**Keyword Monitoring** - two independent keyword lists with toggles. Positive keywords give posts a configurable glow color (default blue). Negative keywords hide posts entirely with `display: none`. Each list has its own search, pagination, and clear button. Keywords are matched case-insensitively via substring.
 
-**Magic Reply with Tones** — injects a button into Bluesky reply dialogs. Click it and SkyBuddy extracts the post text, sends it to your local LLM with a tone-specific system prompt, and inserts the generated reply into the composer. Five tones to choose from — Generic, Agree, Disagree, Funny, Informative — each with its own editable prompt that you can customize or restore to default.
+![SkyBuddy Screenshot](/images/skybuddy-screenshot.png)
 
-**Privacy & Control** — a master toggle pauses everything without losing your settings. Full-config export/import as a versioned JSON file covers keywords, toggles, LLM config, tone prompts, temperature, max tokens, and glow color. No telemetry, no third-party API calls, no data leaving your machine except to the LLM endpoint you configure.
+**Magic Reply with Tones** - injects a button into Bluesky reply dialogs. Click it and SkyBuddy extracts the post text, sends it to your local LLM with a tone-specific system prompt, and inserts the generated reply into the composer. Five tones to choose from - Generic, Agree, Disagree, Funny, Informative - each with its own editable prompt that you can customize or restore to default.
 
-**Right-Click Integration** — right-click any hashtag on Bluesky to add it to your positive or negative keyword list. A toast notification confirms the action.
+![SkyBuddy Screenshot](/images/skybuddy-magic-reply.png)
 
-**Multiple Backend Support** — works with OpenAI-compatible endpoints (llama.cpp, LM Studio, LocalAI) and Ollama. Configure the URL, model name, temperature, and max tokens from the popup.
+**Privacy & Control** - a master toggle pauses everything without losing your settings. Full-config export/import as a versioned JSON file covers keywords, toggles, LLM config, tone prompts, temperature, max tokens, and glow color. No telemetry, no third-party API calls, no data leaving your machine except to the LLM endpoint you configure.
 
-**LLM Status Indicator** — the popup header shows a live connection status dot with the LLM endpoint so you always know if your backend is reachable.
+![SkyBuddy Master Toggle](/images/skybuddy-master-toggle.png)
+
+**Right-Click Integration** - right-click any hashtag on Bluesky to add it to your positive or negative keyword list. A toast notification confirms the action.
+
+![SkyBuddy Keyword Insert](/images/skybuddy-keyword-insert.png)
+
+
+**Multiple Backend Support** - works with OpenAI-compatible endpoints (llama.cpp, LM Studio, LocalAI) and Ollama. Configure the URL, model name, temperature, and max tokens from the popup.
+
+![SkyBuddy LLM Settings](/images/skybuddy-llm-settings.png)
+
+**LLM Status Indicator** - the popup header shows a live connection status dot with the LLM endpoint so you always know if your backend is reachable.
+
+![SkyBuddy Master Toggle](/images/skybuddy-master-toggle.png)
 
 ## Tech Stack
 
