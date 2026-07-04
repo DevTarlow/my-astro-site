@@ -78,7 +78,8 @@
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  display: block;
 }
 
 .prose-custom table {
