@@ -1,0 +1,8 @@
+# Always check for fresh HTML
+/*.html
+  Cache-Control: no-cache
+
+# Cache hashed assets forever
+/_astro/*
+  Cache-Control: max-age=31536000
+  Cache-Control: immutable
