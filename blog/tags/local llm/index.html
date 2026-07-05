@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="en"> <head><script>
+      (function () {
+        const theme = localStorage.getItem('theme')
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CAqDO0tx.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args){dataLayer.push(args);}
+      gtag('js', new Date());
+      gtag('config', 'G-H879GPJ4GM');
+
+      document.addEventListener('astro:page-load', function () {
+        gtag('config', 'G-H879GPJ4GM', { page_path: location.pathname })
+
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      })
+    </script><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"><title>#local llm — Tarlow.space | AI Developer</title><link rel="alternate" type="application/rss+xml" title="Tarlow.space" href="/rss.xml"><meta name="description" content="Posts tagged with &#34;local llm&#34;."><meta property="og:title" content="#local llm — Tarlow.space | AI Developer"><meta property="og:description" content="Posts tagged with &#34;local llm&#34;."><meta property="og:type" content="website"><meta property="og:url" content="https://tarlow.space/blog/tags/local%20llm/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="#local llm — Tarlow.space | AI Developer"><meta name="twitter:description" content="Posts tagged with &#34;local llm&#34;."><link rel="stylesheet" href="/_astro/BaseLayout.BLKeNIZM.css"></head> <body class="bg-paper"> <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen"> <nav class="flex items-center justify-center gap-6 xl:gap-8 border-b border-terracotta/10 py-5 px-4"> <button data-menu-trigger class="xl:hidden inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Open menu"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="3" y1="6" x2="21" y2="6"></line> <line x1="3" y1="12" x2="21" y2="12"></line> <line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> <a href="/" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> Home </a><a href="/blog" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-terracotta border-terracotta
+          "> Blog </a><a href="/projects" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> Projects </a><a href="/about" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> About </a> <button id="theme-toggle" class="inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Toggle dark mode"> <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button data-bluesky-trigger class="inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Bluesky posts"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" class="h-[0.875em] w-auto" fill="currentColor"> <path d="M135.72 44.03C202.216 93.951 274.842 195.287 300 249.844c25.158-54.557 97.784-155.893 164.28-205.814C512.227 1.244 600-26.116 600 59.393c0 19.285-11.292 161.953-17.918 185.119-23.002 80.367-106.823 100.882-181.354 88.453 130.324 22.186 163.455 95.542 91.884 168.936-135.943 139.324-195.473-34.988-210.777-79.592-2.824-8.256-4.147-12.115-4.147-8.772 0-3.343-1.323-.516-4.147 8.772-15.304 44.604-74.834 218.916-210.777 79.592-71.571-73.394-38.44-146.75 91.884-168.936-74.531 12.429-158.352-8.086-181.354-88.453C11.292 221.346 0 78.678 0 59.393 0-26.116 87.773-1.244 135.72 44.03Z"></path> </svg> </button> </nav> <script data-astro-rerun>
+  (function () {
+    const sun = document.getElementById('theme-icon-sun')
+    const moon = document.getElementById('theme-icon-moon')
+
+    function setTheme (dark) {
+      if (dark) {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+        sun.classList.remove('hidden')
+        moon.classList.add('hidden')
+      } else {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+        sun.classList.add('hidden')
+        moon.classList.remove('hidden')
+      }
+    }
+
+    function syncIcons () {
+      const d = localStorage.getItem('theme') === 'dark'
+      sun.classList.toggle('hidden', !d)
+      moon.classList.toggle('hidden', d)
+    }
+
+    syncIcons()
+
+    if (window.__navbarHandlers) {
+      document.removeEventListener('click', window.__navbarHandlers.click)
+    }
+    const handleToggle = function (e) {
+      if (!e.target.closest('#theme-toggle')) return
+      setTheme(!document.documentElement.classList.contains('dark'))
+    }
+    window.__navbarHandlers = { click: handleToggle }
+    document.addEventListener('click', handleToggle)
+
+    document.addEventListener('astro:page-load', syncIcons)
+  })()
+</script> <div id="bluesky-overlay" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 dark:bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300"> <div class="relative mt-20 mb-20 w-full max-w-[600px] rounded-lg bg-paper p-6 shadow-xl"> <div class="flex items-center justify-between border-b border-terracotta/10 pb-4"> <h2 class="font-serif text-xl font-semibold tracking-tight text-ink">
+Latest from Bluesky
+</h2> <button id="bluesky-close" class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> <div id="bluesky-content" class="mt-6 space-y-4"> <p class="text-center text-ink/50 py-12">Click the butterfly to load posts</p> </div> </div> </div> <script data-astro-rerun>
+  (function () {
+  const overlay = document.getElementById('bluesky-overlay')
+  const content = document.getElementById('bluesky-content')
+
+  let loaded = false
+
+  function escapeHtml (str) {
+    if (!str) return ''
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+
+  function byteOffsetToCharIndex (text, byteOffset) {
+    let byteCount = 0
+    for (let i = 0; i < text.length; i++) {
+      if (byteCount >= byteOffset) return i
+      const code = text.charCodeAt(i)
+      if (code < 0x80) {
+        byteCount += 1
+      } else if (code < 0x800) {
+        byteCount += 2
+      } else if (code >= 0xD800 && code <= 0xDBFF) {
+        byteCount += 4
+        i++
+      } else {
+        byteCount += 3
+      }
+    }
+    return text.length
+  }
+
+  function facetsToHtml (text, facets) {
+    if (!facets || facets.length === 0) return escapeHtml(text)
+
+    facets.sort(function (a, b) { return a.index.byteStart - b.index.byteStart })
+
+    let result = ''
+    let lastEnd = 0
+
+    for (let i = 0; i < facets.length; i++) {
+      const f = facets[i]
+      const start = byteOffsetToCharIndex(text, f.index.byteStart)
+      const end = byteOffsetToCharIndex(text, f.index.byteEnd)
+
+      if (start > lastEnd) {
+        result += escapeHtml(text.slice(lastEnd, start))
+      }
+
+      const facetText = text.slice(start, end)
+      const escaped = escapeHtml(facetText)
+
+      const feature = f.features[0]
+      if (feature && feature.$type === 'app.bsky.richtext.facet#link') {
+        result += '<a href="' + escapeHtml(feature.uri) + '" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline break-all">' + escaped + '</a>'
+      } else if (feature && feature.$type === 'app.bsky.richtext.facet#mention') {
+        result += '<a href="https://bsky.app/profile/' + feature.did + '" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline">' + escaped + '</a>'
+      } else {
+        result += escaped
+      }
+
+      lastEnd = end
+    }
+
+    if (lastEnd < text.length) {
+      result += escapeHtml(text.slice(lastEnd))
+    }
+
+    return result
+  }
+
+  function relativeTime (dateStr) {
+    if (!dateStr) return ''
+    const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000)
+    if (diff < 60) return 'just now'
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago'
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago'
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago'
+    const d = new Date(dateStr)
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  }
+
+  function postUrlFromUri (uri) {
+    const parts = uri.split('/')
+    return 'https://bsky.app/profile/' + parts[2] + '/post/' + parts[parts.length - 1]
+  }
+
+  function renderPost (item) {
+    const post = item.post
+    const record = post.record
+    const author = post.author
+
+    let html = '<div class="py-4 border-b border-terracotta/10 last:border-b-0">'
+
+    html += '<div class="flex items-center gap-2">'
+    if (author.avatar) {
+      html += '<img src="' + author.avatar + '" alt="" class="h-6 w-6 rounded-full" loading="lazy" />'
+    } else {
+      html += '<div class="h-6 w-6 rounded-full bg-terracotta/20"></div>'
+    }
+    html += '<span class="text-sm text-ink/70">@' + escapeHtml(author.handle) + '</span>'
+    html += '<span class="text-sm text-ink/30">·</span>'
+    html += '<span class="text-sm text-ink/50">' + relativeTime(record.createdAt) + '</span>'
+    html += '</div>'
+
+    if (record.text) {
+      let renderedText
+      if (record.facets && record.facets.length > 0) {
+        renderedText = facetsToHtml(record.text, record.facets)
+      } else {
+        renderedText = escapeHtml(record.text)
+      }
+      html += '<div class="mt-2 text-[1.0625rem] leading-relaxed text-ink/80">' + renderedText.replace(/\n/g, '<br>') + '</div>'
+    }
+
+    if (post.embed) {
+      const embed = post.embed
+
+      if (embed.$type === 'app.bsky.embed.images#view') {
+        html += '<div class="mt-3 grid gap-2" style="grid-template-columns: repeat(' + (embed.images.length > 1 ? '2' : '1') + ', 1fr)">'
+        embed.images.forEach(function (img) {
+          html += '<img src="' + img.fullsize + '" alt="' + escapeHtml(img.alt || '') + '" class="w-full rounded-lg object-cover" style="max-height: 300px;" loading="lazy" />'
+        })
+        html += '</div>'
+      }
+
+      if (embed.$type === 'app.bsky.embed.external#view') {
+        const ext = embed.external
+        html += '<a href="' + escapeHtml(ext.uri) + '" target="_blank" rel="noopener noreferrer" class="mt-3 block rounded-lg border border-terracotta/10 overflow-hidden no-underline hover:bg-terracotta/5 transition-colors">'
+        if (ext.thumb) {
+          html += '<img src="' + ext.thumb + '" alt="" class="w-full h-40 object-cover" loading="lazy" />'
+        }
+        html += '<div class="p-3">'
+        if (ext.title) html += '<div class="text-sm font-semibold text-ink truncate">' + escapeHtml(ext.title) + '</div>'
+        if (ext.description) html += '<div class="text-xs text-ink/50 mt-1 line-clamp-2">' + escapeHtml(ext.description) + '</div>'
+        html += '<div class="text-xs text-ink/30 mt-1 truncate">' + escapeHtml(ext.uri) + '</div>'
+        html += '</div>'
+        html += '</a>'
+      }
+
+      if (embed.$type === 'app.bsky.embed.recordWithMedia#view') {
+        const media = embed.media
+        if (media && media.$type === 'app.bsky.embed.images#view') {
+          html += '<div class="mt-3 grid gap-2" style="grid-template-columns: repeat(' + (media.images.length > 1 ? '2' : '1') + ', 1fr)">'
+          media.images.forEach(function (img) {
+            html += '<img src="' + img.fullsize + '" alt="' + escapeHtml(img.alt || '') + '" class="w-full rounded-lg object-cover" style="max-height: 300px;" loading="lazy" />'
+          })
+          html += '</div>'
+        }
+      }
+    }
+
+    const pUrl = postUrlFromUri(post.uri)
+    html += '<div class="mt-3">'
+    html += '<a href="' + pUrl + '" target="_blank" rel="noopener noreferrer" class="text-sm text-terracotta hover:underline no-underline">View on Bluesky →</a>'
+    html += '</div>'
+
+    html += '</div>'
+
+    return html
+  }
+
+  function open () {
+    overlay.classList.remove('opacity-0', 'pointer-events-none')
+    document.body.style.overflow = 'hidden'
+    if (!loaded) {
+      loadPosts()
+      loaded = true
+    }
+  }
+
+  function closeOverlay () {
+    overlay.classList.add('opacity-0', 'pointer-events-none')
+    document.body.style.overflow = ''
+  }
+
+  if (window.__bskyHandlers) {
+    document.removeEventListener('click', window.__bskyHandlers.click)
+    document.removeEventListener('keydown', window.__bskyHandlers.keydown)
+  }
+  const handleBlueskyClick = function (e) {
+    const target = e.target
+    if (target.closest('[data-bluesky-trigger]')) { open(); return }
+    if (target.closest('#bluesky-close')) { closeOverlay(); return }
+    if (overlay && e.target === overlay) { closeOverlay(); return }
+  }
+  const handleBlueskyEscape = function (e) {
+    if (e.key === 'Escape') closeOverlay()
+  }
+  window.__bskyHandlers = { click: handleBlueskyClick, keydown: handleBlueskyEscape }
+  document.addEventListener('click', handleBlueskyClick)
+  document.addEventListener('keydown', handleBlueskyEscape)
+
+  async function loadPosts () {
+    content.innerHTML = '<p class="text-center text-ink/50 py-12">Loading...</p>'
+
+    try {
+      const handle = 'itstarlow.bsky.social'
+      const feedUrl = 'https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=' + handle + '&limit=10'
+
+      const feedRes = await fetch(feedUrl)
+
+      if (!feedRes.ok) throw new Error('Failed to fetch data')
+
+      const feed = await feedRes.json()
+
+      let html = ''
+
+      feed.feed.forEach(function (item) {
+        html += renderPost(item)
+      })
+
+      content.innerHTML = html
+    } catch {
+      content.innerHTML = '<p class="text-center text-red-500 py-12">Failed to load Bluesky posts. Try again later.</p>'
+    }
+  }
+  })()
+</script> <div id="mobile-panel-overlay" class="fixed inset-0 z-40 bg-black/60 dark:bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300"></div> <div id="mobile-panel" class="fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-paper border-l border-terracotta/10 shadow-xl translate-x-full transition-transform duration-300 overflow-y-auto"> <div class="sticky top-0 z-10 flex items-center justify-between bg-paper border-b border-terracotta/10 px-4 py-3"> <h2 class="font-serif text-sm font-semibold text-ink tracking-tight">
+Menu
+</h2> <button id="mobile-panel-close" class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta" aria-label="Close menu"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> <div class="p-4 flex flex-col gap-4"> <nav class="flex flex-col gap-1 border-b border-terracotta/10 pb-4"> <a href="/" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> Home </span>  </a><a href="/blog" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-terracotta"> Blog </span> <span class="text-terracotta text-xs">→</span> </a><a href="/projects" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> Projects </span>  </a><a href="/about" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> About </span>  </a> </nav> <div class="border-b border-terracotta/10 pb-4"> <button id="mobile-theme-toggle" class="flex items-center gap-3 w-full py-2 px-1 rounded transition-colors duration-200 text-ink group"> <svg id="mobile-theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-hover:text-terracotta transition-colors"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="mobile-theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-terracotta transition-colors"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> <span id="mobile-theme-label" class="font-serif text-sm tracking-tight transition-colors">Dark Mode</span> </button> </div> <aside class="border border-terracotta/30 rounded-lg p-4 bg-paper/90"> <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+Search
+</h2> <form id="mobile-search-form" class="flex gap-2"> <input type="search" id="mobile-search-input" aria-label="Search posts" placeholder="Search posts..." class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-ink/30 focus:outline-none focus:border-terracotta transition-colors"> <button type="submit" class="shrink-0 bg-terracotta text-paper text-sm rounded px-4 py-2 hover:opacity-90 transition-opacity font-medium">
+Search
+</button> </form> <div id="mobile-default-content"> <aside class="mt-4"> <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+Recent Posts
+</h2> <ul class="space-y-3"> <li> <a href="/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Taking Control - How Gemma 4 Powers My Local AI Ecosystem </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 30, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> See how I use Gemma 4 locally. A look into powering tools like Open WebUI, n8n agents, and Chrome extensions on your own hardware. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/family-dashboard-major-update-2-0/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Sunshine Family Dashboard Major Update v2.0 </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 27, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Calendar, Weekly Planner, Recipe Hub, Stats &amp; More. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/making-an-automated-weather-report-with-discord-updates-using-local-llm/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 14, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/project-talk-blog-wiz-md-creating-useful-tools-to-help-my-flow/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow </span> <time class="block text-[10px] text-ink/40 mt-0.5"> May 18, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Removing Barriers for writing and publishing on my Astro blog. This is why I created a tool to update my Astro Blog. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/vibe-coding-setup-may-2026-my-go-to-stack/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Vibe Coding Setup May 2026 - My Go-To Stack for AI Development </span> <time class="block text-[10px] text-ink/40 mt-0.5"> May 11, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Ditch the manual labor. See my 2026 Vibe Coding setup: How Gemini, OpenCode, and local LLMs let me build features fast, affordably, and privately. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li> </ul> </aside> </div> <div id="mobile-search-results" class="hidden"></div> </aside> </div> </div> <script>(function(){const postsData = [{"id":"family-dashboard-major-update-2-0","title":"Sunshine Family Dashboard Major Update v2.0","description":"Calendar, Weekly Planner, Recipe Hub, Stats & More.","pubDate":"2026-06-27T00:00:00.000Z","tags":["family-dashboard","local-app","personal-project","web-development"]},{"id":"from-idea-to-github-launching-the-sunshine-family-dashboard","title":"From Idea to GitHub: Launching the Sunshine Family Dashboard","description":"How and why I created the Sunshine Family Dashboard. A simple private, self-hosted digital dashboard to keep your family organized and your data/lifestyle off the internet. ","pubDate":"2026-04-28T00:00:00.000Z","tags":["family-dashboard","local-app","personal-project","web-development"]},{"id":"hello-world-new-theme-new-vibe","title":"Hello, World. New Theme, New Vibe.","description":"Just vibe coded myself a new Astro theme for my website/blog. Here is how I built it.","pubDate":"2026-05-08T00:00:00.000Z","tags":["astro","ai coding","web development","theme design","generative ai"]},{"id":"how-to-install-lm-studio-and-run-gemma4-locally-for-private-llm-use","title":"How to Install LM Studio and Run Gemma 4 Locally for Private LLM Use","description":"A step-by-step guide to running LLMs on your own hardware using LM Studio and Google's Gemma 4 models for private, offline AI.","pubDate":"2026-05-08T00:00:00.000Z","tags":["local-llm","gemma4","run-llm-locally","llm-privacy","on-device-ai"]},{"id":"making-an-automated-weather-report-with-discord-updates-using-local-llm","title":"How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio","description":"Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows.","pubDate":"2026-06-14T00:00:00.000Z","tags":["AI automation","local llms","N8N","LM Studio","Workflow Automation"]},{"id":"new-blog-and-home-for-my-ideas","title":"New Blog & Home for Ideas","description":"Brief introduction of my new space for sharing and innovation. Follow me on my journey exploring new possibilities","pubDate":"2026-04-22T00:00:00.000Z","tags":["local-first apps","local llm","technology sharing","new blog","developer journey"]},{"id":"project-talk-blog-wiz-md-creating-useful-tools-to-help-my-flow","title":"Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow","description":"Removing Barriers for writing and publishing on my Astro blog. This is why I created a tool to update my Astro Blog.","pubDate":"2026-05-18T00:00:00.000Z","tags":["astro","markdown","vibe-coding","tool","local-first"]},{"id":"taking-control-how-gemma-4-powers-my-local-ai-ecosystem","title":"Taking Control - How Gemma 4 Powers My Local AI Ecosystem","description":"See how I use Gemma 4 locally. A look into powering tools like Open WebUI, n8n agents, and Chrome extensions on your own hardware.","pubDate":"2026-06-30T00:00:00.000Z","tags":["local-llm","gemma4","run-llm-locally","llm-privacy","on-device-ai"]},{"id":"vibe-coding-setup-may-2026-my-go-to-stack","title":"Vibe Coding Setup May 2026 - My Go-To Stack for AI Development","description":"Ditch the manual labor. See my 2026 Vibe Coding setup: How Gemini, OpenCode, and local LLMs let me build features fast, affordably, and privately.","pubDate":"2026-05-11T00:00:00.000Z","tags":["vibe-coding","ai-development","deepseek","gemini"]}];
+
+  const overlay = document.getElementById('mobile-panel-overlay')
+  const panel = document.getElementById('mobile-panel')
+  const closeBtn = document.getElementById('mobile-panel-close')
+  const searchForm = document.getElementById('mobile-search-form')
+  const searchInput = document.getElementById('mobile-search-input')
+  const defaultContent = document.getElementById('mobile-default-content')
+  const searchResults = document.getElementById('mobile-search-results')
+
+  const themeToggle = document.getElementById('mobile-theme-toggle')
+  const themeSun = document.getElementById('mobile-theme-icon-sun')
+  const themeMoon = document.getElementById('mobile-theme-icon-moon')
+  const themeLabel = document.getElementById('mobile-theme-label')
+
+  function setMobileTheme (dark) {
+    if (dark) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+      themeSun.classList.remove('hidden')
+      themeMoon.classList.add('hidden')
+      themeLabel.textContent = 'Light Mode'
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+      themeSun.classList.add('hidden')
+      themeMoon.classList.remove('hidden')
+      themeLabel.textContent = 'Dark Mode'
+    }
+  }
+
+  function syncMobileTheme () {
+    const d = localStorage.getItem('theme') === 'dark'
+    themeSun.classList.toggle('hidden', !d)
+    themeMoon.classList.toggle('hidden', d)
+    themeLabel.textContent = d ? 'Light Mode' : 'Dark Mode'
+  }
+  syncMobileTheme()
+  document.addEventListener('astro:page-load', syncMobileTheme)
+
+  themeToggle.addEventListener('click', function () {
+    const dark = document.documentElement.classList.contains('dark')
+    setMobileTheme(!dark)
+  })
+
+  function openPanel () {
+    overlay.classList.remove('opacity-0', 'pointer-events-none')
+    panel.classList.remove('translate-x-full')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closePanel () {
+    overlay.classList.add('opacity-0', 'pointer-events-none')
+    panel.classList.add('translate-x-full')
+    document.body.style.overflow = ''
+  }
+
+  function handleClick (e) {
+    const trigger = e.target.closest('[data-menu-trigger]')
+    if (trigger) {
+      e.stopPropagation()
+      openPanel()
+    }
+  }
+  function handleEscape (e) {
+    if (e.key === 'Escape') closePanel()
+  }
+
+  if (window.__mpHandlers) {
+    document.removeEventListener('click', window.__mpHandlers.click)
+    document.removeEventListener('keydown', window.__mpHandlers.keydown)
+  }
+  window.__mpHandlers = { click: handleClick, keydown: handleEscape }
+  document.addEventListener('click', handleClick)
+  document.addEventListener('keydown', handleEscape)
+
+  closeBtn.addEventListener('click', closePanel)
+  overlay.addEventListener('click', closePanel)
+
+  searchForm.addEventListener('submit', function (e) {
+    e.preventDefault()
+    const query = searchInput.value.trim().toLowerCase()
+    if (!query) {
+      clearMobileSearch()
+      return
+    }
+
+    const words = query.split(/\s+/)
+    const matches = postsData.filter(function (post) {
+    return words.every(function (word) {
+      return post.title.toLowerCase().includes(word) ||
+        post.description.toLowerCase().includes(word)
+    })
+  })
+
+    if (matches.length === 0) {
+      searchResults.innerHTML =
+        '<div class="space-y-4">' +
+        '<div class="flex items-center justify-between">' +
+        '<p class="text-sm text-ink/60">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
+        '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+        '</div>' +
+        '</div>'
+    } else {
+      let html = ''
+      html += '<div class="flex items-center justify-between mb-2">'
+      html += '<p class="text-sm text-ink/60">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+      html += '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>'
+      html += '</div>'
+
+      html += '<ul class="space-y-4">'
+      matches.forEach(function (post) {
+        html += '<li>' +
+          '<article>' +
+          '<time class="block text-xs text-ink/40 mb-1">' + new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</time>' +
+          '<a href="/blog/' + post.id + '/" class="text-sm font-serif text-ink no-underline hover:text-terracotta transition-colors">' + escapeHtml(post.title) + '</a>' +
+          '<p class="mt-1 text-xs text-ink/60 leading-relaxed">' + escapeHtml(post.description) + '</p>' +
+          '<a href="/blog/' + post.id + '/" class="mt-1 inline-block text-xs text-terracotta no-underline hover:opacity-80 transition-opacity">Read More →</a>' +
+          '</article>' +
+          '</li>'
+      })
+      html += '</ul>'
+
+      searchResults.innerHTML = html
+    }
+
+    defaultContent.classList.add('hidden')
+    searchResults.classList.remove('hidden')
+
+    searchResults.addEventListener('click', function (e) {
+      if (e.target.closest('[data-clear]')) clearMobileSearch()
+    })
+  })
+
+  function clearMobileSearch () {
+    searchInput.value = ''
+    searchResults.classList.add('hidden')
+    defaultContent.classList.remove('hidden')
+    searchResults.innerHTML = ''
+  }
+
+  function escapeHtml (str) {
+    if (!str) return ''
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+})();</script>  <main class="mx-auto max-w-[65ch] px-6 py-20"> <header class="mb-12"> <a href="/blog/tags/" class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6">
+← All Tags
+</a> <h1 class="font-serif text-3xl font-semibold tracking-tight">
+#<span class="text-terracotta">local llm</span> </h1> <p class="mt-2 text-sm text-ink/60"> 1 post </p> <div class="mt-4 h-0.5 w-12 rounded bg-terracotta"></div> </header> <ul class="space-y-12"> <li> <article> <a href="/blog/new-blog-and-home-for-my-ideas/"> <img src="/images/new-blog-and-home.jpeg" alt decoding="async" loading="lazy" width="1376" height="768" class="w-full h-36 object-cover rounded-lg mb-3"> </a> <time class="block text-sm text-ink/40 mb-1.5"> April 22, 2026 </time> <a href="/blog/new-blog-and-home-for-my-ideas/" class="font-serif text-xl text-ink no-underline hover:text-terracotta transition-colors"> New Blog &amp; Home for Ideas </a> <p class="mt-2 text-sm text-ink/60 leading-relaxed"> The New Blog Space - Welcome in traveler! It&#39;s nice to finally have a space where I can write my thoughts, share my projects, and help others. I am eager to share what I have been working on, and over time this space will become a knowledge base of… </p> <a href="/blog/new-blog-and-home-for-my-ideas/" class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity">
+Read More →
+</a> </article> </li> </ul> </main>  <button id="back-to-top" class="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-paper shadow-md opacity-0 pointer-events-none transition-opacity duration-200 hover:opacity-90" aria-label="Back to top"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="18 15 12 9 6 15"></polyline> </svg> </button> <script>
+  (function () {
+    const btn = document.getElementById('back-to-top')
+    if (!btn) return
+
+    function update() {
+      if (window.scrollY > 400) {
+        btn.classList.remove('opacity-0', 'pointer-events-none')
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none')
+      }
+    }
+
+    document.addEventListener('astro:page-load', function () {
+      update()
+      window.addEventListener('scroll', update, { passive: true })
+    })
+
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  })()
+</script> </div> </body></html>

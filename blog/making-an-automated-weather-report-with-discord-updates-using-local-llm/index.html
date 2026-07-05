@@ -1,0 +1,919 @@
+<!DOCTYPE html><html lang="en"> <head><script>
+      (function () {
+        const theme = localStorage.getItem('theme')
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CAqDO0tx.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args){dataLayer.push(args);}
+      gtag('js', new Date());
+      gtag('config', 'G-H879GPJ4GM');
+
+      document.addEventListener('astro:page-load', function () {
+        gtag('config', 'G-H879GPJ4GM', { page_path: location.pathname })
+
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      })
+    </script><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"><title>How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio — Tarlow.space | AI Developer</title><link rel="alternate" type="application/rss+xml" title="Tarlow.space" href="/rss.xml"><meta name="description" content="Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows."><meta property="og:title" content="How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio — Tarlow.space | AI Developer"><meta property="og:description" content="Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows."><meta property="og:type" content="article"><meta property="og:url" content="https://tarlow.space/blog/making-an-automated-weather-report-with-discord-updates-using-local-llm/"><meta property="og:image" content="https://tarlow.space/images/weather-workflow-discord-n8n.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio — Tarlow.space | AI Developer"><meta name="twitter:description" content="Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows."><meta name="twitter:image" content="https://tarlow.space/images/weather-workflow-discord-n8n.png"><link rel="stylesheet" href="/_astro/BaseLayout.BLKeNIZM.css">
+<style>.prose-custom{font-size:1.0625rem;line-height:1.6}.prose-custom p{margin-bottom:1.5rem}.prose-custom h2{font-family:Lora,Georgia,serif;font-size:1.5rem;font-weight:600;margin-top:2.5rem;margin-bottom:1rem}.prose-custom h3{font-family:Lora,Georgia,serif;font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem}.prose-custom a{color:#c05746;text-decoration:underline;text-underline-offset:2px}.prose-custom a:hover{opacity:.8}.prose-custom blockquote{border-left:3px solid #C05746;padding-left:1rem;margin:1.5rem 0;font-style:italic;color:rgb(var(--color-ink) / .7)}.prose-custom ul,.prose-custom ol{padding-left:1.5rem;margin-bottom:1.5rem}.prose-custom ul{list-style-type:disc}.prose-custom ol{list-style-type:decimal}.prose-custom li{margin-bottom:.375rem}.prose-custom code{font-size:.875em;background:#c0574614;padding:.2em .4em;border-radius:3px}.prose-custom pre{overflow-x:auto;padding:1rem;margin:1.5rem 0;border-radius:6px;font-size:.875rem}.prose-custom img{max-width:100%;height:auto;border-radius:4px;margin:2rem auto;display:block}.prose-custom table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9375rem}.prose-custom th,.prose-custom td{border:1px solid rgb(var(--color-ink) / .15);padding:.625rem .75rem;text-align:left;vertical-align:top}.prose-custom th{background:#c0574614;font-weight:600;font-family:Lora,Georgia,serif}.prose-custom tr:nth-child(2n) td{background:rgb(var(--color-ink) / .03)}.prose-custom hr{border:none;border-top:1px solid rgb(var(--color-ink) / .1);margin:2.5rem 0}
+</style></head> <body class="bg-paper"> <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen"> <nav class="flex items-center justify-center gap-6 xl:gap-8 border-b border-terracotta/10 py-5 px-4"> <button data-menu-trigger class="xl:hidden inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Open menu"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="3" y1="6" x2="21" y2="6"></line> <line x1="3" y1="12" x2="21" y2="12"></line> <line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> <a href="/" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> Home </a><a href="/blog" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-terracotta border-terracotta
+          "> Blog </a><a href="/projects" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> Projects </a><a href="/about" class="
+            font-serif text-lg tracking-tight no-underline
+            border-b-2 transition-colors duration-300
+            hidden xl:inline
+            text-ink border-transparent hover:text-terracotta hover:border-terracotta
+          "> About </a> <button id="theme-toggle" class="inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Toggle dark mode"> <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button data-bluesky-trigger class="inline-flex items-center border-b-2 transition-colors duration-300 text-ink border-transparent hover:text-terracotta hover:border-terracotta cursor-pointer" aria-label="Bluesky posts"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" class="h-[0.875em] w-auto" fill="currentColor"> <path d="M135.72 44.03C202.216 93.951 274.842 195.287 300 249.844c25.158-54.557 97.784-155.893 164.28-205.814C512.227 1.244 600-26.116 600 59.393c0 19.285-11.292 161.953-17.918 185.119-23.002 80.367-106.823 100.882-181.354 88.453 130.324 22.186 163.455 95.542 91.884 168.936-135.943 139.324-195.473-34.988-210.777-79.592-2.824-8.256-4.147-12.115-4.147-8.772 0-3.343-1.323-.516-4.147 8.772-15.304 44.604-74.834 218.916-210.777 79.592-71.571-73.394-38.44-146.75 91.884-168.936-74.531 12.429-158.352-8.086-181.354-88.453C11.292 221.346 0 78.678 0 59.393 0-26.116 87.773-1.244 135.72 44.03Z"></path> </svg> </button> </nav> <script data-astro-rerun>
+  (function () {
+    const sun = document.getElementById('theme-icon-sun')
+    const moon = document.getElementById('theme-icon-moon')
+
+    function setTheme (dark) {
+      if (dark) {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+        sun.classList.remove('hidden')
+        moon.classList.add('hidden')
+      } else {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+        sun.classList.add('hidden')
+        moon.classList.remove('hidden')
+      }
+    }
+
+    function syncIcons () {
+      const d = localStorage.getItem('theme') === 'dark'
+      sun.classList.toggle('hidden', !d)
+      moon.classList.toggle('hidden', d)
+    }
+
+    syncIcons()
+
+    if (window.__navbarHandlers) {
+      document.removeEventListener('click', window.__navbarHandlers.click)
+    }
+    const handleToggle = function (e) {
+      if (!e.target.closest('#theme-toggle')) return
+      setTheme(!document.documentElement.classList.contains('dark'))
+    }
+    window.__navbarHandlers = { click: handleToggle }
+    document.addEventListener('click', handleToggle)
+
+    document.addEventListener('astro:page-load', syncIcons)
+  })()
+</script> <div id="bluesky-overlay" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 dark:bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300"> <div class="relative mt-20 mb-20 w-full max-w-[600px] rounded-lg bg-paper p-6 shadow-xl"> <div class="flex items-center justify-between border-b border-terracotta/10 pb-4"> <h2 class="font-serif text-xl font-semibold tracking-tight text-ink">
+Latest from Bluesky
+</h2> <button id="bluesky-close" class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> <div id="bluesky-content" class="mt-6 space-y-4"> <p class="text-center text-ink/50 py-12">Click the butterfly to load posts</p> </div> </div> </div> <script data-astro-rerun>
+  (function () {
+  const overlay = document.getElementById('bluesky-overlay')
+  const content = document.getElementById('bluesky-content')
+
+  let loaded = false
+
+  function escapeHtml (str) {
+    if (!str) return ''
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+
+  function byteOffsetToCharIndex (text, byteOffset) {
+    let byteCount = 0
+    for (let i = 0; i < text.length; i++) {
+      if (byteCount >= byteOffset) return i
+      const code = text.charCodeAt(i)
+      if (code < 0x80) {
+        byteCount += 1
+      } else if (code < 0x800) {
+        byteCount += 2
+      } else if (code >= 0xD800 && code <= 0xDBFF) {
+        byteCount += 4
+        i++
+      } else {
+        byteCount += 3
+      }
+    }
+    return text.length
+  }
+
+  function facetsToHtml (text, facets) {
+    if (!facets || facets.length === 0) return escapeHtml(text)
+
+    facets.sort(function (a, b) { return a.index.byteStart - b.index.byteStart })
+
+    let result = ''
+    let lastEnd = 0
+
+    for (let i = 0; i < facets.length; i++) {
+      const f = facets[i]
+      const start = byteOffsetToCharIndex(text, f.index.byteStart)
+      const end = byteOffsetToCharIndex(text, f.index.byteEnd)
+
+      if (start > lastEnd) {
+        result += escapeHtml(text.slice(lastEnd, start))
+      }
+
+      const facetText = text.slice(start, end)
+      const escaped = escapeHtml(facetText)
+
+      const feature = f.features[0]
+      if (feature && feature.$type === 'app.bsky.richtext.facet#link') {
+        result += '<a href="' + escapeHtml(feature.uri) + '" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline break-all">' + escaped + '</a>'
+      } else if (feature && feature.$type === 'app.bsky.richtext.facet#mention') {
+        result += '<a href="https://bsky.app/profile/' + feature.did + '" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline">' + escaped + '</a>'
+      } else {
+        result += escaped
+      }
+
+      lastEnd = end
+    }
+
+    if (lastEnd < text.length) {
+      result += escapeHtml(text.slice(lastEnd))
+    }
+
+    return result
+  }
+
+  function relativeTime (dateStr) {
+    if (!dateStr) return ''
+    const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000)
+    if (diff < 60) return 'just now'
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago'
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago'
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago'
+    const d = new Date(dateStr)
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  }
+
+  function postUrlFromUri (uri) {
+    const parts = uri.split('/')
+    return 'https://bsky.app/profile/' + parts[2] + '/post/' + parts[parts.length - 1]
+  }
+
+  function renderPost (item) {
+    const post = item.post
+    const record = post.record
+    const author = post.author
+
+    let html = '<div class="py-4 border-b border-terracotta/10 last:border-b-0">'
+
+    html += '<div class="flex items-center gap-2">'
+    if (author.avatar) {
+      html += '<img src="' + author.avatar + '" alt="" class="h-6 w-6 rounded-full" loading="lazy" />'
+    } else {
+      html += '<div class="h-6 w-6 rounded-full bg-terracotta/20"></div>'
+    }
+    html += '<span class="text-sm text-ink/70">@' + escapeHtml(author.handle) + '</span>'
+    html += '<span class="text-sm text-ink/30">·</span>'
+    html += '<span class="text-sm text-ink/50">' + relativeTime(record.createdAt) + '</span>'
+    html += '</div>'
+
+    if (record.text) {
+      let renderedText
+      if (record.facets && record.facets.length > 0) {
+        renderedText = facetsToHtml(record.text, record.facets)
+      } else {
+        renderedText = escapeHtml(record.text)
+      }
+      html += '<div class="mt-2 text-[1.0625rem] leading-relaxed text-ink/80">' + renderedText.replace(/\n/g, '<br>') + '</div>'
+    }
+
+    if (post.embed) {
+      const embed = post.embed
+
+      if (embed.$type === 'app.bsky.embed.images#view') {
+        html += '<div class="mt-3 grid gap-2" style="grid-template-columns: repeat(' + (embed.images.length > 1 ? '2' : '1') + ', 1fr)">'
+        embed.images.forEach(function (img) {
+          html += '<img src="' + img.fullsize + '" alt="' + escapeHtml(img.alt || '') + '" class="w-full rounded-lg object-cover" style="max-height: 300px;" loading="lazy" />'
+        })
+        html += '</div>'
+      }
+
+      if (embed.$type === 'app.bsky.embed.external#view') {
+        const ext = embed.external
+        html += '<a href="' + escapeHtml(ext.uri) + '" target="_blank" rel="noopener noreferrer" class="mt-3 block rounded-lg border border-terracotta/10 overflow-hidden no-underline hover:bg-terracotta/5 transition-colors">'
+        if (ext.thumb) {
+          html += '<img src="' + ext.thumb + '" alt="" class="w-full h-40 object-cover" loading="lazy" />'
+        }
+        html += '<div class="p-3">'
+        if (ext.title) html += '<div class="text-sm font-semibold text-ink truncate">' + escapeHtml(ext.title) + '</div>'
+        if (ext.description) html += '<div class="text-xs text-ink/50 mt-1 line-clamp-2">' + escapeHtml(ext.description) + '</div>'
+        html += '<div class="text-xs text-ink/30 mt-1 truncate">' + escapeHtml(ext.uri) + '</div>'
+        html += '</div>'
+        html += '</a>'
+      }
+
+      if (embed.$type === 'app.bsky.embed.recordWithMedia#view') {
+        const media = embed.media
+        if (media && media.$type === 'app.bsky.embed.images#view') {
+          html += '<div class="mt-3 grid gap-2" style="grid-template-columns: repeat(' + (media.images.length > 1 ? '2' : '1') + ', 1fr)">'
+          media.images.forEach(function (img) {
+            html += '<img src="' + img.fullsize + '" alt="' + escapeHtml(img.alt || '') + '" class="w-full rounded-lg object-cover" style="max-height: 300px;" loading="lazy" />'
+          })
+          html += '</div>'
+        }
+      }
+    }
+
+    const pUrl = postUrlFromUri(post.uri)
+    html += '<div class="mt-3">'
+    html += '<a href="' + pUrl + '" target="_blank" rel="noopener noreferrer" class="text-sm text-terracotta hover:underline no-underline">View on Bluesky →</a>'
+    html += '</div>'
+
+    html += '</div>'
+
+    return html
+  }
+
+  function open () {
+    overlay.classList.remove('opacity-0', 'pointer-events-none')
+    document.body.style.overflow = 'hidden'
+    if (!loaded) {
+      loadPosts()
+      loaded = true
+    }
+  }
+
+  function closeOverlay () {
+    overlay.classList.add('opacity-0', 'pointer-events-none')
+    document.body.style.overflow = ''
+  }
+
+  if (window.__bskyHandlers) {
+    document.removeEventListener('click', window.__bskyHandlers.click)
+    document.removeEventListener('keydown', window.__bskyHandlers.keydown)
+  }
+  const handleBlueskyClick = function (e) {
+    const target = e.target
+    if (target.closest('[data-bluesky-trigger]')) { open(); return }
+    if (target.closest('#bluesky-close')) { closeOverlay(); return }
+    if (overlay && e.target === overlay) { closeOverlay(); return }
+  }
+  const handleBlueskyEscape = function (e) {
+    if (e.key === 'Escape') closeOverlay()
+  }
+  window.__bskyHandlers = { click: handleBlueskyClick, keydown: handleBlueskyEscape }
+  document.addEventListener('click', handleBlueskyClick)
+  document.addEventListener('keydown', handleBlueskyEscape)
+
+  async function loadPosts () {
+    content.innerHTML = '<p class="text-center text-ink/50 py-12">Loading...</p>'
+
+    try {
+      const handle = 'itstarlow.bsky.social'
+      const feedUrl = 'https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=' + handle + '&limit=10'
+
+      const feedRes = await fetch(feedUrl)
+
+      if (!feedRes.ok) throw new Error('Failed to fetch data')
+
+      const feed = await feedRes.json()
+
+      let html = ''
+
+      feed.feed.forEach(function (item) {
+        html += renderPost(item)
+      })
+
+      content.innerHTML = html
+    } catch {
+      content.innerHTML = '<p class="text-center text-red-500 py-12">Failed to load Bluesky posts. Try again later.</p>'
+    }
+  }
+  })()
+</script> <div id="mobile-panel-overlay" class="fixed inset-0 z-40 bg-black/60 dark:bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300"></div> <div id="mobile-panel" class="fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-paper border-l border-terracotta/10 shadow-xl translate-x-full transition-transform duration-300 overflow-y-auto"> <div class="sticky top-0 z-10 flex items-center justify-between bg-paper border-b border-terracotta/10 px-4 py-3"> <h2 class="font-serif text-sm font-semibold text-ink tracking-tight">
+Menu
+</h2> <button id="mobile-panel-close" class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta" aria-label="Close menu"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> <div class="p-4 flex flex-col gap-4"> <nav class="flex flex-col gap-1 border-b border-terracotta/10 pb-4"> <a href="/" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> Home </span>  </a><a href="/blog" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-terracotta"> Blog </span> <span class="text-terracotta text-xs">→</span> </a><a href="/projects" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> Projects </span>  </a><a href="/about" class="font-serif text-lg tracking-tight no-underline py-2 px-1 rounded transition-colors duration-200 flex items-center justify-between group"> <span class="text-ink group-hover:text-terracotta transition-colors"> About </span>  </a> </nav> <div class="border-b border-terracotta/10 pb-4"> <button id="mobile-theme-toggle" class="flex items-center gap-3 w-full py-2 px-1 rounded transition-colors duration-200 text-ink group"> <svg id="mobile-theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-hover:text-terracotta transition-colors"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="mobile-theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-terracotta transition-colors"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> <span id="mobile-theme-label" class="font-serif text-sm tracking-tight transition-colors">Dark Mode</span> </button> </div> <aside class="border border-terracotta/30 rounded-lg p-4 bg-paper/90"> <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+Search
+</h2> <form id="mobile-search-form" class="flex gap-2"> <input type="search" id="mobile-search-input" aria-label="Search posts" placeholder="Search posts..." class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-ink/30 focus:outline-none focus:border-terracotta transition-colors"> <button type="submit" class="shrink-0 bg-terracotta text-paper text-sm rounded px-4 py-2 hover:opacity-90 transition-opacity font-medium">
+Search
+</button> </form> <div id="mobile-default-content"> <aside class="mt-4"> <h2 class="font-serif text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
+Recent Posts
+</h2> <ul class="space-y-3"> <li> <a href="/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Taking Control - How Gemma 4 Powers My Local AI Ecosystem </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 30, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> See how I use Gemma 4 locally. A look into powering tools like Open WebUI, n8n agents, and Chrome extensions on your own hardware. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/family-dashboard-major-update-2-0/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Sunshine Family Dashboard Major Update v2.0 </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 27, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Calendar, Weekly Planner, Recipe Hub, Stats &amp; More. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/making-an-automated-weather-report-with-discord-updates-using-local-llm/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio </span> <time class="block text-[10px] text-ink/40 mt-0.5"> June 14, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/project-talk-blog-wiz-md-creating-useful-tools-to-help-my-flow/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow </span> <time class="block text-[10px] text-ink/40 mt-0.5"> May 18, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Removing Barriers for writing and publishing on my Astro blog. This is why I created a tool to update my Astro Blog. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li><li> <a href="/blog/vibe-coding-setup-may-2026-my-go-to-stack/" class="group block no-underline"> <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug"> Vibe Coding Setup May 2026 - My Go-To Stack for AI Development </span> <time class="block text-[10px] text-ink/40 mt-0.5"> May 11, 2026 </time> <span class="block text-xs text-ink/50 mt-1 leading-normal line-clamp-2"> Ditch the manual labor. See my 2026 Vibe Coding setup: How Gemini, OpenCode, and local LLMs let me build features fast, affordably, and privately. </span> <span class="mt-1 inline-block text-[11px] text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
+Read More →
+</span> </a> </li> </ul> </aside> </div> <div id="mobile-search-results" class="hidden"></div> </aside> </div> </div> <script>(function(){const postsData = [{"id":"family-dashboard-major-update-2-0","title":"Sunshine Family Dashboard Major Update v2.0","description":"Calendar, Weekly Planner, Recipe Hub, Stats & More.","pubDate":"2026-06-27T00:00:00.000Z","tags":["family-dashboard","local-app","personal-project","web-development"]},{"id":"from-idea-to-github-launching-the-sunshine-family-dashboard","title":"From Idea to GitHub: Launching the Sunshine Family Dashboard","description":"How and why I created the Sunshine Family Dashboard. A simple private, self-hosted digital dashboard to keep your family organized and your data/lifestyle off the internet. ","pubDate":"2026-04-28T00:00:00.000Z","tags":["family-dashboard","local-app","personal-project","web-development"]},{"id":"hello-world-new-theme-new-vibe","title":"Hello, World. New Theme, New Vibe.","description":"Just vibe coded myself a new Astro theme for my website/blog. Here is how I built it.","pubDate":"2026-05-08T00:00:00.000Z","tags":["astro","ai coding","web development","theme design","generative ai"]},{"id":"how-to-install-lm-studio-and-run-gemma4-locally-for-private-llm-use","title":"How to Install LM Studio and Run Gemma 4 Locally for Private LLM Use","description":"A step-by-step guide to running LLMs on your own hardware using LM Studio and Google's Gemma 4 models for private, offline AI.","pubDate":"2026-05-08T00:00:00.000Z","tags":["local-llm","gemma4","run-llm-locally","llm-privacy","on-device-ai"]},{"id":"making-an-automated-weather-report-with-discord-updates-using-local-llm","title":"How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio","description":"Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows.","pubDate":"2026-06-14T00:00:00.000Z","tags":["AI automation","local llms","N8N","LM Studio","Workflow Automation"]},{"id":"new-blog-and-home-for-my-ideas","title":"New Blog & Home for Ideas","description":"Brief introduction of my new space for sharing and innovation. Follow me on my journey exploring new possibilities","pubDate":"2026-04-22T00:00:00.000Z","tags":["local-first apps","local llm","technology sharing","new blog","developer journey"]},{"id":"project-talk-blog-wiz-md-creating-useful-tools-to-help-my-flow","title":"Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow","description":"Removing Barriers for writing and publishing on my Astro blog. This is why I created a tool to update my Astro Blog.","pubDate":"2026-05-18T00:00:00.000Z","tags":["astro","markdown","vibe-coding","tool","local-first"]},{"id":"taking-control-how-gemma-4-powers-my-local-ai-ecosystem","title":"Taking Control - How Gemma 4 Powers My Local AI Ecosystem","description":"See how I use Gemma 4 locally. A look into powering tools like Open WebUI, n8n agents, and Chrome extensions on your own hardware.","pubDate":"2026-06-30T00:00:00.000Z","tags":["local-llm","gemma4","run-llm-locally","llm-privacy","on-device-ai"]},{"id":"vibe-coding-setup-may-2026-my-go-to-stack","title":"Vibe Coding Setup May 2026 - My Go-To Stack for AI Development","description":"Ditch the manual labor. See my 2026 Vibe Coding setup: How Gemini, OpenCode, and local LLMs let me build features fast, affordably, and privately.","pubDate":"2026-05-11T00:00:00.000Z","tags":["vibe-coding","ai-development","deepseek","gemini"]}];
+
+  const overlay = document.getElementById('mobile-panel-overlay')
+  const panel = document.getElementById('mobile-panel')
+  const closeBtn = document.getElementById('mobile-panel-close')
+  const searchForm = document.getElementById('mobile-search-form')
+  const searchInput = document.getElementById('mobile-search-input')
+  const defaultContent = document.getElementById('mobile-default-content')
+  const searchResults = document.getElementById('mobile-search-results')
+
+  const themeToggle = document.getElementById('mobile-theme-toggle')
+  const themeSun = document.getElementById('mobile-theme-icon-sun')
+  const themeMoon = document.getElementById('mobile-theme-icon-moon')
+  const themeLabel = document.getElementById('mobile-theme-label')
+
+  function setMobileTheme (dark) {
+    if (dark) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+      themeSun.classList.remove('hidden')
+      themeMoon.classList.add('hidden')
+      themeLabel.textContent = 'Light Mode'
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+      themeSun.classList.add('hidden')
+      themeMoon.classList.remove('hidden')
+      themeLabel.textContent = 'Dark Mode'
+    }
+  }
+
+  function syncMobileTheme () {
+    const d = localStorage.getItem('theme') === 'dark'
+    themeSun.classList.toggle('hidden', !d)
+    themeMoon.classList.toggle('hidden', d)
+    themeLabel.textContent = d ? 'Light Mode' : 'Dark Mode'
+  }
+  syncMobileTheme()
+  document.addEventListener('astro:page-load', syncMobileTheme)
+
+  themeToggle.addEventListener('click', function () {
+    const dark = document.documentElement.classList.contains('dark')
+    setMobileTheme(!dark)
+  })
+
+  function openPanel () {
+    overlay.classList.remove('opacity-0', 'pointer-events-none')
+    panel.classList.remove('translate-x-full')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closePanel () {
+    overlay.classList.add('opacity-0', 'pointer-events-none')
+    panel.classList.add('translate-x-full')
+    document.body.style.overflow = ''
+  }
+
+  function handleClick (e) {
+    const trigger = e.target.closest('[data-menu-trigger]')
+    if (trigger) {
+      e.stopPropagation()
+      openPanel()
+    }
+  }
+  function handleEscape (e) {
+    if (e.key === 'Escape') closePanel()
+  }
+
+  if (window.__mpHandlers) {
+    document.removeEventListener('click', window.__mpHandlers.click)
+    document.removeEventListener('keydown', window.__mpHandlers.keydown)
+  }
+  window.__mpHandlers = { click: handleClick, keydown: handleEscape }
+  document.addEventListener('click', handleClick)
+  document.addEventListener('keydown', handleEscape)
+
+  closeBtn.addEventListener('click', closePanel)
+  overlay.addEventListener('click', closePanel)
+
+  searchForm.addEventListener('submit', function (e) {
+    e.preventDefault()
+    const query = searchInput.value.trim().toLowerCase()
+    if (!query) {
+      clearMobileSearch()
+      return
+    }
+
+    const words = query.split(/\s+/)
+    const matches = postsData.filter(function (post) {
+    return words.every(function (word) {
+      return post.title.toLowerCase().includes(word) ||
+        post.description.toLowerCase().includes(word)
+    })
+  })
+
+    if (matches.length === 0) {
+      searchResults.innerHTML =
+        '<div class="space-y-4">' +
+        '<div class="flex items-center justify-between">' +
+        '<p class="text-sm text-ink/60">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
+        '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+        '</div>' +
+        '</div>'
+    } else {
+      let html = ''
+      html += '<div class="flex items-center justify-between mb-2">'
+      html += '<p class="text-sm text-ink/60">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+      html += '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>'
+      html += '</div>'
+
+      html += '<ul class="space-y-4">'
+      matches.forEach(function (post) {
+        html += '<li>' +
+          '<article>' +
+          '<time class="block text-xs text-ink/40 mb-1">' + new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</time>' +
+          '<a href="/blog/' + post.id + '/" class="text-sm font-serif text-ink no-underline hover:text-terracotta transition-colors">' + escapeHtml(post.title) + '</a>' +
+          '<p class="mt-1 text-xs text-ink/60 leading-relaxed">' + escapeHtml(post.description) + '</p>' +
+          '<a href="/blog/' + post.id + '/" class="mt-1 inline-block text-xs text-terracotta no-underline hover:opacity-80 transition-opacity">Read More →</a>' +
+          '</article>' +
+          '</li>'
+      })
+      html += '</ul>'
+
+      searchResults.innerHTML = html
+    }
+
+    defaultContent.classList.add('hidden')
+    searchResults.classList.remove('hidden')
+
+    searchResults.addEventListener('click', function (e) {
+      if (e.target.closest('[data-clear]')) clearMobileSearch()
+    })
+  })
+
+  function clearMobileSearch () {
+    searchInput.value = ''
+    searchResults.classList.add('hidden')
+    defaultContent.classList.remove('hidden')
+    searchResults.innerHTML = ''
+  }
+
+  function escapeHtml (str) {
+    if (!str) return ''
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+})();</script>  <article class="mx-auto max-w-[65ch] px-6 py-20"> <a href="/blog" class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6">
+← Back to Blog
+</a> <img src="/images/weather-workflow-discord-n8n.png" alt decoding="async" loading="lazy" width="730" height="399" class="w-full h-48 object-cover rounded-lg mb-8"> <header class="mb-12"> <h1 class="font-serif text-3xl font-semibold leading-tight"> How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio </h1> <div class="mt-4 flex items-center gap-4 text-sm text-ink/50"> <time> June 14, 2026 </time> <ul class="flex gap-2"> <li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors"> <a href="/blog/tags/AI%20automation/" class="no-underline text-inherit">#AI automation</a> </li><li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors"> <a href="/blog/tags/local%20llms/" class="no-underline text-inherit">#local llms</a> </li><li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors"> <a href="/blog/tags/N8N/" class="no-underline text-inherit">#N8N</a> </li><li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors"> <a href="/blog/tags/LM%20Studio/" class="no-underline text-inherit">#LM Studio</a> </li><li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors"> <a href="/blog/tags/Workflow%20Automation/" class="no-underline text-inherit">#Workflow Automation</a> </li> </ul> </div> </header> <div class="prose-custom"> <p>Have you ever wanted a personalized weather report sent directly to your Discord each morning?</p>
+<p>I did.</p>
+<p>And that’s why I built this workflow.</p>
+<p>Each morning, I get a beautiful weather report of our local beach <em>(with a cam snap shot)</em>. I enjoy seeing it each morning, plus it helped get me started into local LLMs and tools, this is why I wanted to share it with you.</p>
+<p>Whether you’re looking to build a new automation project or simply want to dive into the world of local LLMs and AI workflows, this guide is for you.</p>
+<p>I will walk you through setting up N8N and LM Studio to create this automated system, making it the perfect starting point for getting into AI automation.</p>
+<p><img src="/images/weather-report-discord.png" alt="Weather Report Discord Bot">
+<em>(Here is a screenshot of my weather report bot message in Discord)</em></p>
+<h2 id="lets-break-down-what-we-are-building">Let’s Break Down What We Are Building</h2>
+<p>We are building a fully automated system that fetches raw weather data, uses an LLM (from LM Studio) to format it into a readable report, and pushes the final output to a Discord message.</p>
+<p><strong>Overall you will learn how to</strong>:</p>
+<ul>
+<li>Obtain and utilize an API key</li>
+<li>Install and use the self-hosted n8n to create an automated workflow.</li>
+<li>Install and use LM Studio to download a LLM and host the server for local use.</li>
+<li>Create and setup a Discord Webhook URL</li>
+</ul>
+<h2 id="the-setup">The Setup</h2>
+<p>Let’s go over some of our required tools for the entire workflow. Later we will break down each tool so you can learn how to install and use each one.</p>
+<p><em>This setup is just an outline, so adjust it to how you see fit for your hardware.</em></p>
+<p><strong>Required Tools</strong>:</p>
+<ul>
+<li>N8N (Self-hosted or cloud instance)</li>
+<li>Docker (for the container n8n runs in)</li>
+<li>LM Studio (and the specific model you plan to use, e.g., I use Gemma4 4B QAT)</li>
+<li>Computer using a graphics card with at least 8GB VRAM (for Gemma4 4B QAT, you can also use smaller models if you have a smaller card)</li>
+<li>OpenWeatherMap API Key</li>
+<li>A Discord Webhook URL</li>
+</ul>
+<p>Let’s dive into the setup for each of the tools, then we will tie it all together to create the flow.</p>
+<h3 id="installing-docker">Installing Docker:</h3>
+<p>Docker is going to be used by n8n to provide a clean, isolated environment, and helps to avoid operating system and tooling incompatibilities as well as making database and environment management simpler.</p>
+<p>So let’s get that going first before we head over to n8n.</p>
+<p><strong>Step 1:</strong> Go to <a href="https://docs.docker.com/get-started/get-docker/">https://docs.docker.com/get-started/get-docker/</a> and follow the instructions on the screen for the specific operating system you have. This will install Docker Desktop. Docker Engine and Docker Compose will also come with it.</p>
+<p>Once you have Docker installed you are ready to move to the next step, installing n8n.</p>
+<h3 id="installing-n8n">Installing N8N</h3>
+<p><em>n8n is a workflow automation platform</em> that uses drag and drop nodes to speed up tasks you want to automate. Very useful for quick prototyping and full automation workflows.</p>
+<p>For this project we will be using the self hosted setup for n8n which is free to use.</p>
+<p><strong>Step 1</strong>: Head over to the Docker Installation instructions <a href="https://docs.n8n.io/hosting/installation/docker/">https://docs.n8n.io/hosting/installation/docker/</a> and follow the steps there. There is also a video guide to help if you prefer that over the written guide.</p>
+<p><strong>Step 2</strong>: If you have not already, the we need to start n8n. This is from the same page above and explains how to start n8n for the first time.</p>
+<p>From your terminal, run the following commands, replacing the <code>&#x3C;YOUR_TIMEZONE></code> placeholders with <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List">your timezone</a>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>docker volume create n8n_data</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>docker run -it --rm \</span></span>
+<span class="line"><span> --name n8n \</span></span>
+<span class="line"><span> -p 5678:5678 \</span></span>
+<span class="line"><span> -e GENERIC_TIMEZONE="&#x3C;YOUR_TIMEZONE>" \</span></span>
+<span class="line"><span> -e TZ="&#x3C;YOUR_TIMEZONE>" \</span></span>
+<span class="line"><span> -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \</span></span>
+<span class="line"><span> -e N8N_RUNNERS_ENABLED=true \</span></span>
+<span class="line"><span> -v n8n_data:/home/node/.n8n \</span></span>
+<span class="line"><span> docker.n8n.io/n8nio/n8n</span></span></code></pre>
+<p>This command creates a volume to store persistent data, downloads the required n8n image, and starts the container with the following settings:</p>
+<ul>
+<li>Maps and exposes port <code>5678</code> on the host.</li>
+<li>Sets the timezone for the container:
+<ul>
+<li>the <code>TZ</code> environment variable sets the system timezone to control what scripts and commands like <code>date</code> return.</li>
+<li>the <a href="https://docs.n8n.io/hosting/configuration/environment-variables/timezone-localization/"><code>GENERIC_TIMEZONE</code> environment variable</a> sets the correct timezone for schedule-oriented nodes like the <a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.scheduletrigger/">Schedule Trigger node</a>.</li>
+</ul>
+</li>
+<li>Enforces secure file permissions for the n8n configuration file.</li>
+<li>Enables <a href="https://docs.n8n.io/hosting/configuration/task-runners/">task runners</a>, the recommended way of executing tasks in n8n.</li>
+<li>Mounts the <code>n8n_data</code> volume to the <code>/home/node/.n8n</code> directory to persist your data across container restarts.</li>
+</ul>
+<p>Once running, you can access n8n by opening: <strong><a href="http://localhost:5678/">http://localhost:5678</a></strong></p>
+<p>Now when you start n8n next time you don’t have to start with the “docker volume create n8n_data” because it will already be made.</p>
+<p><strong>Here is my command to get n8n started, (note I am likely in a different time zone)</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>docker run -it --rm \</span></span>
+<span class="line"><span> --name n8n \</span></span>
+<span class="line"><span> -p 5678:5678 \</span></span>
+<span class="line"><span> -e GENERIC_TIMEZONE="America/Los_Angeles" \</span></span>
+<span class="line"><span> -e TZ="America/Los_Angeles" \</span></span>
+<span class="line"><span> -e N8N_BLOCK_FS_WRITE_ACCESS=false \</span></span>
+<span class="line"><span> -e N8N_RESTRICT_FILE_ACCESS_TO="/data" \</span></span>
+<span class="line"><span> -e N8N_RUNNERS_ENABLED=true \</span></span>
+<span class="line"><span> -v n8n_data:/home/node/.n8n \</span></span>
+<span class="line"><span> docker.n8n.io/n8nio/n8n</span></span></code></pre>
+<p><em>You might need to run these commands with sudo depending on your OS and setup.</em></p>
+<p>Now you should have both Docker and n8n all setup and running, congrats!</p>
+<p>If you ran into an issue, don’t forget you can always ask AI to help or refer to the guides.</p>
+<p>Let’s move on the installing LM Studio and getting our local LLM running.</p>
+<h3 id="installing-lm-studio--local-llm">Installing LM Studio &#x26; Local LLM</h3>
+<p>LM Studio is a great way to get started running local LLMs at home on your laptop or desktop. It gives you an easy to user interface as well as guidance on which models will fit on your hardware.</p>
+<p>LM Studio was the first software I started using to run local LLMs at home and it helped me build confidence to experiment and dive deeper.</p>
+<p>Okay, let’s get LM Studio installed.</p>
+<p><strong>Step 1</strong>: Head over to <a href="https://lmstudio.ai/download">https://lmstudio.ai/download</a> and download the correct software for your computer. I am on Linux Mint so I installed the .deb for Linux.</p>
+<p><strong>Step 2</strong>: Now that you have LM Studio installed go ahead and open it so we can install our first large language model to work with. For this tutorial, I will be using Gemma4 4B it QAT <em>(4B is the amount of billions of parameters the model has, it means the model is instruction tuned, and QAT is the newer Quantization-Aware Training)</em>, it’s what I currently use on my system to power my workflows and get quick answers from.</p>
+<p>It’s lightweight, fast, and efficient and easily fits on a 8GB VRAM card.</p>
+<p>Click on the <strong>Model Search</strong> button on the left sidebar, this will open the search box where you can search for a model.</p>
+<p><strong>And paste in the text:</strong>
+<code>lmstudio-community/gemma-4-E4B-it-QAT-GGUF</code></p>
+<p><img src="/images/lm-studio-model-search.png" alt="LM Studio Model Search"></p>
+<p>Download the model and once it’s finished we can begin loading the model.</p>
+<p><strong>Step 3</strong>: Let’s load the model. Click <strong>Developer</strong> tab (if you don’t see it you might need to enable it in settings), on the left sidebar.</p>
+<p>Then click the blue <strong>+ Load Model</strong> button, you will get a screen like the one below and just click on the model, in my case it’s the first model in the list.</p>
+<p>LM Studio will then begin to load the model with optimized settings it feels that are best for your hardware.</p>
+<p><img src="/images/load-model-lm-studio.png" alt="LM Studio Load Model"></p>
+<p><strong>Step 4</strong>: We can test that the model is working now by going to the <strong>Chat</strong> tab on the left sidebar.</p>
+<p>At the top of the application you will see <strong>“Select a model to load”</strong>, click on that and select your model just like we did in the previous step.</p>
+<p>This will essentially load the model for chat so we can test that it’s working.</p>
+<p><img src="/images/select-model-chat-lm-studio.png" alt="LM Studio Select Model"></p>
+<p>Click the <strong>New Chat</strong> button and then ask a question to see the LLMs response, if we got a response back we are ready to move on.</p>
+<p>If the model failed to load then you might not have enough VRAM to load the model.</p>
+<p>In that case you can try to run a smaller model or work on tuning the models config a bit before it loads. LM Studio will try to do this automatically for you.</p>
+<p><strong>Step 5</strong>: Starting the local server so other apps like n8n can see and communicate with our LLM.</p>
+<p>Head back to the <strong>Developer</strong> tab and make sure to load your model first by clicking the blue <strong>+ Load Model</strong> button.</p>
+<p>Once, your model is loaded we can now start the server.</p>
+<p><img src="/images/start-server-lm-studio.png" alt="LM Studio Server Switch"></p>
+<p>Click on the toggle button where it says <strong>Status: Stopped</strong>.</p>
+<p>This will turn on your local server and the LLM is now reachable through compatible endpoints.</p>
+<p>Your local server will now be running on: <a href="http://localhost:1234/">http://localhost:1234/</a></p>
+<p>The local LLM is now ready to listen to requests coming from other applications like n8n.</p>
+<p>Plus, you just got a locall LLM running your own hardware locally, that’s an awesome feeling knowing your data is staying local.</p>
+<p>We are almost done with everything we need for the workflow.</p>
+<p>Now, we just have to get the weather API key, create the Discord webhook URL, and then put the workflow together.</p>
+<p>Almost there, you got this!</p>
+<h3 id="setting-up-the-openweathermap-api-key">Setting up the OpenWeatherMap API Key</h3>
+<p><strong>OpenWeatherMap</strong> is an awesome service that lets you do API calls to receive weather reports. It’s free to use with very generous usage limits; allowing up to 50 calls per minute and 1 million calls per month.</p>
+<p><strong>Step 1</strong>: Sign up with an account to get your API key. Visit <a href="https://openweathermap.org/">https://openweathermap.org/</a> and click the orange “Get API Key” button.</p>
+<p>This will lead you to a sign in form and if you don’t have an account just create one.</p>
+<p><strong>Step 2</strong>: Once inside the account click on the <strong>API keys</strong> tab.</p>
+<p>This will lead you to a page where you can make a new API key.</p>
+<p>Under the <strong>Create key</strong> label type a name for your key (can be anything) and then click <strong>Generate</strong>.</p>
+<p>You will now have your API key ready for use in the workflow.</p>
+<h3 id="setting-up-the-discord-webhook-url">Setting up the Discord Webhook URL</h3>
+<p>If you have made it this far congratulations!</p>
+<p>That was a lot to set up. You have Docker Installed, running a self hosted version of n8n, running your own LLM server through LM Studio to talk to your local LLM, and you have your Weather API Key in hand!</p>
+<p>Let’s get this bit of configuration out of the way and then we can begin setting up the workflow so we can get everything automated.</p>
+<p><strong>Step 1</strong>:  Go to a server on Discord where you want to the message to be sent to and make sure that you also have a channel to send the message.</p>
+<p>Click on the <strong>server name</strong> and then click “<strong>Server Settings</strong>”.</p>
+<p>This will open the servers settings and under the <strong>Apps</strong> section click <strong>Integrations</strong>.</p>
+<p>And finally, choose <strong>Webhooks</strong>.</p>
+<p><img src="/images/webhook-discord.png" alt="Create Webhook Discord"></p>
+<p>Once you see the Webhooks screen you can click the blue “<strong>New Webhook</strong>” button to create a new Webhook.</p>
+<p>Enter in the name you want your Webhook to be and then choose the channel where it will post to.</p>
+<p>Then click <strong>Copy Webhook URL</strong> button.</p>
+<p><em>You can even add a custom photo that will be used as the Discord profile icon for the message.</em></p>
+<p><img src="/images/edit-webhook.png" alt="Edit Webhook Discord"></p>
+<p>Great! Now we have everything we need for the setup and workflow on n8n.</p>
+<p>Let’s get started!</p>
+<h2 id="setting-up-n8n-the-workflow">Setting Up N8N: The Workflow</h2>
+<p>Here is where it all comes together!</p>
+<p>Unlocking the power of your local LLM and automatons.</p>
+<p><strong>The Flow</strong>:
+Schedule Trigger ➡️  AI Agent using OpenWeatherMap tool ➡️  Discord Node</p>
+<ul>
+<li>For the weather data we will be using OpenWeatherMap where you can get a free API key.</li>
+<li>The automation workflow will be handled locally using self hosted n8n</li>
+<li>And LM Studio will the software hosting the LLM locally so we can format the data nicely.</li>
+</ul>
+<p><strong>Here is an example of the completed workflow:</strong>
+<img src="/images/weather-workflow-discord-n8n-1.png" alt="Weather Bot N8N Workflow"></p>
+<p><strong>Step 1</strong>: Let’s start by first opening up n8n which should be at <a href="http://localhost:5678/">http://localhost:5678/</a></p>
+<p>Click on the orange button labeled “<strong>Create Workflow</strong>”</p>
+<h3 id="trigger-manually-node">Trigger Manually Node</h3>
+<p><strong>Step 2:</strong> We can now insert our first node. For now since we will just be testing the workflow we are going to use the “<strong>Trigger manually</strong>” node.</p>
+<ul>
+<li>Click the + sign to <strong>add a node</strong> <em>(or right-click on the canvas and click add node)</em> and find the <strong>Trigger Manually</strong> node.</li>
+</ul>
+<p>Later you can replace it with a “<strong>On a schedule</strong>” node which will execute at a specific time.</p>
+<h3 id="ai-agent-node">AI Agent Node</h3>
+<p><strong>Step 3</strong>: Next add the “<strong>AI Agent Node</strong>”.</p>
+<ul>
+<li>
+<p>Double-click to open the <strong>AI Agent</strong> node so we can update so information.</p>
+</li>
+<li>
+<p>First, using the drop down <strong>Source for Prompt (User Message)</strong> select “<strong>Define Below</strong>”. This will let you enter a user prompt that will be sent to the LLM.</p>
+</li>
+<li>
+<p>Next, In the <strong>Prompt (User Message)</strong> field enter the following prompt.</p>
+</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Step 1: Data Retrieval</span></span>
+<span class="line"><span>Call the "OpenWeatherMap tool" to give me the weather report.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Step 2: Formatting Rules</span></span>
+<span class="line"><span>Create a report using the following structure. Do not include the bracketed labels in the final text; only the values.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Greeting: Start with a natural greeting and a 1-sentence summary of the conditions.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Structure: Use the following Markdown template exactly:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Current Weather Report:</span></span>
+<span class="line"><span>Condition: [Description] [Emoji]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Temperature: [Value]°F</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Feels Like: [Value]°F</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Humidity: [Value]% 💧</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Wind Speed: [Value] m/s 💨</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Step 3: Quality Control</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Remove all placeholder text or "Notes" from the final response.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Ensure the "Condition" emoji matches the weather description.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Final Action: Deliver the formatted report directly to the user.</span></span></code></pre>
+<p>This Prompt (user message) is used to help let the LLM know what we are looking for as far as the response and output. We will give even more guidance next with the system message.</p>
+<p>Step 4: In the <strong>System Message</strong> field enter the following:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Role: You are a specialized weather reporting agent. You excel at translating raw JSON data from tools into professional, user-friendly reports.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Role Objective: Generate a weather report using ONLY data retrieved from the 'OpenWeatherMap tool' when prompted by the user.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Constraints: No Meta-Talk: Do not include instructions, placeholders, or technical warnings (e.g., "Replace your API ID") in the final output.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># No Filler: Provide only the greeting and the weather data. Do not explain your process.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Units: Ensure temperatures are displayed in the unit requested by the user. If the tool returns Kelvin, convert it to Celsius or Fahrenheit before outputting.</span></span></code></pre>
+<p>This will help keep the LLM in line with what we are asking for in the user prompt.</p>
+<p>Go ahead and exit the AI Agent node for now, we need to hook up the chat model and tool next.</p>
+<p><strong>Step 5</strong>: Below the AI Agent you will see a <strong>+</strong> button and <strong>Chat Model</strong>.</p>
+<ul>
+<li>Click the <strong>+</strong> and then type in <strong>OpenAI</strong> and click on “<strong>OpenAI Chat Model</strong>” node.</li>
+</ul>
+<p>You should now see the node parameters and settings.</p>
+<ul>
+<li>Under “<strong>Credential</strong>” click ”<strong>+ Create new credential</strong>”</li>
+</ul>
+<p><img src="/images/openai-n8n-settings.png" alt="OpenAI N8N Settings"></p>
+<ul>
+<li>
+<p>For <strong>API Key</strong>, you can enter anything here since you are using LM Studio locally, for example just enter: weather</p>
+</li>
+<li>
+<p>Next enter the <strong>Base URL</strong> which is the OpenAI endpoint to contact the model: <a href="http://localhost:8080/v1">http://localhost:8080/v1</a></p>
+</li>
+<li>
+<p>Click the orange, <strong>Save</strong> button.</p>
+</li>
+</ul>
+<p>Now you should see the model that you loaded in LM Studio.</p>
+<ul>
+<li>Go ahead a pick the model from the list.</li>
+</ul>
+<p><em>Note: If you don’t see it, make sure that you loaded the model and have the server on. You might need to jump back up a few steps .</em></p>
+<p><strong>Step 6</strong>: Let’s do the same thing for “<strong>Tool</strong>” on the AI Agent.</p>
+<ul>
+<li>After clicking on the + button go ahead and type in “Open” an choose the tool “<strong>OpenWeatherMap Tool</strong>”</li>
+</ul>
+<p>This should open the tool parameters and settings, and we need to setup an account credentials just like we did for OpenAI.</p>
+<ul>
+<li>
+<p>Click on ”<strong>+ Create new credential</strong>” and input your <strong>Access token</strong> (API Key) from OpenWeatherMap here.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong> to return back to the Parameters and settings.</p>
+</li>
+</ul>
+<p>In the OpenWeatherMap node be sure to set:</p>
+<ul>
+<li><strong>Tool Description</strong>: Set Automatically</li>
+<li><strong>Operation</strong>: Current Weather</li>
+<li><strong>Format</strong>: Imperial (depending if you want Celsius or Fahrenheit)</li>
+<li><strong>Location Selection</strong>: I chose City ID (you can get your city ID by searching your city on OpenWeatherMap and it will be the numbers trailing in the URL eg. <a href="https://openweathermap.org/city/5746545">https://openweathermap.org/city/5746545</a>)</li>
+<li><strong>Language</strong>: en</li>
+</ul>
+<p><img src="/images/openweather-account-n8n.png" alt="Setting Up OpenWeatherMap API"></p>
+<p>Now your workflow should look like the image below.</p>
+<p>We are about ready to send the formatted message from the AI agent to Discord.</p>
+<p><img src="/images/weather-bot-flow-1.png" alt="Weather Bot Flow N8N"></p>
+<h3 id="adding-the-discord-node">Adding the Discord Node</h3>
+<p>Now that the AI Agent is all setup we can focus on the discord node.</p>
+<p><strong>Step 7</strong>: On your workflow click the <strong>add a node</strong>, search for <strong>Discord</strong>.</p>
+<p>Once added we are going to need to fill out the parameters just like the previous nodes.</p>
+<ul>
+<li><strong>Connecting Type</strong>: Webhook</li>
+<li><strong>Credential for Discord Webhook:</strong> Add a new credential with your <strong>Discord Webhook URL</strong> and <strong>Save</strong>.</li>
+<li><strong>Operation</strong>: Send a Message</li>
+<li><strong>Message</strong>:  {{ $json.output }} <em>(this is the output from the AI node)</em></li>
+</ul>
+<p><img src="/images/discord-n8n.png" alt="Webhook for Discord on N8N"></p>
+<h2 id="testing-the-workflow">Testing the Workflow</h2>
+<p><img src="/images/weather-workflow-discord-n8n.png" alt="Weather Bot N8N Workflow"></p>
+<p>Go ahead and click the orange “<strong>Execute Workflow</strong>” button, this will trigger the script to start from the first node which is our AI Agent.</p>
+<p>You did it! The workflow should now have everything you need for the AI to fetch the weather using its tool and put it in a nicely formatted message for your Discord channel!</p>
+<p>If this was your first workflow, congrats! It was a lot to get this far but it just gets easier with practice and time.</p>
+<p>Try replacing the first node with a schedule node to get a notification each morning, that’s what I do along with attaching a recent snapshot of the beach that is fetched from a webcam.</p>
+<p>Be creative, that’s what building is all about!</p>
+<p>Thanks for sticking it out and I hope this inspires you to build and share your own projects.</p>
+<p>~ Tarlow</p> </div> <div class="mt-12 flex items-center gap-3 border-t border-ink/10 pt-6"> <span class="text-sm text-ink/50 font-sans mr-1">Share</span> <a href="https://bsky.app/intent/compose?text=How%20To%20Make%20An%20Automated%20Weather%20Report%20with%20Discord%20Updates%20Using%20N8N%20and%20LM%20Studio https%3A%2F%2Ftarlow.space%2Fblog%2Fmaking-an-automated-weather-report-with-discord-updates-using-local-llm%2F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta no-underline transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" class="h-3.5 w-auto" fill="currentColor"> <path d="M135.72 44.03C202.216 93.951 274.842 195.287 300 249.844c25.158-54.557 97.784-155.893 164.28-205.814C512.227 1.244 600-26.116 600 59.393c0 19.285-11.292 161.953-17.918 185.119-23.002 80.367-106.823 100.882-181.354 88.453 130.324 22.186 163.455 95.542 91.884 168.936-135.943 139.324-195.473-34.988-210.777-79.592-2.824-8.256-4.147-12.115-4.147-8.772 0-3.343-1.323-.516-4.147 8.772-15.304 44.604-74.834 218.916-210.777 79.592-71.571-73.394-38.44-146.75 91.884-168.936-74.531 12.429-158.352-8.086-181.354-88.453C11.292 221.346 0 78.678 0 59.393 0-26.116 87.773-1.244 135.72 44.03Z"></path> </svg>
+Bluesky
+</a> <a href="https://twitter.com/intent/tweet?text=How%20To%20Make%20An%20Automated%20Weather%20Report%20with%20Discord%20Updates%20Using%20N8N%20and%20LM%20Studio%20https%3A%2F%2Ftarlow.space%2Fblog%2Fmaking-an-automated-weather-report-with-discord-updates-using-local-llm%2F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta no-underline transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30"> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path> </svg>
+X
+</a> <button id="copy-link-btn" class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30 cursor-pointer bg-transparent"> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path> <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> <span id="copy-link-label">Copy link</span> </button> </div> <script>
+  (function () {
+    const btn = document.getElementById('copy-link-btn')
+    const label = document.getElementById('copy-link-label')
+    if (!btn || !label) return
+
+    btn.addEventListener('click', async function () {
+      try {
+        await navigator.clipboard.writeText(window.location.href)
+        label.textContent = 'Copied!'
+        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
+      } catch {
+        label.textContent = 'Failed'
+        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
+      }
+    })
+  })()
+</script>  </article> <script>
+  (function () {
+    if (window.__imageZoomInit) return
+    window.__imageZoomInit = true
+    const style = document.createElement('style')
+    style.textContent = 'article img{cursor:zoom-in}'
+    document.head.appendChild(style)
+
+    document.addEventListener('click', function (e) {
+      const img = e.target.closest('article img')
+      if (!img) return
+
+      const src = img.getAttribute('src')
+      const alt = img.getAttribute('alt') || ''
+
+      const overlay = document.createElement('div')
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s ease;'
+
+      const closeBtn = document.createElement('button')
+      closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+      closeBtn.style.cssText = 'position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;padding:0.5rem;z-index:1;border-radius:4px;'
+      closeBtn.addEventListener('mouseenter', function () { closeBtn.style.background = 'rgba(255,255,255,0.1)' })
+      closeBtn.addEventListener('mouseleave', function () { closeBtn.style.background = 'transparent' })
+      overlay.appendChild(closeBtn)
+
+      const fullImg = document.createElement('img')
+      fullImg.src = src
+      fullImg.alt = alt
+      fullImg.style.cssText = 'max-width:95vw;max-height:95vh;object-fit:contain;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,0.4);'
+      overlay.appendChild(fullImg)
+
+      document.body.appendChild(overlay)
+      document.body.style.overflow = 'hidden'
+
+      requestAnimationFrame(function () { overlay.style.opacity = '1' })
+
+      function close() {
+        overlay.style.opacity = '0'
+        document.body.style.overflow = ''
+        setTimeout(function () { overlay.remove() }, 200)
+      }
+
+      overlay.addEventListener('click', function (ev) {
+        if (ev.target.tagName !== 'IMG') close()
+      })
+
+      document.addEventListener('keydown', function handler(ev) {
+        if (ev.key === 'Escape') {
+          close()
+          document.removeEventListener('keydown', handler)
+        }
+      })
+    })
+  })()
+</script> <script>
+  (function () {
+    if (window.__codeCopyInit) return
+    window.__codeCopyInit = true
+
+    document.addEventListener('astro:page-load', init)
+    init()
+
+    function init() {
+      document.querySelectorAll('.prose-custom pre').forEach((pre) => {
+        if (pre.querySelector('.code-copy-btn')) return
+
+        const btn = document.createElement('button')
+        btn.className = 'code-copy-btn'
+        btn.textContent = 'Copy'
+        Object.assign(btn.style, {
+          position: 'absolute',
+          top: '0.5rem',
+          right: '0.5rem',
+          fontSize: '0.75rem',
+          lineHeight: '1',
+          padding: '0.3rem 0.6rem',
+          borderRadius: '4px',
+          border: '1px solid rgba(192,87,70,0.2)',
+          background: 'rgba(249,249,248,0.9)',
+          color: '#C05746',
+          cursor: 'pointer',
+          opacity: '0',
+          transition: 'opacity 0.15s ease',
+          fontFamily: 'Inter, sans-serif',
+        })
+
+        pre.style.position = 'relative'
+        pre.appendChild(btn)
+
+        let hideTimer
+
+        pre.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimer)
+          btn.style.opacity = '1'
+        })
+        pre.addEventListener('mouseleave', () => {
+          hideTimer = window.setTimeout(() => { btn.style.opacity = '0' }, 300)
+        })
+
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')
+          const text = code ? code.textContent ?? '' : pre.textContent ?? ''
+          try {
+            await navigator.clipboard.writeText(text)
+            btn.textContent = 'Copied!'
+            btn.style.background = '#C05746'
+            btn.style.color = '#fff'
+            btn.style.borderColor = '#C05746'
+            setTimeout(() => {
+              btn.textContent = 'Copy'
+              btn.style.background = 'rgba(249,249,248,0.9)'
+              btn.style.color = '#C05746'
+              btn.style.borderColor = 'rgba(192,87,70,0.2)'
+            }, 2000)
+          } catch {
+            btn.textContent = 'Failed'
+            setTimeout(() => { btn.textContent = 'Copy' }, 2000)
+          }
+        })
+      })
+    }
+  })()
+</script>  <button id="back-to-top" class="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-paper shadow-md opacity-0 pointer-events-none transition-opacity duration-200 hover:opacity-90" aria-label="Back to top"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <polyline points="18 15 12 9 6 15"></polyline> </svg> </button> <script>
+  (function () {
+    const btn = document.getElementById('back-to-top')
+    if (!btn) return
+
+    function update() {
+      if (window.scrollY > 400) {
+        btn.classList.remove('opacity-0', 'pointer-events-none')
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none')
+      }
+    }
+
+    document.addEventListener('astro:page-load', function () {
+      update()
+      window.addEventListener('scroll', update, { passive: true })
+    })
+
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  })()
+</script> </div> </body></html>
