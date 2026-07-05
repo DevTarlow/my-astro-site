@@ -1,5 +1,5 @@
 ---
-title: 'Sunshine Family Dashboard'
+title: 'Sunshine Family Dashboard - Web App'
 description: 'A private, self-hosted digital dashboard to keep your family organized — meal planning, recipes, calendar, todos, grocery lists, and more — all offline.'
 image: '/images/sunshine-family-dashboard-screenshot.jpg'
 github: 'https://github.com/DevTarlow/sunshine-family-dashboard'

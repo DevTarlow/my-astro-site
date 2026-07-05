@@ -1,5 +1,5 @@
 ---
-title: Blog Wiz MD
+title: Blog Wiz MD - Electron App
 pubDate: 2026-05-18T00:00:00.000Z
 draft: false
 category: Development

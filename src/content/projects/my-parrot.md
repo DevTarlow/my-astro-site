@@ -1,5 +1,5 @@
 ---
-title: 'My Parrot'
+title: 'My Parrot - Web App'
 description: 'A local-first text-to-speech web UI powered by Kokoro-82M. Type text, pick a voice, and get instant synthesized speech with real-time streaming — no cloud, no limits, no subscriptions.'
 image: '/images/my-parrot-app-screenshot-top.png'
 github: 'https://github.com/DevTarlow/my-parrot'
