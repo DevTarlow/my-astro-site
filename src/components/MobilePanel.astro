@@ -182,8 +182,7 @@ const postsData = posts.map(p => ({
   }
 
   function syncMobileTheme () {
-    const t = localStorage.getItem('theme')
-    const d = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const d = localStorage.getItem('theme') === 'dark'
     themeSun.classList.toggle('hidden', !d)
     themeMoon.classList.toggle('hidden', d)
     themeLabel.textContent = d ? 'Light Mode' : 'Dark Mode'

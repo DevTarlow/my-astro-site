@@ -97,8 +97,7 @@ const links = [
     }
 
     function syncIcons () {
-      const t = localStorage.getItem('theme')
-      const d = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      const d = localStorage.getItem('theme') === 'dark'
       sun.classList.toggle('hidden', !d)
       moon.classList.toggle('hidden', d)
     }
