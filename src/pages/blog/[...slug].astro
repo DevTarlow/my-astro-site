@@ -6,6 +6,7 @@ import ContentImage from '../../components/ContentImage.astro'
 import ImageZoom from '../../components/ImageZoom.astro'
 import CodeCopy from '../../components/CodeCopy.astro'
 import RelatedPosts from '../../components/RelatedPosts.astro'
+import ShareButtons from '../../components/ShareButtons.astro'
 import { getPublicBlog, getRelatedPosts } from '../../lib/posts'
 
 export async function getStaticPaths() {
@@ -72,6 +73,7 @@ const related = getRelatedPosts(post, allPosts)
     <div class="prose-custom">
       <Content />
     </div>
+    <ShareButtons title={post.data.title} />
     <RelatedPosts posts={related} />
   </article>
   <ImageZoom />

@@ -1,0 +1,63 @@
+---
+const url = Astro.url
+const title = Astro.props.title as string | undefined
+const pageUrl = `${url.protocol}//${url.host}${url.pathname}`
+---
+
+<div class="mt-12 flex items-center gap-3 border-t border-ink/10 pt-6">
+  <span class="text-sm text-ink/50 font-sans mr-1">Share</span>
+
+  <a
+    href={`https://bsky.app/intent/compose?text=${encodeURIComponent(title ?? '')} ${encodeURIComponent(pageUrl)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta no-underline transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" class="h-3.5 w-auto" fill="currentColor">
+      <path d="M135.72 44.03C202.216 93.951 274.842 195.287 300 249.844c25.158-54.557 97.784-155.893 164.28-205.814C512.227 1.244 600-26.116 600 59.393c0 19.285-11.292 161.953-17.918 185.119-23.002 80.367-106.823 100.882-181.354 88.453 130.324 22.186 163.455 95.542 91.884 168.936-135.943 139.324-195.473-34.988-210.777-79.592-2.824-8.256-4.147-12.115-4.147-8.772 0-3.343-1.323-.516-4.147 8.772-15.304 44.604-74.834 218.916-210.777 79.592-71.571-73.394-38.44-146.75 91.884-168.936-74.531 12.429-158.352-8.086-181.354-88.453C11.292 221.346 0 78.678 0 59.393 0-26.116 87.773-1.244 135.72 44.03Z"/>
+    </svg>
+    Bluesky
+  </a>
+
+  <a
+    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent((title ?? '') + ' ' + pageUrl)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta no-underline transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+    X
+  </a>
+
+  <button
+    id="copy-link-btn"
+    class="inline-flex items-center gap-1.5 text-xs text-ink/50 hover:text-terracotta transition-colors border border-ink/10 rounded px-2.5 py-1.5 hover:border-terracotta/30 cursor-pointer bg-transparent"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+    </svg>
+    <span id="copy-link-label">Copy link</span>
+  </button>
+</div>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById('copy-link-btn')
+    const label = document.getElementById('copy-link-label')
+    if (!btn || !label) return
+
+    btn.addEventListener('click', async function () {
+      try {
+        await navigator.clipboard.writeText(window.location.href)
+        label.textContent = 'Copied!'
+        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
+      } catch {
+        label.textContent = 'Failed'
+        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
+      }
+    })
+  })()
+</script>

@@ -1,0 +1,33 @@
+<button
+  id="back-to-top"
+  class="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-paper shadow-md opacity-0 pointer-events-none transition-opacity duration-200 hover:opacity-90"
+  aria-label="Back to top"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById('back-to-top')
+    if (!btn) return
+
+    function update() {
+      if (window.scrollY > 400) {
+        btn.classList.remove('opacity-0', 'pointer-events-none')
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none')
+      }
+    }
+
+    document.addEventListener('astro:page-load', function () {
+      update()
+      window.addEventListener('scroll', update, { passive: true })
+    })
+
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  })()
+</script>
