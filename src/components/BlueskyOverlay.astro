@@ -25,6 +25,7 @@
 </div>
 
 <script is:inline data-astro-rerun>
+  (function () {
   const overlay = document.getElementById('bluesky-overlay')
   const content = document.getElementById('bluesky-content')
 
@@ -239,4 +240,5 @@
       content.innerHTML = '<p class="text-center text-red-500 py-12">Failed to load Bluesky posts. Try again later.</p>'
     }
   }
+  })()
 </script>
