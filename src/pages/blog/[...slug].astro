@@ -4,7 +4,9 @@ import { render } from 'astro:content'
 import '../../styles/prose.css'
 import ContentImage from '../../components/ContentImage.astro'
 import ImageZoom from '../../components/ImageZoom.astro'
-import { getPublicBlog } from '../../lib/posts'
+import CodeCopy from '../../components/CodeCopy.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
+import { getPublicBlog, getRelatedPosts } from '../../lib/posts'
 
 export async function getStaticPaths() {
   const posts = await getPublicBlog()
@@ -20,6 +22,8 @@ if (!post) {
 }
 
 const { Content } = await render(post)
+const allPosts = await getPublicBlog()
+const related = getRelatedPosts(post, allPosts)
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} image={post.data.featuredimage} ogType="article">
@@ -68,8 +72,10 @@ const { Content } = await render(post)
     <div class="prose-custom">
       <Content />
     </div>
+    <RelatedPosts posts={related} />
   </article>
   <ImageZoom />
+  <CodeCopy />
 </BaseLayout>
 
 

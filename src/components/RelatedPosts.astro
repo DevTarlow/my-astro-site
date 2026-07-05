@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { excerpt } from '../lib/excerpt'
+
+export interface Props {
+  posts: CollectionEntry<'blog'>[]
+}
+
+const { posts } = Astro.props
+---
+
+{
+  posts.length > 0 && (
+    <section class="mt-16 border-t border-ink/10 pt-10">
+      <h2 class="font-serif text-xl font-semibold mb-6">Related Posts</h2>
+      <ul class="space-y-6">
+        {
+          posts.map((post) => (
+            <li>
+              <article>
+                <time class="block text-xs text-ink/40 mb-1">
+                  {post.data.pubDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </time>
+                <a
+                  href={`/blog/${post.id}/`}
+                  class="font-serif text-lg text-ink no-underline hover:text-terracotta transition-colors"
+                >
+                  {post.data.title}
+                </a>
+                <p class="mt-1 text-sm text-ink/60 leading-relaxed">
+                  {excerpt(post.body ?? '', 200)}
+                </p>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <ul class="flex gap-2 mt-2">
+                    {post.data.tags.slice(0, 3).map((tag) => (
+                      <li class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded">
+                        <a href={`/blog/tags/${encodeURIComponent(tag)}/`} class="no-underline text-inherit">#{tag}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  )
+}
