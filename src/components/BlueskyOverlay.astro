@@ -1,6 +1,6 @@
 <div
   id="bluesky-overlay"
-  class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-ink/60 opacity-0 pointer-events-none transition-opacity duration-300"
+  class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 dark:bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300"
 >
   <div class="relative mt-20 mb-20 w-full max-w-[600px] rounded-lg bg-paper p-6 shadow-xl">
     <div class="flex items-center justify-between border-b border-terracotta/10 pb-4">
@@ -207,9 +207,14 @@
   overlay?.addEventListener('click', function (e) {
     if (e.target === overlay) closeOverlay()
   })
-  document.addEventListener('keydown', function (e) {
+  function handleBlueskyEscape (e) {
     if (e.key === 'Escape') closeOverlay()
-  })
+  }
+  if (window.__bskyHandlers) {
+    document.removeEventListener('keydown', window.__bskyHandlers.keydown)
+  }
+  window.__bskyHandlers = { keydown: handleBlueskyEscape }
+  document.addEventListener('keydown', handleBlueskyEscape)
 
   async function loadPosts () {
     content.innerHTML = '<p class="text-center text-ink/50 py-12">Loading...</p>'

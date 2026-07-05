@@ -10,7 +10,7 @@ export interface Props {
 const { project } = Astro.props
 ---
 
-<article class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] flex flex-col rounded-lg border border-terracotta/10 bg-white/50 p-4 hover:shadow-sm transition-shadow">
+<article   class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] flex flex-col rounded-lg border border-terracotta/10 bg-white/50 dark:bg-white/5 p-4 hover:shadow-sm transition-shadow">
   {
     project.data.image && (
       <a href={`/projects/${project.id}/`}>

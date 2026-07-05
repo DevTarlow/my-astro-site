@@ -1,5 +1,7 @@
 <script is:inline>
   (function () {
+    if (window.__imageZoomInit) return
+    window.__imageZoomInit = true
     const style = document.createElement('style')
     style.textContent = 'article img{cursor:zoom-in}'
     document.head.appendChild(style)

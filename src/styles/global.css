@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-paper: 249 249 248;
+  --color-ink: 26 26 26;
+}
+
+html.dark {
+  --color-paper: 13 13 13;
+  --color-ink: 245 245 245;
+}
