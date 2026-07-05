@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -11,7 +15,6 @@ jobs:
       contents: read
       pages: write
       id-token: write
-      actions: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
