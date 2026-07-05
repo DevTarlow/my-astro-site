@@ -24,13 +24,9 @@
   </div>
 </div>
 
-<script>
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-nocheck
+<script is:inline data-astro-rerun>
   const overlay = document.getElementById('bluesky-overlay')
   const content = document.getElementById('bluesky-content')
-  const closeBtn = document.getElementById('bluesky-close')
-  const trigger = document.querySelector('[data-bluesky-trigger]')
 
   let loaded = false
 
@@ -202,18 +198,21 @@
     document.body.style.overflow = ''
   }
 
-  trigger?.addEventListener('click', open)
-  closeBtn?.addEventListener('click', closeOverlay)
-  overlay?.addEventListener('click', function (e) {
-    if (e.target === overlay) closeOverlay()
-  })
-  function handleBlueskyEscape (e) {
-    if (e.key === 'Escape') closeOverlay()
-  }
   if (window.__bskyHandlers) {
+    document.removeEventListener('click', window.__bskyHandlers.click)
     document.removeEventListener('keydown', window.__bskyHandlers.keydown)
   }
-  window.__bskyHandlers = { keydown: handleBlueskyEscape }
+  const handleBlueskyClick = function (e) {
+    const target = e.target
+    if (target.closest('[data-bluesky-trigger]')) { open(); return }
+    if (target.closest('#bluesky-close')) { closeOverlay(); return }
+    if (overlay && e.target === overlay) { closeOverlay(); return }
+  }
+  const handleBlueskyEscape = function (e) {
+    if (e.key === 'Escape') closeOverlay()
+  }
+  window.__bskyHandlers = { click: handleBlueskyClick, keydown: handleBlueskyEscape }
+  document.addEventListener('click', handleBlueskyClick)
   document.addEventListener('keydown', handleBlueskyEscape)
 
   async function loadPosts () {

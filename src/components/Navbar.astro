@@ -76,9 +76,8 @@ const links = [
   </button>
 </nav>
 
-<script is:inline>
+<script is:inline data-astro-rerun>
   (function () {
-    const toggle = document.getElementById('theme-toggle')
     const sun = document.getElementById('theme-icon-sun')
     const moon = document.getElementById('theme-icon-moon')
 
@@ -104,10 +103,15 @@ const links = [
 
     syncIcons()
 
-    toggle.addEventListener('click', function () {
-      const dark = document.documentElement.classList.contains('dark')
-      setTheme(!dark)
-    })
+    if (window.__navbarHandlers) {
+      document.removeEventListener('click', window.__navbarHandlers.click)
+    }
+    const handleToggle = function (e) {
+      if (!e.target.closest('#theme-toggle')) return
+      setTheme(!document.documentElement.classList.contains('dark'))
+    }
+    window.__navbarHandlers = { click: handleToggle }
+    document.addEventListener('click', handleToggle)
 
     document.addEventListener('astro:page-load', syncIcons)
   })()
