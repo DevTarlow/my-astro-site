@@ -16,8 +16,8 @@ export interface Props {
 const { title, description, image, ogType = 'website' } = Astro.props
 
 const siteUrl = 'https://tarlow.space'
-const pageTitle = title ? `${title} — Tarlow.space | AI Developer` : 'Tarlow.space | AI Developer'
-const defaultDesc = 'A corner of the web built with intention — A blog about Tarlows projects, local-first tools, and AI exploration.'
+const pageTitle = title ? `${title} — Tarlow.space | Developer` : 'Tarlow.space | Developer'
+const defaultDesc = 'A blog about Tarlows projects, local-first tools, and AI exploration.'
 const pageDesc = description || defaultDesc
 
 function absUrl(src: string | undefined): string | undefined {
