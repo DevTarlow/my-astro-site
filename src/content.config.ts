@@ -25,7 +25,7 @@ const projects = defineCollection({
     github: z.string().optional(),
     featured: z.boolean().optional(),
     draft: z.boolean().optional(),
-    category: z.enum(['Launched', 'Development']),
+    category: z.enum(['Launched', 'Development']).optional(),
   }),
 })
 
