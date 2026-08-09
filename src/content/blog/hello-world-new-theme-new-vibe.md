@@ -24,7 +24,7 @@ All within 2 days.
 
 ## Theme
 
-Minimal Modern Hipster — Digital Paper (`#F9F9F8`) surfaces, Terracotta (`#C05746`) accents, Playfair Display for headings, Inter for body text.
+Minimal Modern Hipster — Digital Paper (`#F9F9F8`) surfaces, Terracotta (`#C05746`) accents, Lora for headings, Inter for body text.
 
 
 ## How did I build it?

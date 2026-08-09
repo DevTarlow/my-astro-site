@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # all log files
 *.log
+
+# editor metadata
+.frontmatter/
