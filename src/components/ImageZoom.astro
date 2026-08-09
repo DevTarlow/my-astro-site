@@ -3,12 +3,12 @@
     if (window.__imageZoomInit) return
     window.__imageZoomInit = true
     const style = document.createElement('style')
-    style.textContent = 'article img{cursor:zoom-in}'
+    style.textContent = 'article img{cursor:zoom-in}article a img{cursor:pointer}'
     document.head.appendChild(style)
 
     document.addEventListener('click', function (e) {
       const img = e.target.closest('article img')
-      if (!img) return
+      if (!img || img.closest('a')) return
 
       const src = img.getAttribute('src')
       const alt = img.getAttribute('alt') || ''
