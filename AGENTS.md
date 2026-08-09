@@ -40,7 +40,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 | Route | File | Key Details |
 |---|---|---|
-| `/` | `index.astro` | Home with profile image + greeting, shows 3 latest posts |
+| `/` | `index.astro` | Home with profile image + greeting, shows 5 latest posts |
 | `/blog/` | `blog/index.astro` | Paginated listing (5/page) with sidebar search |
 | `/blog/page/[page]/` | `blog/page/[page].astro` | Pagination pages 2+ |
 | `/blog/[...slug]/` | `blog/[...slug].astro` | Individual blog post via `getStaticPaths()` |
