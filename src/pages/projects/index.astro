@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectCard from '../../components/ProjectCard.astro'
+import ContentImage from '../../components/ContentImage.astro'
 import { getPublicProjects } from '../../lib/posts'
 const projects = await getPublicProjects()
 projects.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -21,6 +22,59 @@ const latestImage = projects[0]?.data.image
     </header>
 
     <div class="mx-auto max-w-4xl flex flex-col gap-6">
+      <article class="rounded-lg border border-terracotta/30 bg-white/50 dark:bg-white/5 bg-gradient-to-br from-terracotta/10 to-transparent p-5 hover:shadow-sm transition-shadow">
+        <div class="flex flex-col sm:flex-row gap-5">
+          <a href="https://mossaistudio.com" target="_blank" rel="noopener" class="sm:shrink-0">
+            <ContentImage
+              src="/images/moss-ai-studio-hero.png"
+              alt="Moss AI Studio"
+              class="w-full sm:w-72 lg:w-96 aspect-[16/9] object-cover rounded-md"
+            />
+          </a>
+
+          <div class="flex-1 flex flex-col min-w-0">
+            <span class="inline-flex self-start items-center gap-1 text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"></path></svg>
+              Pinned
+            </span>
+
+            <a
+              href="https://mossaistudio.com"
+              target="_blank"
+              rel="noopener"
+              class="mt-2 font-serif text-2xl text-ink no-underline hover:text-terracotta transition-colors"
+            >
+              Moss AI Studio
+            </a>
+
+            <p class="mt-2 text-sm text-ink/60 leading-relaxed">
+              My studio for AI tools and custom software - free tools, portfolio work, and
+              local-first AI builds.
+            </p>
+
+            <div class="mt-4 flex items-center gap-2 flex-wrap">
+              {['ai-tools', 'local-first', 'custom-builds'].map((tag) => (
+                <span class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            <div class="mt-4 flex items-center gap-3">
+              <a
+                href="https://mossaistudio.com"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded bg-terracotta px-4 py-2 text-sm text-paper no-underline hover:opacity-90 transition-opacity font-medium"
+              >
+                Visit mossaistudio.com
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
       {projects.map((project) => (
         <ProjectCard project={project} />
       ))}
