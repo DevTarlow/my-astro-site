@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import { getPublicBlog } from '../lib/posts'
 import { excerpt } from '../lib/excerpt'
 import ContentImage from '../components/ContentImage.astro'
+import PostActivityGraph from '../components/PostActivityGraph.astro'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -24,6 +25,8 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
       <p class="mt-10 text-sm text-ink/60 leading-relaxed max-w-prose mx-auto">
         I write about AI, technology, and my creative pursuits.
       </p>
+
+      <PostActivityGraph />
     </section>
 
     <h2 class="font-serif text-2xl font-semibold tracking-tight mb-8">

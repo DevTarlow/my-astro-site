@@ -1,0 +1,185 @@
+---
+import { getPublicBlog } from '../lib/posts'
+import type { CollectionEntry } from 'astro:content'
+
+const posts = await getPublicBlog()
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+const pad = (n: number) => String(n).padStart(2, '0')
+const dateKey = (d: Date) => `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`
+const fmtDate = (d: Date) => `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
+
+// Group posts by publish date (UTC day - frontmatter dates are parsed as UTC midnight)
+const byDate = new Map<string, CollectionEntry<'blog'>[]>()
+for (const post of posts) {
+  const key = dateKey(post.data.pubDate)
+  const list = byDate.get(key) ?? []
+  list.push(post)
+  byDate.set(key, list)
+}
+
+// 6-month window: 26 full weeks + the current week, Sunday start (GitHub style)
+const now = new Date()
+const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
+const todaySunday = new Date(today)
+todaySunday.setUTCDate(todaySunday.getUTCDate() - todaySunday.getUTCDay())
+const start = new Date(todaySunday)
+start.setUTCDate(start.getUTCDate() - 26 * 7)
+
+const weeks: Date[][] = []
+const cursor = new Date(start)
+while (cursor.getTime() <= todaySunday.getTime()) {
+  const week: Date[] = []
+  for (let i = 0; i < 7; i++) {
+    week.push(new Date(cursor))
+    cursor.setUTCDate(cursor.getUTCDate() + 1)
+  }
+  weeks.push(week)
+}
+
+// Month label above the first week column that contains the 1st of a new month
+// (GitHub's rule: a column is labeled with the month of its last day, Saturday,
+// so the label lands on the week the month actually begins in)
+let lastMonth = -1
+const monthLabels = weeks.map((week) => {
+  const m = week[6].getUTCMonth()
+  if (m !== lastMonth) {
+    lastMonth = m
+    return MONTHS[m]
+  }
+  return ''
+})
+
+// 0 = empty, 1-2 = light, 3 = medium, 4+ = full (GitHub's 5-level scale)
+const LEVELS = [
+  'bg-ink/10',
+  'bg-terracotta/40',
+  'bg-terracotta/65',
+  'bg-terracotta/85',
+  'bg-terracotta',
+]
+const level = (count: number) => (count === 0 ? 0 : Math.min(4, count))
+
+const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
+
+// Tooltip placement: top rows (Sun/Tue) flip the tooltip below the cell so
+// the scroll container never clips the title (GitHub anchors below too)
+---
+
+<div class="mt-10 overflow-x-auto pt-8 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+  <div class="mx-auto w-max">
+    <p class="mb-3 text-xs text-ink/40">{posts.length} posts in the last 6 months</p>
+
+    <div class="flex">
+      <div class="w-7 shrink-0" aria-hidden="true"></div>
+      <div class="flex gap-[3px]">
+        {
+          monthLabels.map((label) => (
+            <div class="w-[10px] whitespace-nowrap text-[10px] leading-[13px] text-ink/40" aria-hidden="true">
+              {label}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-[3px] flex">
+      <div
+        class="flex w-7 shrink-0 flex-col gap-[3px] pr-1 text-[10px] leading-[10px] text-ink/40"
+        aria-hidden="true"
+      >
+        {
+          DAY_LABELS.map((label) => (
+            <span class="h-[10px]">{label}</span>
+          ))
+        }
+      </div>
+
+      <div class="flex gap-[3px]">
+        {
+          weeks.map((week) => (
+            <div class="flex flex-col gap-[3px]">
+              {
+                week.map((date, dayIndex) => {
+                  const entry = byDate.get(dateKey(date))
+                  if (!entry) {
+                    return <div class="h-[10px] w-[10px] rounded-[2px] bg-ink/15 dark:bg-ink/12" aria-hidden="true"></div>
+                  }
+                  const n = entry.length
+                  const label = `${n} ${n === 1 ? 'post' : 'posts'} on ${fmtDate(date)}`
+                  const tooltipPos = dayIndex >= 3 ? 'bottom-full mb-2' : 'top-full mt-2'
+                  return (
+                    <div class="group relative" data-graph-cell>
+                      <button
+                        type="button"
+                        class={`h-[10px] w-[10px] rounded-[2px] ${LEVELS[level(n)]} outline-none focus-visible:ring-2 focus-visible:ring-terracotta/60`}
+                        aria-label={label}
+                      ></button>
+                      <div
+                        data-graph-tooltip
+                        class={`pointer-events-none absolute left-1/2 z-20 w-max max-w-[300px] -translate-x-1/2 rounded-md bg-ink px-3 py-2 text-xs text-paper opacity-0 shadow-lg transition-opacity duration-100 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-[.open]:pointer-events-auto group-[.open]:opacity-100 ${tooltipPos}`}
+                      >
+                        <span class="block font-medium">{label}</span>
+                        <span class="mt-1 block space-y-1">
+                          {
+                            entry.map((post) => (
+                              <a
+                                href={`/blog/${post.id}/`}
+                                class="block break-words font-medium text-paper/90 underline decoration-paper/40 underline-offset-2 hover:text-terracotta hover:decoration-terracotta/60"
+                              >
+                                {post.data.title}
+                              </a>
+                            ))
+                          }
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-3 flex items-center justify-end gap-[3px] text-[10px] text-ink/40">
+      <span class="mr-1">Less</span>
+      <span class="h-[10px] w-[10px] rounded-[2px] bg-ink/15 dark:bg-ink/12"></span>
+      <span class="h-[10px] w-[10px] rounded-[2px] bg-terracotta/40"></span>
+      <span class="h-[10px] w-[10px] rounded-[2px] bg-terracotta/65"></span>
+      <span class="h-[10px] w-[10px] rounded-[2px] bg-terracotta/85"></span>
+      <span class="h-[10px] w-[10px] rounded-[2px] bg-terracotta"></span>
+      <span class="ml-1">More</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Tap-to-show tooltips (mobile) + click-anywhere-to-close.
+  // Delegated on document so it survives View Transition navigation;
+  // guarded so handlers are never registered twice.
+  const initPostGraphTaps = () => {
+    if (window.__postGraphTaps) return
+    window.__postGraphTaps = true
+    document.addEventListener('click', (e) => {
+      const open = document.querySelectorAll('[data-graph-cell].open')
+      const cell = e.target.closest('[data-graph-cell]')
+      if (!cell) {
+        open.forEach((c) => c.classList.remove('open'))
+        return
+      }
+      // Clicked a post link inside a tooltip - let it navigate, close the rest
+      if (e.target.closest('[data-graph-tooltip]')) {
+        open.forEach((c) => c.classList.remove('open'))
+        return
+      }
+      open.forEach((c) => {
+        if (c !== cell) c.classList.remove('open')
+      })
+      cell.classList.toggle('open')
+    })
+  }
+  initPostGraphTaps()
+</script>
