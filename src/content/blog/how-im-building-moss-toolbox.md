@@ -57,7 +57,7 @@ Building the tools was the easy part. The friction showed up everywhere else.
 
 - **Letting an AI tool loose on the internet.** Member tools take free text and feed it to a model. If you let people type anything, the model will happily help with anything. So every generator has limits: input caps, filters for jailbreak attempts, hate, and private info like card numbers, plus a refusal line baked into each prompt. A blocked input never spends a credit, and a filtered result refunds it. It's not the glamorous part of building AI tools, but it's the part that makes them safe to leave running.
 
-- **The plumbing.** Each tool looks small, but behind them sits the same shared stack I use for all my products: Firebase for auth and data, Stripe for payments, one backend. A new tool is a page and a function, not a new app. That's the whole point. I can keep adding tools without rebuilding anything.
+- **The plumbing.** A tool looks like a single page, but there's a lot behind it: accounts, payments, credits. Once that plumbing is in place, a new tool is mostly a page and a function, not a whole new app. I can keep adding tools without rebuilding anything.
 
 ### What's Next
 
