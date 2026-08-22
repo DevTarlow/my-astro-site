@@ -11,6 +11,7 @@ description: >-
   Moss Toolbox is my growing set of free web tools and AI powered member tools
   under one membership. Here is what is in it, how I am building it, and the
   friction I hit along the way.
+featuredimage: /images/moss-toolbox-hero-section.png
 ---
 
 Most of my tools start the same way. A small problem that keeps showing up, and a fix that's too useful to leave as a bookmark.
