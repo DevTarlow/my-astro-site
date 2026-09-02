@@ -1,7 +1,7 @@
 ---
 title: 'How My Dashboard Talks to My Agents - One Click From Task to Done'
 pubDate: 2026-09-01
-draft: true
+draft: false
 tags:
   - ai-agents
   - hermes-agent
