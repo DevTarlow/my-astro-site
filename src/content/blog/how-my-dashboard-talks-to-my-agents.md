@@ -11,6 +11,7 @@ description: >-
   I built a dashboard that pulls my whole day into one place. Then I wired it
   to my AI agents so a task can go from a checkbox to a working chat session
   with one click. Here is how it works and why I built it.
+featuredimage: /images/hermes-custom-dashboard-tarlow.png
 ---
 
 I run my work through a small team of AI agents now. One handles my plans and reviews, one turns plans into shipped code, one does research, one handles social. I wrote about [how I got here](/blog/how-my-coding-workflow-changed) a couple weeks back.
