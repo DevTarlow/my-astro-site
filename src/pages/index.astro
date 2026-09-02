@@ -29,7 +29,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
       <PostActivityGraph />
     </section>
 
-    <h2 class="font-serif text-2xl font-semibold tracking-tight mb-8">
+    <h2 class="font-sans text-2xl font-semibold tracking-tight mb-8">
       Latest Posts
     </h2>
 
@@ -58,7 +58,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
               </time>
               <a
                 href={`/blog/${post.id}/`}
-                class="font-serif text-xl text-ink no-underline hover:text-terracotta transition-colors"
+                class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
               >
                 {post.data.title}
               </a>
@@ -80,7 +80,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
     <div class="mt-14 text-center">
       <a
         href="/blog/"
-        class="font-serif text-lg text-terracotta no-underline transition-opacity hover:opacity-80 border-b-2 border-terracotta pb-0.5"
+        class="font-sans text-lg text-terracotta no-underline transition-opacity hover:opacity-80 border-b-2 border-terracotta pb-0.5"
       >
         Read More →
       </a>

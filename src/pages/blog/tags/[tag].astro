@@ -33,7 +33,7 @@ const filtered = posts
       >
         ← All Tags
       </a>
-      <h1 class="font-serif text-3xl font-semibold tracking-tight">
+      <h1 class="font-sans text-3xl font-semibold tracking-tight">
         #<span class="text-terracotta">{tag}</span>
       </h1>
       <p class="mt-2 text-sm text-ink/60">
@@ -67,7 +67,7 @@ const filtered = posts
               </time>
               <a
                 href={`/blog/${post.id}/`}
-                class="font-serif text-xl text-ink no-underline hover:text-terracotta transition-colors"
+                class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
               >
                 {post.data.title}
               </a>

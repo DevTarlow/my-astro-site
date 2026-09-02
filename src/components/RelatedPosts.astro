@@ -12,7 +12,7 @@ const { posts } = Astro.props
 {
   posts.length > 0 && (
     <section class="mt-16 border-t border-ink/10 pt-10">
-      <h2 class="font-serif text-xl font-semibold mb-6">Related Posts</h2>
+      <h2 class="font-sans text-xl font-semibold mb-6">Related Posts</h2>
       <ul class="space-y-6">
         {
           posts.map((post) => (
@@ -27,7 +27,7 @@ const { posts } = Astro.props
                 </time>
                 <a
                   href={`/blog/${post.id}/`}
-                  class="font-serif text-lg text-ink no-underline hover:text-terracotta transition-colors"
+                  class="font-sans text-lg text-ink no-underline hover:text-terracotta transition-colors"
                 >
                   {post.data.title}
                 </a>

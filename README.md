@@ -12,7 +12,7 @@ A corner of the web built by [Tarlow](https://github.com/DevTarlow), a developer
 
 ## Theme
 
-Minimal Modern Hipster — Digital Paper (`#F9F9F8`) surfaces, Terracotta (`#C05746`) accents, Lora for headings, Inter for body text.
+Minimal Modern Hipster — Digital Paper (`#F9F9F8`) surfaces, Terracotta (`#C05746`) accents, Inter for body and headings.
 
 ## Prerequisites
 
@@ -87,4 +87,4 @@ Pushing to `main` triggers the [GitHub Actions workflow](.github/workflows/deplo
 
 - **Google Analytics** (G-H879GPJ4GM) — loaded in `BaseLayout`
 - **Bluesky** — share buttons link to bsky.app intent URLs
-- **Google Fonts** — Inter + Lora served via fonts.googleapis.com
+- **Google Fonts** — Inter served via fonts.googleapis.com

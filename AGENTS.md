@@ -56,7 +56,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 Key components in [src/components/](src/components/):
 
-- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (localStorage `theme`, applied before paint), Google Analytics (G-H879GPJ4GM), Inter/Lora fonts from Google Fonts, OG/Twitter meta, Navbar, MobilePanel, content slot, and BackToTop.
+- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (localStorage `theme`, applied before paint), Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta, Navbar, MobilePanel, content slot, and BackToTop.
 - **Navbar** - Desktop nav links (Home, Blog, Projects, About) with active-state highlighting (border-underline style); hamburger trigger (`data-menu-trigger`) for the mobile panel; dark mode toggle (sun/moon icons). Theme handler registered on `window.__navbarHandlers` to survive View Transition navigation.
 - **Sidebar** - Blog listing sidebar with search form (client-side JS, filters by title/description), recent posts list, and tag cloud (top 8).
 - **MobilePanel** - Slide-in mobile nav duplicating Sidebar functionality (search, recent posts, tag cloud) plus a dark mode toggle.
@@ -75,7 +75,7 @@ Tailwind theme tokens in [tailwind.config.mjs](tailwind.config.mjs):
 
 - **Colors**: `paper` (#F9F9F8), `ink` (#1A1A1A), `terracotta` (#C05746)
 - **Dark mode**: `darkMode: 'class'`. `paper` and `ink` are CSS variables defined in [src/styles/global.css](src/styles/global.css) and swapped by `html.dark` (paper #0D0D0D, ink #F5F5F5). Always use the semantic tokens (`text-ink`, `bg-paper`, `text-terracotta`) - never hardcoded hex - or dark mode breaks. Semi-transparent token usage (e.g. `text-ink/60`, `bg-paper/90`) works via the RGB-variable `<alpha-value>` pattern.
-- **Fonts**: `font-serif` -> Lora (headings), `font-sans` -> Inter (body)
+- **Fonts**: `font-sans` -> Inter (body + headings), system sans fallback stack
 - **Content prose**: Custom `.prose-custom` class in [src/styles/prose.css](src/styles/prose.css) - not Tailwind's typography plugin. Handles headings, links (terracotta underline), blockquotes, code, tables, images.
 - **Motion**: `prefers-reduced-motion: reduce` disables all transitions and View Transitions (global.css).
 
@@ -95,7 +95,7 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 - **Google Analytics** (G-H879GPJ4GM) - loaded in BaseLayout head
 - **Bluesky** - share buttons link to bsky.app intent URLs (no API calls)
-- **Google Fonts** - Inter + Lora served via fonts.googleapis.com
+- **Google Fonts** - Inter served via fonts.googleapis.com
 
 ## Style Conventions
 
