@@ -19,11 +19,13 @@ const pageTitle = title ? `${title} — Tarlow.space | Developer` : 'Tarlow.spac
 const defaultDesc = 'A blog about Tarlows projects, local-first tools, and AI exploration.'
 const pageDesc = description || defaultDesc
 
-function absUrl(src: string | undefined): string | undefined {
-  if (!src) return undefined
+function absUrl(src: string): string {
   if (src.startsWith('http://') || src.startsWith('https://')) return src
   return siteUrl + src
 }
+
+// Pages without an explicit image still get a non-blank social card.
+const ogImage = absUrl(image || '/images/tarlow-cropped-headshot-small.jpg')
 ---
 
 <!doctype html>
@@ -31,8 +33,10 @@ function absUrl(src: string | undefined): string | undefined {
   <head>
     <script is:inline>
       (function () {
-        const theme = localStorage.getItem('theme')
-        if (theme === 'dark') {
+        let stored = null
+        try { stored = localStorage.getItem('theme') } catch { /* storage may be unavailable */ }
+        const dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (dark) {
           document.documentElement.classList.add('dark')
         }
       })()
@@ -48,14 +52,12 @@ function absUrl(src: string | undefined): string | undefined {
 
       document.addEventListener('astro:page-load', function () {
         gtag('config', 'G-H879GPJ4GM', { page_path: location.pathname })
-
-        if (localStorage.getItem('theme') === 'dark') {
-          document.documentElement.classList.add('dark')
-        }
       })
     </script>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#F9F9F8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,18 +74,86 @@ function absUrl(src: string | undefined): string | undefined {
     <meta property="og:description" content={pageDesc} />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={new URL(Astro.url.pathname, siteUrl)} />
-    {image && <meta property="og:image" content={absUrl(image)} />}
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDesc} />
-    {image && <meta name="twitter:image" content={absUrl(image)} />}
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body class="bg-paper">
     <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen">
-      <Navbar />
+      <div id="app-shell">
+        <Navbar />
+        <slot />
+        <BackToTop />
+      </div>
       <MobilePanel />
-      <slot />
-      <BackToTop />
     </div>
+
+    <!-- Single theme controller: delegated so it survives View Transition navigation.
+         Re-runs on every navigation (data-astro-rerun) and swaps the old handler.
+         Astro's router copies the next page's <html> attributes onto the live root,
+         which strips class="dark" on client-side navigation - so applyTheme() must
+         re-run on every page load. -->
+    <script is:inline data-astro-rerun>
+      (function () {
+        function currentDark () {
+          return document.documentElement.classList.contains('dark')
+        }
+
+        function desiredDark () {
+          let stored = null
+          try { stored = localStorage.getItem('theme') } catch { /* storage may be unavailable */ }
+          return stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        function persistTheme (dark) {
+          try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch { /* storage may be unavailable */ }
+        }
+
+        function syncControls (dark) {
+          document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+            const sun = btn.querySelector('[data-theme-sun]')
+            const moon = btn.querySelector('[data-theme-moon]')
+            const label = btn.querySelector('[data-theme-label]')
+            if (sun) sun.classList.toggle('hidden', !dark)
+            if (moon) moon.classList.toggle('hidden', dark)
+            if (label) label.textContent = dark ? 'Light Mode' : 'Dark Mode'
+          })
+        }
+
+        function setTheme (dark) {
+          document.documentElement.classList.toggle('dark', dark)
+          persistTheme(dark)
+          syncControls(dark)
+        }
+
+        // Restore the stored/system theme without persisting anything.
+        // Runs once per navigation to undo the router's attribute swap.
+        function applyTheme () {
+          const dark = desiredDark()
+          document.documentElement.classList.toggle('dark', dark)
+          syncControls(dark)
+        }
+
+        applyTheme()
+
+        if (window.__themeHandlers) {
+          document.removeEventListener('click', window.__themeHandlers.click)
+        }
+        const handleClick = function (e) {
+          if (!e.target.closest('[data-theme-toggle]')) return
+          setTheme(!currentDark())
+        }
+        window.__themeHandlers = { click: handleClick }
+        document.addEventListener('click', handleClick)
+
+        if (window.__themeOnPageLoad) {
+          document.removeEventListener('astro:page-load', window.__themeOnPageLoad)
+        }
+        window.__themeOnPageLoad = applyTheme
+        document.addEventListener('astro:page-load', applyTheme)
+      })()
+    </script>
   </body>
 </html>

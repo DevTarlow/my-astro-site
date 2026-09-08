@@ -41,7 +41,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 | Route | File | Key Details |
 |---|---|---|
 | `/` | `index.astro` | Home with profile image + greeting, shows 5 latest posts |
-| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with sidebar search |
+| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with a `BlogSearch` box above the list and a `Sidebar` (Recent + Tags) at `lg+` |
 | `/blog/page/[page]/` | `blog/page/[page].astro` | Pagination pages 2+ |
 | `/blog/[...slug]/` | `blog/[...slug].astro` | Individual blog post via `getStaticPaths()` |
 | `/blog/tags/` | `blog/tags/index.astro` | Tag cloud with post counts |
@@ -56,10 +56,11 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 Key components in [src/components/](src/components/):
 
-- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (localStorage `theme`, applied before paint), Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta, Navbar, MobilePanel, content slot, and BackToTop.
-- **Navbar** - Desktop nav links (Home, Blog, Projects, About) with active-state highlighting (border-underline style); hamburger trigger (`data-menu-trigger`) for the mobile panel; dark mode toggle (sun/moon icons). Theme handler registered on `window.__navbarHandlers` to survive View Transition navigation.
-- **Sidebar** - Blog listing sidebar with search form (client-side JS, filters by title/description), recent posts list, and tag cloud (top 8).
-- **MobilePanel** - Slide-in mobile nav duplicating Sidebar functionality (search, recent posts, tag cloud) plus a dark mode toggle.
+- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta (fallback image), Navbar, `#app-shell` wrapper (Navbar + slot + BackToTop), MobilePanel sibling, and BackToTop.
+- **Navbar** - Header with "Tarlow" wordmark (links to `/`), centered inline nav links (Home, Blog, Projects, About, shown from `md`) with active-state highlighting (border-underline style), and a right cluster with the hamburger trigger (`data-menu-trigger`, `< md`, `aria-expanded` managed by MobilePanel) plus the theme toggle. No theme script of its own - BaseLayout owns theming.
+- **Sidebar** - Static blog sidebar shown at `lg+` on blog listing pages: Recent Posts list and tag cloud (top 8). No search - that lives in `BlogSearch`.
+- **MobilePanel** - Slide-in mobile nav (`< md`) with nav links, theme toggle row, and Recent Posts. No search/posts data. Script is `data-astro-rerun` + delegated (via `window.__menuCleanup`) to survive View Transitions; manages `inert` on `#app-shell`/panel, focus trap + return, Escape, backdrop/close clicks, and auto-close on resize past `md`.
+- **BlogSearch** - Search box rendered above the post list on `/blog` listing pages at all sizes (filters title, description, and tags client-side; results replace the list via `#default-content` / `#search-results`). The only component that inlines post metadata (`define:vars`).
 - **Pagination** - Prev/Next with page numbers, ellipsis for long ranges, configurable `basePath` (defaults to `/blog`).
 - **ContentImage** - Astro `<Image>` component that reads image dimensions via `sharp` at build time. Source paths must be relative to `/public/`.
 - **ImageZoom** - Global click-to-zoom overlay for blog/project article images.

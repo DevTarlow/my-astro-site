@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro'
 import Sidebar from '../../../components/Sidebar.astro'
+import BlogSearch from '../../../components/BlogSearch.astro'
 import Pagination from '../../../components/Pagination.astro'
 import { getPublicBlog } from '../../../lib/posts'
 import { excerpt } from '../../../lib/excerpt'
@@ -27,8 +28,11 @@ const pagePosts = posts.slice(offset, offset + pageSize)
 ---
 
 <BaseLayout title={`Blog — Page ${currentPage}`} description="Latest posts from Tarlow on projects, local-first tools, and AI exploration." image={latestImage}>
-  <div class="flex flex-col xl:flex-row justify-center xl:gap-8">
+  <div class="flex flex-col lg:flex-row justify-center lg:gap-8">
     <main class="w-full max-w-[65ch] px-6 py-20">
+      <h1 class="sr-only">Blog</h1>
+      <BlogSearch />
+
       <div id="default-content">
         <ul class="space-y-12">
           {
@@ -73,13 +77,14 @@ const pagePosts = posts.slice(offset, offset + pageSize)
             ))
           }
         </ul>
-      </div>
-      <div id="search-results" class="hidden"></div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
+      </div>
+
+      <div id="search-results" class="hidden"></div>
     </main>
 
-    <aside class="hidden xl:block w-64 shrink-0 pt-20 pb-20">
+    <aside class="hidden lg:block w-64 shrink-0 pt-20 pb-20">
       <Sidebar />
     </aside>
   </div>

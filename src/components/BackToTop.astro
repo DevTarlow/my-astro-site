@@ -9,25 +9,34 @@
 </button>
 
 <script is:inline>
+  // Delegated on document so the click/scroll handling survives View
+  // Transition navigation (the button node is recreated on each page).
   (function () {
-    const btn = document.getElementById('back-to-top')
-    if (!btn) return
+    if (window.__backToTopInit) return
+    window.__backToTopInit = true
 
-    function update() {
-      if (window.scrollY > 400) {
-        btn.classList.remove('opacity-0', 'pointer-events-none')
-      } else {
-        btn.classList.add('opacity-0', 'pointer-events-none')
-      }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    function menuOpen () {
+      return document.body.style.overflow === 'hidden'
     }
 
-    document.addEventListener('astro:page-load', function () {
-      update()
-      window.addEventListener('scroll', update, { passive: true })
-    })
+    function update () {
+      const btn = document.getElementById('back-to-top')
+      if (!btn) return
+      const visible = window.scrollY > 400 && !menuOpen()
+      btn.classList.toggle('opacity-0', !visible)
+      btn.classList.toggle('pointer-events-none', !visible)
+    }
 
-    btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    })
+    function onClick (e) {
+      if (!e.target.closest('#back-to-top')) return
+      window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' })
+    }
+
+    window.addEventListener('scroll', update, { passive: true })
+    document.addEventListener('click', onClick)
+    document.addEventListener('astro:page-load', update)
+    update()
   })()
 </script>
