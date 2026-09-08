@@ -1,5 +1,7 @@
 # build output
 dist/
+# generated responsive image variants (rebuilt by npm run images / prebuild)
+public/images/_opt/
 # generated types
 .astro/
 .opencode/

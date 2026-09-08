@@ -27,7 +27,7 @@ const offset = (currentPage - 1) * pageSize
 const pagePosts = posts.slice(offset, offset + pageSize)
 ---
 
-<BaseLayout title={`Blog — Page ${currentPage}`} description="Latest posts from Tarlow on projects, local-first tools, and AI exploration." image={latestImage}>
+<BaseLayout title={`Blog - Page ${currentPage}`} description="Latest posts from Tarlow on projects, local-first tools, and AI exploration." image={latestImage}>
   <div class="flex flex-col lg:flex-row justify-center lg:gap-8">
     <main class="w-full max-w-[65ch] px-6 py-20">
       <h1 class="sr-only">Blog</h1>
@@ -50,7 +50,7 @@ const pagePosts = posts.slice(offset, offset + pageSize)
                     </a>
                   )
                 }
-                <time class="block text-sm text-ink/40 mb-1.5">
+                <time class="block text-sm text-muted mb-1.5">
                     {post.data.pubDate.toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -63,7 +63,7 @@ const pagePosts = posts.slice(offset, offset + pageSize)
                   >
                     {post.data.title}
                   </a>
-                  <p class="mt-2 text-sm text-ink/60 leading-relaxed">
+                  <p class="mt-2 text-sm text-muted leading-relaxed">
                     {excerpt(post.body ?? '', 250)}
                   </p>
                   <a
@@ -81,11 +81,11 @@ const pagePosts = posts.slice(offset, offset + pageSize)
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       </div>
 
-      <div id="search-results" class="hidden"></div>
+      <div id="search-results" class="hidden" aria-live="polite" role="status"></div>
     </main>
 
     <aside class="hidden lg:block w-64 shrink-0 pt-20 pb-20">
-      <Sidebar />
+      <Sidebar showRecent />
     </aside>
   </div>
 </BaseLayout>

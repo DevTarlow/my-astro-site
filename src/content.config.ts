@@ -23,6 +23,7 @@ const projects = defineCollection({
     tags: z.array(z.string()),
     image: z.string().optional(),
     github: z.string().optional(),
+    url: z.string().optional(),
     featured: z.boolean().optional(),
     draft: z.boolean().optional(),
     category: z.enum(['Launched', 'Development']).optional(),

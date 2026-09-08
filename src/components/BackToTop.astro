@@ -1,6 +1,8 @@
 <button
   id="back-to-top"
-  class="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-paper shadow-md opacity-0 pointer-events-none transition-opacity duration-200 hover:opacity-90"
+  tabindex="-1"
+  aria-hidden="true"
+  class="invisible fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-paper shadow-md opacity-0 pointer-events-none transition-opacity duration-200 hover:opacity-90"
   aria-label="Back to top"
 >
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -27,6 +29,11 @@
       const visible = window.scrollY > 400 && !menuOpen()
       btn.classList.toggle('opacity-0', !visible)
       btn.classList.toggle('pointer-events-none', !visible)
+      // visibility:hidden also removes the button from the tab order so
+      // keyboard users never land on an invisible control.
+      btn.classList.toggle('invisible', !visible)
+      btn.tabIndex = visible ? 0 : -1
+      btn.setAttribute('aria-hidden', visible ? 'false' : 'true')
     }
 
     function onClick (e) {

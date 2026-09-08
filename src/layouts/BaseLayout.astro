@@ -15,7 +15,7 @@ export interface Props {
 const { title, description, image, ogType = 'website' } = Astro.props
 
 const siteUrl = 'https://tarlow.space'
-const pageTitle = title ? `${title} — Tarlow.space | Developer` : 'Tarlow.space | Developer'
+const pageTitle = title ? `${title} - Tarlow.space | Developer` : 'Tarlow.space | Developer'
 const defaultDesc = 'A blog about Tarlows projects, local-first tools, and AI exploration.'
 const pageDesc = description || defaultDesc
 
@@ -42,13 +42,34 @@ const ogImage = absUrl(image || '/images/tarlow-cropped-headshot-small.jpg')
       })()
     </script>
     <ClientRouter />
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM"></script>
+    <!-- Google tag (gtag.js). The library is ~170KB, so it is loaded after the
+         page is interactive and the queue in dataLayer is flushed on arrival. -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(...args){dataLayer.push(args);}
       gtag('js', new Date());
       gtag('config', 'G-H879GPJ4GM');
+
+      (function () {
+        let loaded = false;
+        function loadGtag () {
+          if (loaded) return
+          loaded = true
+          const script = document.createElement('script')
+          script.async = true
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM'
+          document.head.appendChild(script)
+        }
+        const schedule = function () {
+          if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(loadGtag, { timeout: 3000 })
+          } else {
+            setTimeout(loadGtag, 1500)
+          }
+        }
+        if (document.readyState === 'complete') schedule()
+        else window.addEventListener('load', schedule, { once: true })
+      })()
 
       document.addEventListener('astro:page-load', function () {
         gtag('config', 'G-H879GPJ4GM', { page_path: location.pathname })
@@ -67,6 +88,7 @@ const ogImage = absUrl(image || '/images/tarlow-cropped-headshot-small.jpg')
     />
 
     <title>{pageTitle}</title>
+    <link rel="canonical" href={new URL(Astro.url.pathname, siteUrl)} />
     <link rel="alternate" type="application/rss+xml" title="Tarlow.space" href="/rss.xml" />
 
     <meta name="description" content={pageDesc} />

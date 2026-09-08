@@ -20,13 +20,15 @@ const postsData = sorted.map(p => ({
   <h2 class="font-sans text-xs font-semibold text-terracotta uppercase tracking-widest mb-3">
     Search
   </h2>
-  <form id="search-form" class="flex gap-2">
+  <form id="search-form" role="search" class="flex gap-2">
     <input
       type="search"
       id="search-input"
+      name="q"
       aria-label="Search posts"
+      aria-controls="search-results"
       placeholder="Search posts..."
-      class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-ink/30 focus:outline-none focus:border-terracotta transition-colors"
+      class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-muted focus:outline-none focus:border-terracotta transition-colors"
     />
     <button
       type="submit"
@@ -39,6 +41,7 @@ const postsData = sorted.map(p => ({
 
 <script define:vars={{ postsData }} is:inline data-astro-rerun>
   (function () {
+    function init () {
     const searchForm = document.getElementById('search-form')
     const searchInput = document.getElementById('search-input')
     const defaultContent = document.getElementById('default-content')
@@ -87,7 +90,7 @@ const postsData = sorted.map(p => ({
         searchResults.innerHTML =
           '<div class="space-y-4">' +
           '<div class="flex items-center justify-between">' +
-          '<p class="text-sm text-ink/60">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
+          '<p class="text-sm text-muted">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
           '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
           '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
           '</button>' +
@@ -96,7 +99,7 @@ const postsData = sorted.map(p => ({
       } else {
         let html = ''
         html += '<div class="flex items-center justify-between mb-6">'
-        html += '<p class="text-sm text-ink/60">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+        html += '<p class="text-sm text-muted">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
         html += '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
           '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
           '</button>'
@@ -106,9 +109,9 @@ const postsData = sorted.map(p => ({
         matches.forEach(function (post) {
           html += '<li>' +
             '<article>' +
-            '<time class="block text-sm text-ink/40 mb-1.5">' + new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</time>' +
+            '<time class="block text-sm text-muted mb-1.5">' + new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</time>' +
             '<a href="/blog/' + post.id + '/" class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors">' + escapeHtml(post.title) + '</a>' +
-            '<p class="mt-2 text-sm text-ink/60 leading-relaxed">' + escapeHtml(post.description) + '</p>' +
+            '<p class="mt-2 text-sm text-muted leading-relaxed">' + escapeHtml(post.description) + '</p>' +
             '<a href="/blog/' + post.id + '/" class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity">Read More →</a>' +
             '</article>' +
             '</li>'
@@ -121,5 +124,16 @@ const postsData = sorted.map(p => ({
       defaultContent.classList.add('hidden')
       searchResults.classList.remove('hidden')
     })
+    }
+
+    // This script is rendered before #default-content / #search-results exist,
+    // so on a direct load or hard refresh the elements are still unparsed.
+    // Wait for the document to finish parsing before binding. On View Transition
+    // navigation the DOM is already complete, so init runs immediately.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true })
+    } else {
+      init()
+    }
   })()
 </script>

@@ -24,7 +24,7 @@
 }
 
 .prose-custom a {
-  color: #C05746;
+  color: rgb(var(--color-terracotta));
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -34,7 +34,7 @@
 }
 
 .prose-custom blockquote {
-  border-left: 3px solid #C05746;
+  border-left: 3px solid rgb(var(--color-terracotta));
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
@@ -61,7 +61,7 @@
 
 .prose-custom code {
   font-size: 0.875em;
-  background: rgba(192, 87, 70, 0.08);
+  background: rgb(var(--color-terracotta) / 0.08);
   padding: 0.2em 0.4em;
   border-radius: 3px;
 }
@@ -110,7 +110,7 @@
 }
 
 .prose-custom th {
-  background: rgba(192, 87, 70, 0.08);
+  background: rgb(var(--color-terracotta) / 0.08);
   font-weight: 600;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
@@ -135,9 +135,9 @@
   line-height: 1;
   padding: 0.3rem 0.6rem;
   border-radius: 4px;
-  border: 1px solid rgb(192 87 70 / 0.2);
+  border: 1px solid rgb(var(--color-terracotta) / 0.2);
   background: rgb(var(--color-paper) / 0.9);
-  color: #C05746;
+  color: rgb(var(--color-terracotta));
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.15s ease;
@@ -159,12 +159,12 @@
 
 .code-copy-btn.copied,
 .code-copy-btn.failed {
-  background: #C05746;
-  color: #fff;
-  border-color: #C05746;
+  background: rgb(var(--color-terracotta));
+  color: rgb(var(--color-paper));
+  border-color: rgb(var(--color-terracotta));
 }
 
 .code-copy-btn:focus-visible {
-  outline: 2px solid #C05746;
+  outline: 2px solid rgb(var(--color-terracotta));
   outline-offset: 2px;
 }

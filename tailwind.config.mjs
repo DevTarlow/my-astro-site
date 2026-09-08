@@ -7,7 +7,8 @@ export default {
       colors: {
         paper: 'rgb(var(--color-paper) / <alpha-value>)',
         ink: 'rgb(var(--color-ink) / <alpha-value>)',
-        terracotta: '#C05746',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        terracotta: 'rgb(var(--color-terracotta) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],

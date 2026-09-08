@@ -30,21 +30,12 @@ const { Content } = await render(project)
     >
       ← Back to Projects
     </a>
-    {
-      project.data.image && (
-        <ContentImage
-          src={project.data.image}
-          alt=""
-          class="w-full h-48 object-cover rounded-lg mb-8"
-        />
-      )
-    }
-    <header class="mb-12">
+    <header class="mb-10">
       <h1 class="font-sans text-3xl font-semibold leading-tight">
         {project.data.title}
       </h1>
 
-      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink/50">
+      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
         <time>
           {project.data.pubDate.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -76,6 +67,16 @@ const { Content } = await render(project)
       )}
     </header>
 
+    {
+      project.data.image && (
+        <ContentImage
+          src={project.data.image}
+          alt=""
+          class="w-full h-48 object-cover rounded-lg mb-8"
+        />
+      )
+    }
+
     <div class="prose-custom">
       <Content />
     </div>
@@ -92,7 +93,7 @@ const { Content } = await render(project)
       )}
       <a
         href="/projects/"
-        class="ml-auto text-sm text-ink/50 no-underline hover:text-terracotta transition-colors"
+        class="ml-auto text-sm text-muted no-underline hover:text-terracotta transition-colors"
       >
         ← All Projects
       </a>

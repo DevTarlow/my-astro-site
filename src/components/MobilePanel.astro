@@ -42,7 +42,7 @@ const links = [
     <button
       id="mobile-panel-close"
       data-menu-close
-      class="flex h-8 w-8 items-center justify-center rounded-md text-ink/50 transition-colors hover:bg-terracotta/10 hover:text-terracotta"
+      class="flex h-8 w-8 items-center justify-center rounded-md text-muted transition-colors hover:bg-terracotta/10 hover:text-terracotta"
       aria-label="Close menu"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -107,7 +107,7 @@ const links = [
                 <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug">
                   {post.data.title}
                 </span>
-                <time class="block text-[10px] text-ink/40 mt-0.5">
+                <time class="block text-[10px] text-muted mt-0.5">
                   {post.data.pubDate.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',

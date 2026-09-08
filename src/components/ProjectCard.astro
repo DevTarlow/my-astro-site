@@ -5,18 +5,29 @@ import ContentImage from './ContentImage.astro'
 
 export interface Props {
   project: CollectionEntry<'projects'>
+  featured?: boolean
 }
 
-const { project } = Astro.props
+const { project, featured = false } = Astro.props
+const href = `/projects/${project.id}/`
+const externalUrl = project.data.url
 ---
 
-<article class="flex flex-col sm:flex-row gap-5 rounded-lg border border-terracotta/10 bg-white/50 dark:bg-white/5 p-4 hover:shadow-sm transition-shadow">
+<article
+  class:list={[
+    'flex flex-col sm:flex-row gap-5 rounded-lg border p-4 transition-shadow hover:shadow-sm',
+    featured
+      ? 'border-terracotta/40 bg-gradient-to-br from-terracotta/10 to-transparent'
+      : 'border-terracotta/10 bg-white/50 dark:bg-white/5',
+  ]}
+>
   {
     project.data.image && (
-      <a href={`/projects/${project.id}/`} class="sm:shrink-0">
+      <a href={href} class="sm:shrink-0" tabindex="-1" aria-hidden="true">
         <ContentImage
           src={project.data.image}
           alt=""
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 256px, 320px"
           class="w-full sm:w-64 lg:w-80 aspect-[16/9] object-cover rounded-md"
         />
       </a>
@@ -24,7 +35,13 @@ const { project } = Astro.props
   }
 
   <div class="flex-1 flex flex-col min-w-0">
-    <time class="block text-xs text-ink/40 mb-1">
+    {featured && (
+      <span class="mb-2 inline-flex self-start items-center gap-1 rounded bg-terracotta/10 px-2 py-0.5 text-xs font-medium text-terracotta">
+        Featured
+      </span>
+    )}
+
+    <time class="block text-xs text-muted mb-1">
       {project.data.pubDate.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -32,20 +49,20 @@ const { project } = Astro.props
     </time>
 
     <a
-      href={`/projects/${project.id}/`}
+      href={href}
       class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
     >
       {project.data.title}
     </a>
 
-    <p class="mt-2 text-sm text-ink/60 leading-relaxed line-clamp-3">
+    <p class="mt-2 text-sm text-muted leading-relaxed line-clamp-3">
       {excerpt(project.body ?? '', 200)}
     </p>
 
     <div class="mt-4 flex items-center gap-2 flex-wrap">
       {
         (project.data.tags ?? []).slice(0, 3).map((tag) => (
-          <span class="text-xs text-terracotta/70 bg-terracotta/5 px-2 py-0.5 rounded">
+          <span class="text-xs text-terracotta bg-terracotta/5 px-2 py-0.5 rounded">
             #{tag}
           </span>
         ))
@@ -56,18 +73,26 @@ const { project } = Astro.props
       {project.data.github && (
         <a
           href={project.data.github}
-          class="inline-flex items-center gap-1 text-xs text-ink/50 hover:text-terracotta transition-colors no-underline"
+          class="inline-flex items-center gap-1 text-xs text-muted hover:text-terracotta transition-colors no-underline"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           GitHub
         </a>
       )}
       <a
-        href={`/projects/${project.id}/`}
-        class="ml-auto text-xs text-terracotta no-underline hover:opacity-80 transition-opacity"
+        href={externalUrl ?? href}
+        target={externalUrl ? '_blank' : undefined}
+        rel={externalUrl ? 'noopener noreferrer' : undefined}
+        class:list={[
+          'ml-auto inline-flex items-center rounded-md text-sm no-underline transition-opacity',
+          featured
+            ? 'bg-terracotta px-4 py-2 font-medium text-paper hover:opacity-90'
+            : 'text-terracotta hover:opacity-80',
+        ]}
       >
-        Details →
+        {externalUrl ? 'Visit →' : featured ? 'View project →' : 'Details →'}
       </a>
     </div>
   </div>

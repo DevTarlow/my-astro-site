@@ -40,22 +40,22 @@ function getPageNumbers(): (number | 'ellipsis')[] {
 }
 
 const pageNumbers = getPageNumbers()
-const linkClass = 'font-sans text-lg tracking-tight no-underline transition-colors duration-300 border-b-2'
+const linkClass =
+  'inline-flex h-11 min-w-[44px] items-center justify-center rounded-md px-3 font-sans text-base no-underline transition-colors'
+const idleClass = `${linkClass} text-ink hover:bg-terracotta/10`
+const disabledClass = `${linkClass} text-muted opacity-60`
 ---
 
-<nav class="flex items-center justify-center gap-3 mt-16">
+<nav aria-label="Pagination" class="mt-16 flex items-center justify-center gap-2">
   {
     currentPage > 1
       ? (
-        <a
-          href={pageUrl(currentPage - 1)}
-          class={`${linkClass} text-terracotta border-transparent hover:opacity-80`}
-        >
+        <a href={pageUrl(currentPage - 1)} rel="prev" class={idleClass}>
           ← Prev
         </a>
       )
       : (
-        <span class={`${linkClass} text-ink/20 border-transparent pointer-events-none`}>
+        <span class={disabledClass} aria-disabled="true">
           ← Prev
         </span>
       )
@@ -64,11 +64,15 @@ const linkClass = 'font-sans text-lg tracking-tight no-underline transition-colo
   {
     pageNumbers.map((p) =>
       p === 'ellipsis' ? (
-        <span class="font-sans text-lg tracking-tight text-ink/30">…</span>
+        <span class="px-1 font-sans text-base text-muted" aria-hidden="true">
+          …
+        </span>
       ) : (
         <a
           href={pageUrl(p)}
-          class={`${linkClass} ${p === currentPage ? 'text-terracotta border-terracotta' : 'text-ink/50 border-transparent hover:text-terracotta hover:border-terracotta'}`}
+          aria-current={p === currentPage ? 'page' : undefined}
+          aria-label={`Page ${p}`}
+          class={p === currentPage ? `${linkClass} bg-terracotta font-medium text-paper` : idleClass}
         >
           {p}
         </a>
@@ -79,15 +83,12 @@ const linkClass = 'font-sans text-lg tracking-tight no-underline transition-colo
   {
     currentPage < totalPages
       ? (
-        <a
-          href={pageUrl(currentPage + 1)}
-          class={`${linkClass} text-terracotta border-transparent hover:opacity-80`}
-        >
+        <a href={pageUrl(currentPage + 1)} rel="next" class={idleClass}>
           Next →
         </a>
       )
       : (
-        <span class={`${linkClass} text-ink/20 border-transparent pointer-events-none`}>
+        <span class={disabledClass} aria-disabled="true">
           Next →
         </span>
       )

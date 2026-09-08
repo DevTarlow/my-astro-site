@@ -12,6 +12,17 @@ export default [
     ignores: ['dist/', '.astro/', 'node_modules/'],
   },
   {
+    // Build-time Node scripts and rehype plugins run outside the browser.
+    files: ['scripts/**/*.mjs', 'plugins/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+      },
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },

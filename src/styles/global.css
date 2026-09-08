@@ -5,11 +5,17 @@
 :root {
   --color-paper: 249 249 248;
   --color-ink: 26 26 26;
+  /* Secondary text tier: clears WCAG AA (>= 4.5:1) on paper. */
+  --color-muted: 111 111 111;
+  /* Brand accent tuned per theme so text and fills clear AA in both. */
+  --color-terracotta: 168 72 58;
 }
 
 html.dark {
   --color-paper: 13 13 13;
   --color-ink: 245 245 245;
+  --color-muted: 165 165 165;
+  --color-terracotta: 224 122 106;
 }
 
 @media (prefers-reduced-motion: reduce) {

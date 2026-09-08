@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import { getImageEntry, srcsetFor } from '../lib/image-manifest'
 import sharp from 'sharp'
 import path from 'path'
 
@@ -7,20 +7,68 @@ export interface Props {
   src: string
   alt: string
   class?: string
+  /** Responsive `sizes` for the srcset. Defaults to the prose column. */
+  sizes?: string
+  loading?: 'lazy' | 'eager'
+  fetchpriority?: 'high' | 'low' | 'auto'
 }
 
-const { src, alt, class: className } = Astro.props
+const {
+  src,
+  alt,
+  class: className,
+  sizes = '(max-width: 768px) 100vw, 65ch',
+  loading = 'lazy',
+  fetchpriority,
+} = Astro.props
 
-const cleanSrc = src.replace(/^\//, '')
-const filePath = path.join(process.cwd(), 'public', cleanSrc)
-const { width, height } = await sharp(filePath).metadata()
+// Variants come from scripts/optimize-images.mjs (run via predev/prebuild).
+// If the manifest is missing (e.g. first run before the script), fall back to
+// sharp for intrinsic dimensions so the layout still reserves space.
+const entry = getImageEntry(src)
+
+let width = entry?.width
+let height = entry?.height
+if (!width || !height) {
+  try {
+    const cleanSrc = src.replace(/^\//, '')
+    const meta = await sharp(path.join(process.cwd(), 'public', cleanSrc)).metadata()
+    width = meta.width
+    height = meta.height
+  } catch {
+    /* leave dimensions unset */
+  }
+}
+
+const srcset = entry ? srcsetFor(entry) : ''
+const hasVariants = srcset.length > 0
 ---
 
-<Image
-  src={src}
-  width={width}
-  height={height}
-  alt={alt}
-  class={className}
-  decoding="async"
-/>
+{
+  hasVariants ? (
+    <picture class="contents">
+      <source type="image/webp" srcset={srcset} sizes={sizes} />
+      <img
+        src={src}
+        width={width}
+        height={height}
+        alt={alt}
+        class={className}
+        loading={loading}
+        decoding="async"
+        fetchpriority={fetchpriority}
+      />
+    </picture>
+  ) : (
+    <img
+      src={src}
+      width={width}
+      height={height}
+      alt={alt}
+      class={className}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+    />
+  )
+}
