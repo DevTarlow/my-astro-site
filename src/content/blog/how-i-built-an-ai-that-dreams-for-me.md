@@ -1,7 +1,7 @@
 ---
-title: How I Built an AI That Dreams for Me Every Night
+title: The 2am Cron Job - Letting My AI Dream While I Sleep
 pubDate: 2026-09-07
-draft: true
+draft: false
 tags:
   - AI
   - HermesAgent
