@@ -104,6 +104,16 @@ const ogImage = absUrl(image || '/images/tarlow-cropped-headshot-small.jpg')
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body class="bg-paper">
+    <!-- Keyboard users land here first; it slides in on focus and is plain
+         off-screen the rest of the time. Kept out of `sr-only` because mixing
+         `not-sr-only` with a positioning utility is order-dependent. -->
+    <a
+      id="skip-link"
+      href="#main-content"
+      class="absolute left-4 top-4 z-[100] -translate-y-20 rounded-md bg-terracotta px-4 py-2 font-sans text-sm font-medium text-paper no-underline shadow-lg transition-transform focus:translate-y-0"
+    >
+      Skip to content
+    </a>
     <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen">
       <div id="app-shell">
         <Navbar />

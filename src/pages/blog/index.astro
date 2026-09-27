@@ -18,7 +18,7 @@ const pagePosts = posts.slice(0, pageSize)
 
 <BaseLayout title="Blog" description="Latest posts from Tarlow on projects, local-first tools, and AI exploration." image={latestImage}>
   <div class="flex flex-col lg:flex-row justify-center lg:gap-8">
-    <main class="w-full max-w-[65ch] px-6 py-20">
+    <main id="main-content" class="w-full max-w-[65ch] px-6 py-20">
       <header class="mb-10">
         <h1 class="font-sans text-3xl font-semibold tracking-tight">Blog</h1>
         <p class="mt-2 text-sm text-muted">
@@ -49,7 +49,7 @@ const pagePosts = posts.slice(0, pageSize)
       <div id="search-results" class="hidden" aria-live="polite" role="status"></div>
     </main>
 
-    <aside class="hidden lg:block w-64 shrink-0 pt-20 pb-20">
+    <aside aria-label="Blog sidebar" class="hidden lg:block w-64 shrink-0 pt-20 pb-20">
       <Sidebar showRecent={false} />
     </aside>
   </div>

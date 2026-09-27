@@ -24,7 +24,8 @@ const { Content } = await render(project)
 ---
 
 <BaseLayout title={project.data.title} description={project.data.description} image={project.data.image} ogType="article">
-  <article class="mx-auto max-w-[65ch] px-6 py-20">
+  <main id="main-content">
+    <article class="mx-auto max-w-[65ch] px-6 py-20">
     <a
       href="/projects"
       class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
@@ -95,7 +96,8 @@ const { Content } = await render(project)
         ← All Projects
       </a>
     </footer>
-  </article>
+    </article>
+  </main>
   <ImageZoom />
 </BaseLayout>
 
