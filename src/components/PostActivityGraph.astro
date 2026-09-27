@@ -89,14 +89,16 @@ function tooltipAlign (weekIndex: number, totalWeeks: number): string {
 // the scroll container never clips the title (GitHub anchors below too)
 ---
 
-<div class="mt-10 pt-8 pb-2">
+<div class="mt-5 pb-2 pt-4 sm:mt-10 sm:pt-8">
   <div class="mx-auto w-max max-w-full">
     <p class="mb-3 text-xs text-muted">{posts.length} posts in the last 6 months</p>
 
     <!-- The grid is hidden below sm: it cannot fit a 390px viewport without
          horizontal scrolling, and the count line above carries the same signal.
          The grid itself is ~376px wide, so no scroll container is needed; letting
-         it overflow visibly keeps edge tooltips readable instead of clipped. -->
+         it overflow visibly keeps edge tooltips readable instead of clipped.
+         The wrapper's top padding is smaller on mobile so the count line does not
+         sit in a gap that belonged to the hidden grid. -->
     <div class="hidden overflow-visible sm:block">
       <div class="w-max">
         <div class="flex">

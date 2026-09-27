@@ -14,11 +14,14 @@ const { project, href, shortTitle, month, category } = item
 // thumbnail from `sm` up so every project stays visually anchored.
 const titleClass =
   'font-sans text-base text-ink no-underline transition-colors group-hover:text-terracotta'
+
+const datetime = project.data.pubDate.toISOString().slice(0, 10)
+const monthClass = 'font-mono text-[11px] uppercase tracking-wider text-muted'
 ---
 
 <a
   href={href}
-  class="group flex items-center gap-4 py-2.5 no-underline"
+  class="group flex items-center gap-4 py-3 no-underline md:py-2.5"
 >
   <span class="hidden shrink-0 overflow-hidden rounded border border-terracotta/10 sm:block">
     {
@@ -37,14 +40,31 @@ const titleClass =
     }
   </span>
 
-  <span class:list={[titleClass, 'hidden w-56 shrink-0 sm:block']}>{shortTitle}</span>
-  <span class:list={[titleClass, 'min-w-0 flex-1 sm:hidden']}>{shortTitle}</span>
+  <!-- Below md the row stacks into two lines: title and month, then the
+       description and category pill. Hiding the description on phones left
+       the list as bare project names with nothing to click for. -->
+  <span class="flex min-w-0 flex-1 flex-col gap-1 md:hidden">
+    <span class="flex items-baseline justify-between gap-3">
+      <span class={titleClass}>{shortTitle}</span>
+      <time datetime={datetime} class={`shrink-0 ${monthClass}`}>{month}</time>
+    </span>
+    <span class="block text-sm text-muted line-clamp-2">{project.data.description}</span>
+    {
+      category && (
+        <span class:list={['mt-0.5 self-start rounded px-1.5 py-0.5 text-xs', categoryClass(category)]}>
+          {category}
+        </span>
+      )
+    }
+  </span>
+
+  <span class:list={[titleClass, 'hidden w-56 shrink-0 md:block']}>{shortTitle}</span>
 
   <span class="hidden min-w-0 flex-1 md:block">
     <span class="block max-w-[46rem] text-sm text-muted line-clamp-2">{project.data.description}</span>
   </span>
 
-  <span class="flex shrink-0 items-center gap-3 text-xs">
+  <span class="hidden shrink-0 items-center gap-3 text-xs md:flex">
     {
       category && (
         <span class:list={['hidden rounded px-1.5 py-0.5 sm:inline', categoryClass(category)]}>
@@ -52,8 +72,6 @@ const titleClass =
         </span>
       )
     }
-    <time datetime={project.data.pubDate.toISOString().slice(0, 10)} class="font-mono text-[11px] uppercase tracking-wider text-muted">
-      {month}
-    </time>
+    <time datetime={datetime} class={monthClass}>{month}</time>
   </span>
 </a>
