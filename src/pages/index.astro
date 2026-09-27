@@ -4,6 +4,7 @@ import { getPublicBlog } from '../lib/posts'
 import { excerpt } from '../lib/excerpt'
 import ContentImage from '../components/ContentImage.astro'
 import PostActivityGraph from '../components/PostActivityGraph.astro'
+import { dateParts } from '../lib/dates'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -102,11 +103,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
                 )
               }
               <time class="block text-sm text-muted mb-1.5">
-                {post.data.pubDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {dateParts(post.data.pubDate).long}
               </time>
               <a
                 href={`/blog/${post.id}/`}

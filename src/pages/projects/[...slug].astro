@@ -5,6 +5,7 @@ import '../../styles/prose.css'
 import ContentImage from '../../components/ContentImage.astro'
 import ImageZoom from '../../components/ImageZoom.astro'
 import { getPublicProjects } from '../../lib/posts'
+import { dateParts } from '../../lib/dates'
 
 export async function getStaticPaths() {
   const projects = await getPublicProjects()
@@ -37,11 +38,7 @@ const { Content } = await render(project)
 
       <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
         <time>
-          {project.data.pubDate.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+          {dateParts(project.data.pubDate).long}
         </time>
 
         {project.data.tags && project.data.tags.length > 0 && (

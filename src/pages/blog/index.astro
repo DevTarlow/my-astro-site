@@ -6,6 +6,7 @@ import Pagination from '../../components/Pagination.astro'
 import { getPublicBlog } from '../../lib/posts'
 import { excerpt } from '../../lib/excerpt'
 import ContentImage from '../../components/ContentImage.astro'
+import { dateParts } from '../../lib/dates'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -41,11 +42,7 @@ const pagePosts = posts.slice(0, pageSize)
                   )
                 }
                 <time class="block text-sm text-muted mb-1.5">
-                    {post.data.pubDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {dateParts(post.data.pubDate).long}
                   </time>
                   <a
                     href={`/blog/${post.id}/`}

@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { excerpt } from '../lib/excerpt'
+import { dateParts } from '../lib/dates'
 
 export interface Props {
   posts: CollectionEntry<'blog'>[]
@@ -19,11 +20,7 @@ const { posts } = Astro.props
             <li>
               <article>
                 <time class="block text-xs text-muted mb-1">
-                  {post.data.pubDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
+                  {dateParts(post.data.pubDate).short}
                 </time>
                 <a
                   href={`/blog/${post.id}/`}

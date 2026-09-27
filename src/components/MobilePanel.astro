@@ -1,5 +1,6 @@
 ---
 import { getPublicBlog } from '../lib/posts'
+import { dateParts } from '../lib/dates'
 
 const posts = await getPublicBlog()
 
@@ -108,11 +109,7 @@ const links = [
                   {post.data.title}
                 </span>
                 <time class="block text-[10px] text-muted mt-0.5">
-                  {post.data.pubDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {dateParts(post.data.pubDate).long}
                 </time>
               </a>
             </li>

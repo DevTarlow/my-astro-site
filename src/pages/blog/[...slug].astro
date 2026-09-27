@@ -8,6 +8,7 @@ import CodeCopy from '../../components/CodeCopy.astro'
 import RelatedPosts from '../../components/RelatedPosts.astro'
 import ShareButtons from '../../components/ShareButtons.astro'
 import { getPublicBlog, getRelatedPosts } from '../../lib/posts'
+import { dateParts } from '../../lib/dates'
 
 export async function getStaticPaths() {
   const posts = await getPublicBlog()
@@ -51,11 +52,7 @@ const related = getRelatedPosts(post, allPosts)
 
       <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
         <time>
-          {post.data.pubDate.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+          {dateParts(post.data.pubDate).long}
         </time>
 
         {post.data.tags && post.data.tags.length > 0 && (
