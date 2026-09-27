@@ -12,7 +12,7 @@ description: >-
 featuredimage: /images/copy-sprout-hero-section.png
 ---
 
-A few weeks after I launched [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click), I kept coming back to the same thought. I had built a tool that tells you when a listing looks like AI. But the sellers behind real shops have the opposite problem. They make beautiful things. And writing is the hardest part of selling them.
+A few weeks after I launched [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/), I kept coming back to the same thought. I had built a tool that tells you when a listing looks like AI. But the sellers behind real shops have the opposite problem. They make beautiful things. And writing is the hardest part of selling them.
 
 Product descriptions. Shop announcements. Renewals. Social posts. Every word of it is a wall for someone who would rather be making stuff.
 
@@ -79,4 +79,4 @@ If you sell on Etsy and you've ever stared at a blank description box, I built t
 
 ---
 
-*P.S. CopySprout is the second public product from [Moss AI Studio](https://mossaistudio.com) - visit my shop to check out more apps. The first was [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click).*
+*P.S. CopySprout is the second public product from [Moss AI Studio](https://mossaistudio.com) - visit my shop to check out more apps. The first was [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/).*

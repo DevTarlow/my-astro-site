@@ -26,13 +26,40 @@ if (!post) {
 const { Content } = await render(post)
 const allPosts = await getPublicBlog()
 const related = getRelatedPosts(post, allPosts)
+
+// BlogPosting gives search engines the author, dates and tags they need for
+// article rich results; the blog had none at all before.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.pubDate.toISOString(),
+  url: `https://tarlow.space/blog/${post.id}/`,
+  mainEntityOfPage: `https://tarlow.space/blog/${post.id}/`,
+  author: { '@type': 'Person', name: 'Tarlow', url: 'https://tarlow.space/about/' },
+  publisher: { '@type': 'Person', name: 'Tarlow', url: 'https://tarlow.space/' },
+  ...(post.data.tags?.length ? { keywords: post.data.tags.join(', ') } : {}),
+  ...(post.data.featuredimage
+    ? { image: `https://tarlow.space${post.data.featuredimage}` }
+    : {}),
+}
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} image={post.data.featuredimage} ogType="article">
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.featuredimage}
+  ogType="article"
+  publishedTime={post.data.pubDate.toISOString()}
+  articleTags={post.data.tags ?? []}
+  jsonLd={jsonLd}
+>
   <main id="main-content">
     <article class="mx-auto max-w-[65ch] px-6 py-20">
     <a
-      href="/blog"
+      href="/blog/"
       class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
     >
       ← Back to Blog

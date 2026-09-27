@@ -7,7 +7,7 @@ featuredimage: /images/sunshine-family-dashboard-dining-out-to-do-grocery-list.j
 ---
 ## Sunshine Family Dashboard Launched!
 
-![Screenshot](/images/sunshine-family-dashboard-screenshot.jpg)
+![Screenshot](/images/sunshine-family-dashboard-screenshot.png)
 
 I am excited to share my first public project on GitHub, the [Sunshine Family Dashboard](https://github.com/DevTarlow/sunshine-family-dashboard).
 

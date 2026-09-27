@@ -21,13 +21,35 @@ if (!project) {
 }
 
 const { Content } = await render(project)
+
+// CreativeWork rather than BlogPosting: a project page is not an article.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': project.data.category === 'Launched' ? 'SoftwareApplication' : 'CreativeWork',
+  name: project.data.title,
+  description: project.data.description,
+  datePublished: project.data.pubDate.toISOString(),
+  url: `https://tarlow.space/projects/${project.id}/`,
+  author: { '@type': 'Person', name: 'Tarlow', url: 'https://tarlow.space/about/' },
+  ...(project.data.tags?.length ? { keywords: project.data.tags.join(', ') } : {}),
+  ...(project.data.url ? { sameAs: project.data.url } : {}),
+  ...(project.data.image ? { image: `https://tarlow.space${project.data.image}` } : {}),
+}
 ---
 
-<BaseLayout title={project.data.title} description={project.data.description} image={project.data.image} ogType="article">
+<BaseLayout
+  title={project.data.title}
+  description={project.data.description}
+  image={project.data.image}
+  ogType="article"
+  publishedTime={project.data.pubDate.toISOString()}
+  articleTags={project.data.tags ?? []}
+  jsonLd={jsonLd}
+>
   <main id="main-content">
     <article class="mx-auto max-w-[65ch] px-6 py-20">
     <a
-      href="/projects"
+      href="/projects/"
       class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
     >
       ← Back to Projects

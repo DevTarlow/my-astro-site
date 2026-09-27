@@ -16,7 +16,7 @@ The short version: I am working inside the DeepSeek Harness for projects and dev
 
 OpenCode and the third-party harnesses are behind me now. For a long stretch my setup was a pile of parts that each did one job well and knew nothing about the others. I spent more time and money than I want to admit patching the seams between them.
 
-Hermes Agent was the first setup that felt like one piece. It held my context, it remembered how I work, and it kept the projects in one place. That is why I wrote about it a few weeks back in [How My Coding Workflow Changed - From VS Code to a Team of Agents](/blog/how-my-coding-workflow-changed).
+Hermes Agent was the first setup that felt like one piece. It held my context, it remembered how I work, and it kept the projects in one place. That is why I wrote about it a few weeks back in [How My Coding Workflow Changed - From VS Code to a Team of Agents](/blog/how-my-coding-workflow-changed/).
 
 Marimo Desktop is the next step in the same direction. It is my own agentic harness, so the fit is closer. It's not built to handle my coding. That's what the DeepSeek Harness is for.
 

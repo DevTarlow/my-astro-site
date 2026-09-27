@@ -37,7 +37,7 @@ That's the whole box right now. New tools land as I build them, and every credit
 
 ### Why It Runs on Credits
 
-The AI tools call real models, and every call costs me money. That's the same math I wrote about with [CopySprout](/blog/how-i-built-copysprout-an-ai-writing-tool-for-etsy-sellers), so the toolbox runs on credits.
+The AI tools call real models, and every call costs me money. That's the same math I wrote about with [CopySprout](/blog/how-i-built-copysprout-an-ai-writing-tool-for-etsy-sellers/), so the toolbox runs on credits.
 
 The first version of that was a subscription. The current one is simpler. A new account starts with 20 free credits, no card needed, so you can try any tool before you pay. After that you buy a pack when you need one: $3 for 100 credits, $5 for 250, or $7 for 500. They never expire, and there's nothing to cancel.
 

@@ -11,6 +11,7 @@
     "build": "astro build",
     "prebuild": "node scripts/optimize-images.mjs",
     "images": "node scripts/optimize-images.mjs",
+    "og:image": "node scripts/make-og-image.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",

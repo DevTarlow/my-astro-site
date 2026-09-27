@@ -8,7 +8,7 @@ tags:
 description: >-
   I built a cron job that dreams at 2am. Here's what happens when your AI
   works the night shift, and the strange insights that come from it.
-featuredimage: /images/how-i-built-an-ai-that-dreams-for-me.png
+featuredimage: /images/how-i-built-an-ai-that-dreams-for-me.jpg
 ---
 
 A cron job on my machine wakes up at 2am every night. It does not check email. It does not run backups. It dreams.

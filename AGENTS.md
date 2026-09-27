@@ -10,6 +10,7 @@ This file provides guidance to AI coding agents when working with this repositor
 | `npm run build` | Build production site to `./dist/` (runs image optimization first) |
 | `npm run preview` | Preview production build |
 | `npm run images` | Regenerate responsive WebP variants + manifest in `public/images/_opt/` |
+| `npm run og:image` | Regenerate the default social card and Apple touch icon (`public/images/og-default.png`, `apple-touch-icon.png`) |
 | `npm run check` | Run astro check (type-check Astro files) |
 | `npm run lint` | ESLint check all files |
 | `npm run lint:fix` | ESLint auto-fix |
@@ -58,6 +59,8 @@ Images live in `public/images/` and are referenced by public URL (`/images/foo.p
 - [plugins/rehype-optimize-images.mjs](plugins/rehype-optimize-images.mjs) does the same for markdown body images, and stamps `width`/`height`/`loading="lazy"` to prevent layout shift.
 - `<picture>` uses `class="contents"` so the existing sizing classes on the `<img>` keep working.
 
+**The file extension must match the bytes.** Two images shipped with the wrong extension (a 2.6MB JPEG named `.png`, a PNG named `.jpg`), which made the `og:image` content type disagree with the file. `scripts/optimize-images.mjs` skips `og-default.png` and `apple-touch-icon.png` because they are generated for unfurls and icons rather than page content. `scripts/make-og-image.mjs` (`npm run og:image`) rasterises the default share card with Lato, since Inter is only available over the network at runtime.
+
 ### Routing
 
 Pages use Astro file-based routing in [src/pages/](src/pages/):
@@ -81,7 +84,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 Key components in [src/components/](src/components/):
 
-- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), a skip link (`#skip-link`, off-screen until focused) that targets `#main-content`, Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta (fallback image), Navbar, `#app-shell` wrapper (Navbar + slot + FooterColumns + BackToTop), MobilePanel sibling, and BackToTop. **Every page must render `<main id="main-content">`** or the skip link has nowhere to go; the post and project pages wrap their `<article>` in one.
+- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), a skip link (`#skip-link`, off-screen until focused) that targets `#main-content`, Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta, Navbar, `#app-shell` wrapper (Navbar + slot + FooterColumns + BackToTop), MobilePanel sibling, and BackToTop. **Every page must render `<main id="main-content">`** or the skip link has nowhere to go; the post and project pages wrap their `<article>` in one. Props beyond title/description/image/ogType: `noindex` (drops the canonical and emits `robots noindex`, used by the 404), `publishedTime` + `articleTags` (emit `article:*` meta on `og:type=article` pages) and `jsonLd` (one object or an array, serialised with `<` escaped). Pages without their own `image` fall back to `/images/og-default.png`, a generated 1200x630 card; per-post images declare `og:image:width/height` from the build-time manifest.
 - **Navbar** - Header with "Tarlow" wordmark (links to `/`), centered inline nav links (Home, Blog, Projects, About, shown from `md`) with active-state highlighting (border-underline style), and a right cluster with the hamburger trigger (`data-menu-trigger`, `< md`, `aria-expanded` managed by MobilePanel) plus the theme toggle. No theme script of its own - BaseLayout owns theming.
 - **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout, inside `#app-shell` before BackToTop. Wordmark + blurb + copyright on the left, then three link groups: Explore (nav), Elsewhere (GitHub, Bluesky, X, Moss AI Studio - the external accounts that exist nowhere else in the chrome), and Follow (RSS, email). Left column spans `1.4fr` and the groups `2fr` at `md+`, stacking on mobile.
 - **Sidebar** - Blog sidebar shown at `lg+` on blog listing pages, sticky (`lg:sticky lg:top-8`) and tag cloud (top 8). Takes a `showRecent` prop: page 1 passes `showRecent={false}` (the main list already shows the newest posts) and renders an About card instead; pages 2+ show Recent Posts. No search - that lives in `BlogSearch`.

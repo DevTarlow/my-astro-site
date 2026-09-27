@@ -22,11 +22,14 @@ const MANIFEST_PATH = path.join(OUT_DIR, 'manifest.json')
 const WIDTHS = [320, 640, 1280]
 const WEBP_QUALITY = 78
 const INPUT_RE = /\.(png|jpe?g|webp|avif)$/i
+// Generated for social unfurls and home-screen icons; never rendered as page
+// content, so responsive variants would be dead weight in the build.
+const SKIP_RE = /^(og-default\.png|apple-touch-icon\.png)$/
 
 function listSources () {
   if (!existsSync(SRC_DIR)) return []
   return readdirSync(SRC_DIR)
-    .filter((name) => INPUT_RE.test(name))
+    .filter((name) => INPUT_RE.test(name) && !SKIP_RE.test(name))
     .map((name) => path.join(SRC_DIR, name))
 }
 

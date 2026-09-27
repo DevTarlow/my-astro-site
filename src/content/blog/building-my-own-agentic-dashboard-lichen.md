@@ -15,9 +15,9 @@ It shows my focus for the day, the tasks that are actually mine today, and the n
 
 ## The Dashboard Before This One
 
-I built a dashboard a few weeks back that talked to Hermes Agent. It pulled my tasks, my notes and my session history onto one page, and it had a dispatch button that turned a task into a real chat session with an agent. I wrote the whole thing up in [How My Dashboard Talks to My Agents - One Click From Task to Done](/blog/how-my-dashboard-talks-to-my-agents).
+I built a dashboard a few weeks back that talked to Hermes Agent. It pulled my tasks, my notes and my session history onto one page, and it had a dispatch button that turned a task into a real chat session with an agent. I wrote the whole thing up in [How My Dashboard Talks to My Agents - One Click From Task to Done](/blog/how-my-dashboard-talks-to-my-agents/).
 
-Then my stack shifted. Hermes Agent went behind me, Marimo Desktop took its place, and I told that story in [How My Stack Shifted Again - From Hermes Agent to a Harness of My Own](/blog/how-my-stack-shifted-again). The old dashboard was still pointed at a world that no longer existed. So I started again, this time from Marimo Desktop outward.
+Then my stack shifted. Hermes Agent went behind me, Marimo Desktop took its place, and I told that story in [How My Stack Shifted Again - From Hermes Agent to a Harness of My Own](/blog/how-my-stack-shifted-again/). The old dashboard was still pointed at a world that no longer existed. So I started again, this time from Marimo Desktop outward.
 
 The new one is Lichen.
 

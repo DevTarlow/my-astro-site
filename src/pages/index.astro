@@ -7,9 +7,32 @@ import PostActivityGraph from '../components/PostActivityGraph.astro'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Tarlow.space',
+    url: 'https://tarlow.space/',
+    description: "A blog about Tarlow's projects, local-first tools, and AI exploration.",
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Tarlow',
+    url: 'https://tarlow.space/',
+    jobTitle: 'Developer',
+    knowsAbout: ['local-first software', 'AI tools', 'web development'],
+    sameAs: [
+      'https://github.com/DevTarlow/',
+      'https://bsky.app/profile/mossaistudio.bsky.social',
+      'https://x.com/MossAIStudio',
+    ],
+  },
+]
 ---
 
-<BaseLayout description="A corner of the web built with intention. Here you'll find posts about my latest projects and research.">
+<BaseLayout description="A corner of the web built with intention. Here you'll find posts about my latest projects and research." jsonLd={jsonLd}>
   <main id="main-content" class="mx-auto max-w-[65ch] px-6 py-12 sm:py-20">
     <section class="mb-14 text-center sm:mb-20">
       <ContentImage

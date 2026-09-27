@@ -13,7 +13,7 @@ description: >-
 featuredimage: /images/hermes-custom-dashboard-tarlow.png
 ---
 
-I run my work through a small team of AI agents now. One handles my plans and reviews, one turns plans into shipped code, one does research, one handles social. I wrote about [how I got here](/blog/how-my-coding-workflow-changed) a couple weeks back.
+I run my work through a small team of AI agents now. One handles my plans and reviews, one turns plans into shipped code, one does research, one handles social. I wrote about [how I got here](/blog/how-my-coding-workflow-changed/) a couple weeks back.
 
 The catch: my work lived in too many places. Tasks in one app, notes in another, signups for my products scattered across a few databases, chat sessions buried in a desktop app. Every morning I spent the first hour re-gathering context I already had, just spread out. So I built a dashboard to pull it all into one place. Then I went one step further and wired it straight to my agents.
 

@@ -1,14 +1,14 @@
 ---
 title: 'Sunshine Family Dashboard - Web App'
 description: 'A private, self-hosted digital dashboard to keep your family organized — meal planning, recipes, calendar, todos, grocery lists, and more — all offline.'
-image: '/images/sunshine-family-dashboard-screenshot.jpg'
+image: '/images/sunshine-family-dashboard-screenshot.png'
 github: 'https://github.com/DevTarlow/sunshine-family-dashboard'
 tags: [local-dashboard, family-hub, local-ai, nextjs, home-automation, meal-planner, recipe-hub, calendar, stats, pwa]
 category: Launched
 pubDate: 2026-04-15
 ---
 
-![Screenshot](/images/sunshine-family-dashboard-screenshot.jpg)
+![Screenshot](/images/sunshine-family-dashboard-screenshot.png)
 
 The **Sunshine Family Dashboard** is a local-first web app that brings your family's entire week into one place. Packaged in a single Docker container and built with Next.js and SQLite, it handles meal planning, recipe bookmarking, shared grocery lists, daily todos, fitness tracking, dining-out costs, sticky notes, and a whole lot more.
 

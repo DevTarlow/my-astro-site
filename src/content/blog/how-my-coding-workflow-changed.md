@@ -12,7 +12,7 @@ description: >-
 featuredimage: /images/coding-workflow-agents.jpg
 ---
 
-Back in May I wrote about my [vibe coding setup](/blog/vibe-coding-setup-may-2026-my-go-to-stack). The short version: VS Code with the OpenChamber plugin running OpenCode, DeepSeek Flash doing the thinking, and me steering the whole thing. It was my daily driver for a while, and it worked.
+Back in May I wrote about my [vibe coding setup](/blog/vibe-coding-setup-may-2026-my-go-to-stack/). The short version: VS Code with the OpenChamber plugin running OpenCode, DeepSeek Flash doing the thinking, and me steering the whole thing. It was my daily driver for a while, and it worked.
 
 Then I found Hermes Agent. I didn't plan to switch. But the more I used it, the more I noticed I wasn't opening VS Code. At some point it hit me: it had been weeks.
 
