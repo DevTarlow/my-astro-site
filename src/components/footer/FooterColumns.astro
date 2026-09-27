@@ -1,0 +1,76 @@
+---
+// 2 - two columns: wordmark + bio left, grouped sitemap right.
+const year = new Date().getFullYear()
+
+const columns = [
+  {
+    title: 'Explore',
+    links: [
+      { href: '/', label: 'Home', external: false },
+      { href: '/blog', label: 'Blog', external: false },
+      { href: '/projects', label: 'Projects', external: false },
+      { href: '/about', label: 'About', external: false },
+    ],
+  },
+  {
+    title: 'Elsewhere',
+    links: [
+      { href: 'https://github.com/DevTarlow/', label: 'GitHub', external: true },
+      { href: 'https://bsky.app/profile/mossaistudio.bsky.social', label: 'Bluesky', external: true },
+      { href: 'https://x.com/MossAIStudio', label: 'X', external: true },
+      { href: 'https://mossaistudio.com/', label: 'Moss AI Studio', external: true },
+    ],
+  },
+  {
+    title: 'Follow',
+    links: [
+      { href: '/rss.xml', label: 'RSS feed', external: false },
+      { href: 'mailto:tarlow@mossaistudio.com', label: 'Email me', external: false },
+    ],
+  },
+]
+---
+
+<footer class="mt-16 border-t border-terracotta/10">
+  <div class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 md:grid-cols-[1.4fr_2fr] md:px-6">
+    <div>
+      <a
+        href="/"
+        class="font-sans text-xl font-semibold tracking-tight text-ink no-underline transition-colors hover:text-terracotta"
+      >
+        Tarlow
+      </a>
+      <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted">
+        I like to build things, help people, learn, and blog. Local-first tools and AI
+        experiments, documented as I go.
+      </p>
+      <p class="mt-6 text-xs text-muted">© {year} Tarlow. All rights reserved.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+      {
+        columns.map((column) => (
+          <div>
+            <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-terracotta">
+              {column.title}
+            </h2>
+            <ul class="mt-3 flex flex-col gap-2">
+              {column.links.map(({ href, label, external }) => (
+                <li>
+                  <a
+                    href={href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    class="text-sm text-muted no-underline transition-colors hover:text-terracotta"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</footer>
