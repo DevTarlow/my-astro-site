@@ -9,7 +9,7 @@ export default [
   ...astro.configs.recommended,
   jsxA11y.flatConfigs.recommended,
   {
-    ignores: ['dist/', '.astro/', 'node_modules/'],
+    ignores: ['dist/', '.astro/', 'node_modules/', '.audit/'],
   },
   {
     // Build-time Node scripts and rehype plugins run outside the browser.

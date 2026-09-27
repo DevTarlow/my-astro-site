@@ -37,3 +37,6 @@ pnpm-debug.log*
 
 # editor metadata
 .frontmatter/
+
+# UX audit scratch work (screenshots, browser profiles)
+.audit/
