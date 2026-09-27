@@ -1,12 +1,12 @@
 /**
- * Plain-text excerpt for post cards.
+ * Plain-text views of a markdown body.
  *
  * Strips markdown syntax (fences, links, images, headings, lists, blockquotes,
- * tables, emphasis) before truncating on a word boundary. Blockquote markers
- * used to leak through as literal `> "` artifacts, so they are removed per line.
+ * tables, emphasis) and collapses whitespace. Blockquote markers used to leak
+ * through as literal `> "` artifacts, so they are removed per line.
  */
-export function excerpt(body: string, max = 250): string {
-  const text = body
+export function plainText(body: string): string {
+  return body
     .replace(/^---[\s\S]*?---\n*/m, '')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/`([^`]*)`/g, '$1')
@@ -22,6 +22,11 @@ export function excerpt(body: string, max = 250): string {
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+/** Truncates the plain text on a word boundary, for post cards. */
+export function excerpt(body: string, max = 250): string {
+  const text = plainText(body)
 
   if (text.length <= max) return text
 

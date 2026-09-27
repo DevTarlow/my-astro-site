@@ -1,12 +1,27 @@
 ---
 import { getPublicBlog } from '../lib/posts'
 import { dateParts } from '../lib/dates'
+import { getImageEntry } from '../lib/image-manifest'
 
 const posts = await getPublicBlog()
 
 const sorted = [...posts].sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 )
+
+/**
+ * A small WebP variant for result cards. Results used to be text-only while the
+ * listing right above them showed images, so they read as a different page.
+ * Uses the 640w variant rather than the original, which can be several MB.
+ */
+function thumbFor (src?: string) {
+  if (!src) return null
+  const entry = getImageEntry(src)
+  if (!entry) return null
+  const variant = entry.variants.find((v) => v.w === 640) ?? entry.variants[entry.variants.length - 1]
+  if (!variant) return null
+  return { url: variant.url, w: variant.w, h: variant.h }
+}
 
 const postsData = sorted.map(p => ({
   id: p.id,
@@ -15,7 +30,9 @@ const postsData = sorted.map(p => ({
   // Pre-formatted server-side so the client never re-derives the date in its
   // own timezone and shifts a calendar date by a day.
   date: dateParts(p.data.pubDate).long,
+  datetime: p.data.pubDate.toISOString().slice(0, 10),
   tags: p.data.tags ?? [],
+  thumb: thumbFor(p.data.featuredimage),
 }))
 ---
 
@@ -29,6 +46,7 @@ const postsData = sorted.map(p => ({
       id="search-input"
       name="q"
       aria-label="Search posts"
+      aria-describedby="search-scope"
       aria-controls="search-results"
       placeholder="Search posts..."
       class="w-full border border-terracotta/20 rounded px-3 py-2 text-sm bg-paper text-ink placeholder-muted focus:outline-none focus:border-terracotta transition-colors"
@@ -40,93 +58,145 @@ const postsData = sorted.map(p => ({
       Search
     </button>
   </form>
+  <p id="search-scope" class="mt-2 text-xs text-muted">
+    Searches titles, descriptions, tags, and the text of every post.
+  </p>
 </div>
 
 <script define:vars={{ postsData }} is:inline data-astro-rerun>
   (function () {
     function init () {
-    const searchForm = document.getElementById('search-form')
-    const searchInput = document.getElementById('search-input')
-    const defaultContent = document.getElementById('default-content')
-    const searchResults = document.getElementById('search-results')
+      const searchForm = document.getElementById('search-form')
+      const searchInput = document.getElementById('search-input')
+      const defaultContent = document.getElementById('default-content')
+      const searchResults = document.getElementById('search-results')
 
-    if (!searchForm || !searchInput || !defaultContent || !searchResults) return
+      if (!searchForm || !searchInput || !defaultContent || !searchResults) return
 
-    // Fresh DOM nodes on every navigation: bind directly, no stale state.
-    searchResults.addEventListener('click', function (e) {
-      if (e.target.closest('[data-clear]')) clearSearch()
-    })
+      // Bodies are not inlined (they would add well over 100KB to every listing
+      // page), so they arrive from /search-index.json. Warm the request as soon
+      // as the visitor touches the field so submitting feels instant.
+      let bodyIndex = null
+      let bodyIndexPromise = null
+      let bodyIndexFailed = false
 
-    function clearSearch () {
-      searchInput.value = ''
-      searchResults.classList.add('hidden')
-      defaultContent.classList.remove('hidden')
-      searchResults.innerHTML = ''
-      searchInput.focus()
-    }
-
-    function escapeHtml (str) {
-      if (!str) return ''
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-    }
-
-    searchForm.addEventListener('submit', function (e) {
-      e.preventDefault()
-      const query = searchInput.value.trim().toLowerCase()
-      if (!query) {
-        clearSearch()
-        return
+      function loadBodyIndex () {
+        if (bodyIndexPromise) return bodyIndexPromise
+        bodyIndexPromise = fetch('/search-index.json')
+          .then(function (res) { return res.ok ? res.json() : {} })
+          .then(function (data) { bodyIndex = data || {}; return bodyIndex })
+          .catch(function () {
+            bodyIndexFailed = true
+            bodyIndex = {}
+            return bodyIndex
+          })
+        return bodyIndexPromise
       }
 
-      const words = query.split(/\s+/)
-      const matches = postsData.filter(function (post) {
-        return words.every(function (word) {
-          return post.title.toLowerCase().includes(word) ||
-            post.description.toLowerCase().includes(word) ||
-            post.tags.some(function (tag) {
-              return tag.toLowerCase().includes(word)
-            })
-        })
+      searchInput.addEventListener('focus', loadBodyIndex, { once: true })
+      searchInput.addEventListener('input', loadBodyIndex, { once: true })
+
+      // Fresh DOM nodes on every navigation: bind directly, no stale state.
+      searchResults.addEventListener('click', function (e) {
+        if (e.target.closest('[data-clear]')) clearSearch()
       })
 
-      if (matches.length === 0) {
-        searchResults.innerHTML =
-          '<div class="space-y-4">' +
-          '<div class="flex items-center justify-between">' +
-          '<p class="text-sm text-muted">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
-          '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
-          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-          '</button>' +
-          '</div>' +
-          '</div>'
-      } else {
-        let html = ''
-        html += '<div class="flex items-center justify-between mb-6">'
-        html += '<p class="text-sm text-muted">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
-        html += '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
-          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-          '</button>'
-        html += '</div>'
-
-        html += '<ul class="space-y-12">'
-        matches.forEach(function (post) {
-          html += '<li>' +
-            '<article>' +
-            '<time class="block text-sm text-muted mb-1.5">' + post.date + '</time>' +
-            '<a href="/blog/' + post.id + '/" class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors">' + escapeHtml(post.title) + '</a>' +
-            '<p class="mt-2 text-sm text-muted leading-relaxed">' + escapeHtml(post.description) + '</p>' +
-            '<a href="/blog/' + post.id + '/" class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity">Read More →</a>' +
-            '</article>' +
-            '</li>'
-        })
-        html += '</ul>'
-
-        searchResults.innerHTML = html
+      function clearSearch () {
+        searchInput.value = ''
+        searchResults.classList.add('hidden')
+        defaultContent.classList.remove('hidden')
+        searchResults.innerHTML = ''
+        searchInput.focus()
       }
 
-      defaultContent.classList.add('hidden')
-      searchResults.classList.remove('hidden')
-    })
+      function escapeHtml (str) {
+        if (!str) return ''
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+      }
+
+      function clearButton () {
+        return '<button data-clear class="text-terracotta hover:opacity-80 transition-opacity" aria-label="Clear search">' +
+          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+          '</button>'
+      }
+
+      // Same shape as the listing cards, so results no longer read as a
+      // different page: image, date, heading link, description, tags.
+      function resultHtml (post) {
+        let html = '<li><article>'
+        if (post.thumb) {
+          html += '<img src="' + escapeHtml(post.thumb.url) + '" width="' + post.thumb.w + '" height="' + post.thumb.h +
+            '" alt="" loading="lazy" decoding="async" class="w-full h-36 object-cover rounded-lg mb-3" />'
+        }
+        html += '<time datetime="' + escapeHtml(post.datetime) + '" class="block text-sm text-muted mb-1.5">' + escapeHtml(post.date) + '</time>'
+        html += '<h2 class="font-sans text-xl text-ink">' +
+          '<a href="/blog/' + post.id + '/" class="text-inherit no-underline transition-colors hover:text-terracotta">' + escapeHtml(post.title) + '</a>' +
+          '</h2>'
+        html += '<p class="mt-2 text-sm text-muted leading-relaxed">' + escapeHtml(post.description) + '</p>'
+        if (post.tags.length) {
+          html += '<ul class="mt-3 flex flex-wrap gap-2">'
+          post.tags.forEach(function (tag) {
+            html += '<li class="text-xs text-terracotta bg-terracotta/5 px-2 py-0.5 rounded">' +
+              '<a href="/blog/tags/' + encodeURIComponent(tag) + '/" class="no-underline text-inherit">#' + escapeHtml(tag) + '</a>' +
+              '</li>'
+          })
+          html += '</ul>'
+        }
+        html += '</article></li>'
+        return html
+      }
+
+      function haystackFor (post) {
+        return [
+          post.title,
+          post.description,
+          post.tags.join(' '),
+          (bodyIndex && bodyIndex[post.id]) || '',
+        ].join(' ').toLowerCase()
+      }
+
+      searchForm.addEventListener('submit', async function (e) {
+        e.preventDefault()
+        const query = searchInput.value.trim().toLowerCase()
+        if (!query) {
+          clearSearch()
+          return
+        }
+
+        if (!bodyIndex) await loadBodyIndex()
+
+        const words = query.split(/\s+/)
+        const matches = postsData.filter(function (post) {
+          const haystack = haystackFor(post)
+          return words.every(function (word) { return haystack.includes(word) })
+        })
+
+        if (matches.length === 0) {
+          searchResults.innerHTML =
+            '<div class="space-y-4">' +
+            '<div class="flex items-center justify-between">' +
+            '<p class="text-sm text-muted">No results for "<strong>' + escapeHtml(query) + '</strong>"</p>' +
+            clearButton() +
+            '</div>' +
+            '</div>'
+        } else {
+          let html = ''
+          html += '<div class="flex items-center justify-between mb-6">'
+          html += '<p class="text-sm text-muted">' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+          html += clearButton()
+          html += '</div>'
+          if (bodyIndexFailed) {
+            html += '<p class="mb-6 text-xs text-muted">Post text could not be loaded, so these results only cover titles, descriptions and tags.</p>'
+          }
+          html += '<ul class="space-y-12">'
+          matches.forEach(function (post) { html += resultHtml(post) })
+          html += '</ul>'
+          searchResults.innerHTML = html
+        }
+
+        defaultContent.classList.add('hidden')
+        searchResults.classList.remove('hidden')
+      })
     }
 
     // This script is rendered before #default-content / #search-results exist,
