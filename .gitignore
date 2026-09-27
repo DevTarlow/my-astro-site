@@ -5,6 +5,7 @@ public/images/_opt/
 # generated types
 .astro/
 .opencode/
+.agents/
 
 # dependencies
 node_modules/
