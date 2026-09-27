@@ -19,7 +19,10 @@ const { posts } = Astro.props
           posts.map((post) => (
             <li>
               <article>
-                <time class="block text-xs text-muted mb-1">
+                <time
+                  datetime={post.data.pubDate.toISOString().slice(0, 10)}
+                  class="block text-xs text-muted mb-1"
+                >
                   {dateParts(post.data.pubDate).short}
                 </time>
                 <a

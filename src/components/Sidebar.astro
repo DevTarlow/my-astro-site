@@ -44,7 +44,10 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0,
                 <span class="block text-sm font-medium text-ink group-hover:text-terracotta transition-colors leading-snug">
                   {post.data.title}
                 </span>
-                <time class="block text-[10px] text-muted mt-0.5">
+                <time
+                  datetime={post.data.pubDate.toISOString().slice(0, 10)}
+                  class="block text-[10px] text-muted mt-0.5"
+                >
                   {dateParts(post.data.pubDate).long}
                 </time>
                 <span class="block text-xs text-muted mt-1 leading-normal line-clamp-2">

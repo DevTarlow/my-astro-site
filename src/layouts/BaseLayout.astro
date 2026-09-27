@@ -132,6 +132,11 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
         }
 
         document.addEventListener('astro:page-load', function () {
+          // Astro's router copies the next page's <html> attributes onto the
+          // live root, which strips `consent-pending`, and this head script does
+          // not re-run. Without re-applying it here, a reader who clicks any
+          // internal link before answering would never see the notice again.
+          if (!readConsent()) document.documentElement.classList.add('consent-pending')
           if (window.__gaEnabled) {
             window.gtag('config', MEASUREMENT_ID, { page_path: location.pathname })
           }

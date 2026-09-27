@@ -45,19 +45,26 @@ const pageUrl = `${url.protocol}//${url.host}${url.pathname}`
 
 <script is:inline>
   (function () {
-    const btn = document.getElementById('copy-link-btn')
-    const label = document.getElementById('copy-link-label')
-    if (!btn || !label) return
+    // Delegated on document so the button still works after a View Transition
+    // navigation replaces the node. Binding directly to #copy-link-btn meant it
+    // only ever worked on a full page load, so anyone arriving from a link in
+    // the site got a button that did nothing.
+    if (window.__shareButtonsInit) return
+    window.__shareButtonsInit = true
 
-    btn.addEventListener('click', async function () {
+    document.addEventListener('click', async function (e) {
+      const btn = e.target.closest('#copy-link-btn')
+      if (!btn) return
+      const label = btn.querySelector('#copy-link-label')
+      if (!label) return
+
       try {
         await navigator.clipboard.writeText(window.location.href)
         label.textContent = 'Copied!'
-        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
       } catch {
         label.textContent = 'Failed'
-        setTimeout(function () { label.textContent = 'Copy link' }, 2000)
       }
+      setTimeout(function () { label.textContent = 'Copy link' }, 2000)
     })
   })()
 </script>
