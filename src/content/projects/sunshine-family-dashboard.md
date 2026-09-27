@@ -4,7 +4,6 @@ description: 'A private, self-hosted digital dashboard to keep your family organ
 image: '/images/sunshine-family-dashboard-screenshot.jpg'
 github: 'https://github.com/DevTarlow/sunshine-family-dashboard'
 tags: [local-dashboard, family-hub, local-ai, nextjs, home-automation, meal-planner, recipe-hub, calendar, stats, pwa]
-featured: true
 category: Launched
 pubDate: 2026-04-15
 ---

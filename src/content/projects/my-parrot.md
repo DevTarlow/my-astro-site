@@ -4,7 +4,6 @@ description: 'A local-first text-to-speech web UI powered by Kokoro-82M. Type te
 image: '/images/my-parrot-app-screenshot-top.png'
 github: 'https://github.com/DevTarlow/my-parrot'
 tags: [kokoro, local-ai, python, tts, offline-tools, audio]
-featured: true
 category: Launched
 pubDate: 2026-07-03
 ---
