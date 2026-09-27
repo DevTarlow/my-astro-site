@@ -1,13 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import ProjectCard from '../../components/ProjectCard.astro'
-import { getPublicProjects } from '../../lib/posts'
+import ProjectFeaturedCard from '../../components/ProjectFeaturedCard.astro'
+import ProjectIndexRow from '../../components/ProjectIndexRow.astro'
+import { getProjects, toDisplay, groupByYear } from '../../lib/project-browse'
 
-const projects = await getPublicProjects()
-projects.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+const projects = await getProjects()
 
-const featured = projects.find((project) => project.data.featured)
-const rest = projects.filter((project) => project.id !== featured?.id)
+// Every project flagged `featured` gets the full card; the rest collapse into
+// the compact index grouped by year.
+const rows = toDisplay(projects)
+const featured = rows.filter((row) => row.project.data.featured)
+const remaining = groupByYear(rows.filter((row) => !row.project.data.featured))
 
 const latestImage = projects[0]?.data.image
 ---
@@ -24,9 +27,50 @@ const latestImage = projects[0]?.data.image
       <div class="mx-auto mt-6 h-0.5 w-12 rounded bg-terracotta"></div>
     </header>
 
-    <div class="mx-auto max-w-4xl flex flex-col gap-6">
-      {featured && <ProjectCard project={featured} featured />}
-      {rest.map((project) => <ProjectCard project={project} />)}
+    <div class="mx-auto flex max-w-6xl flex-col gap-12">
+      {
+        featured.length > 0 && (
+          <section aria-labelledby="projects-featured">
+            <h2
+              id="projects-featured"
+              class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-terracotta"
+            >
+              Featured
+            </h2>
+            <div class="flex flex-col gap-4">
+              {featured.map((item) => (
+                <ProjectFeaturedCard item={item} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        remaining.length > 0 && (
+          <section aria-labelledby="projects-index">
+            <h2
+              id="projects-index"
+              class="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-terracotta"
+            >
+              Everything else
+            </h2>
+
+            {remaining.map(([year, yearRows]) => (
+              <div class="mb-6 last:mb-0">
+                <p class="mb-1 font-mono text-[11px] tracking-[0.2em] text-muted">{year}</p>
+                <ul class="divide-y divide-terracotta/10">
+                  {yearRows.map((item) => (
+                    <li>
+                      <ProjectIndexRow item={item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
+        )
+      }
     </div>
   </main>
 </BaseLayout>

@@ -33,6 +33,15 @@ Content access helpers are in [src/lib/posts.ts](src/lib/posts.ts):
 - `getPublishedBlog()` - always filters drafts (used for RSS)
 - `getRelatedPosts(current, all, limit?)` - tag-overlap scoring with pubDate tie-break
 
+Project listing helpers are in [src/lib/project-browse.ts](src/lib/project-browse.ts):
+- `getProjects()` - newest first (used by `/projects/`)
+- `toDisplay(projects)` / `groupByYear(rows)` - pre-format the dates and titles the projects page renders (`ProjectDisplay` carries `title`, `shortTitle`, `year`, `month`, `monthYear`, `href`, `category`)
+- `categoryClass(category)` - shared `Launched` / `Development` pill styling
+
+Date helper: [src/lib/dates.ts](src/lib/dates.ts) - `dateParts(date)` returns `long` / `short` / `monthYear` / `month` / `year`.
+
+**Always format frontmatter dates through `dateParts`.** `pubDate: 2026-09-27` is parsed by Zod into a Date at UTC midnight, so calling `toLocaleDateString()` without `timeZone: 'UTC'` renders the previous day for anyone west of UTC (a post dated the 27th displayed as September 26). `dateParts` pins every format to UTC so the displayed date always matches the frontmatter. This applies to every surface that shows a date, including the client-side `BlogSearch` results, which is why it receives a pre-formatted `date` string instead of a raw timestamp. `<time datetime>` uses `toISOString().slice(0, 10)` to stay a date-only value that agrees with the visible text. Anchors that only need ordering (`pubDate.getTime()`) are unaffected.
+
 Plain-text excerpt helper: [src/lib/excerpt.ts](src/lib/excerpt.ts) - `excerpt(body, max)` strips frontmatter, links, images, headings, lists, blockquotes, tables, and markdown from post bodies.
 
 ### Images
@@ -55,7 +64,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 | `/blog/[...slug]/` | `blog/[...slug].astro` | Individual blog post via `getStaticPaths()` |
 | `/blog/tags/` | `blog/tags/index.astro` | Tag cloud with post counts |
 | `/blog/tags/[tag]/` | `blog/tags/[tag].astro` | Posts filtered by tag |
-| `/projects/` | `projects/index.astro` | Showcase; the project with `featured: true` renders first, then the rest |
+| `/projects/` | `projects/index.astro` | Showcase; projects flagged `featured: true` get full cards, the rest collapse into a compact index grouped by year |
 | `/projects/[...slug]/` | `projects/[...slug].astro` | Individual project detail |
 | `/about/` | `about.astro` | About page |
 | `404` | `404.astro` | Custom 404 |
@@ -65,15 +74,17 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 Key components in [src/components/](src/components/):
 
-- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta (fallback image), Navbar, `#app-shell` wrapper (Navbar + slot + BackToTop), MobilePanel sibling, and BackToTop.
+- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), Google Analytics (G-H879GPJ4GM), Inter font from Google Fonts, OG/Twitter meta (fallback image), Navbar, `#app-shell` wrapper (Navbar + slot + FooterColumns + BackToTop), MobilePanel sibling, and BackToTop.
 - **Navbar** - Header with "Tarlow" wordmark (links to `/`), centered inline nav links (Home, Blog, Projects, About, shown from `md`) with active-state highlighting (border-underline style), and a right cluster with the hamburger trigger (`data-menu-trigger`, `< md`, `aria-expanded` managed by MobilePanel) plus the theme toggle. No theme script of its own - BaseLayout owns theming.
+- **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout, inside `#app-shell` before BackToTop. Wordmark + blurb + copyright on the left, then three link groups: Explore (nav), Elsewhere (GitHub, Bluesky, X, Moss AI Studio - the external accounts that exist nowhere else in the chrome), and Follow (RSS, email). Left column spans `1.4fr` and the groups `2fr` at `md+`, stacking on mobile.
 - **Sidebar** - Blog sidebar shown at `lg+` on blog listing pages, sticky (`lg:sticky lg:top-8`) and tag cloud (top 8). Takes a `showRecent` prop: page 1 passes `showRecent={false}` (the main list already shows the newest posts) and renders an About card instead; pages 2+ show Recent Posts. No search - that lives in `BlogSearch`.
 - **MobilePanel** - Slide-in mobile nav (`< md`) with nav links, theme toggle row, and Recent Posts. No search/posts data. Script is `data-astro-rerun` + delegated (via `window.__menuCleanup`) to survive View Transitions; manages `inert` on `#app-shell`/panel, focus trap + return, Escape, backdrop/close clicks, and auto-close on resize past `md`.
 - **BlogSearch** - Search box rendered above the post list on `/blog` listing pages at all sizes (filters title, description, and tags client-side; results replace the list via `#default-content` / `#search-results`). The only component that inlines post metadata (`define:vars`). The script renders *before* `#default-content`/`#search-results`, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
 - **Pagination** - Prev/Next with page numbers, ellipsis for long ranges, configurable `basePath` (defaults to `/blog`). Links are 44px hit targets and the current page carries `aria-current="page"`; the `<nav>` is labelled "Pagination".
 - **ContentImage** - Reads the build-time image manifest and emits responsive `<picture>`/WebP `srcset` markup. Accepts `src` (public path), `alt`, `class`, `sizes`, `loading`, and `fetchpriority`; falls back to a plain `<img>` with `sharp` dimensions when the manifest is absent.
 - **ImageZoom** - Global click-to-zoom overlay for blog/project article images.
-- **ProjectCard** - Responsive card with image, excerpt, tags, and GitHub link. Takes a `featured` prop that adds the "Featured" badge and a filled CTA; when the project has a `url` the CTA becomes an external "Visit" link.
+- **ProjectFeaturedCard** - Full-width lead card for a project with `featured: true`: 16rem screenshot column at `sm+`, date + category meta, title, 3-line description, tags, and GitHub/Visit links. Takes a single `ProjectDisplay` row.
+- **ProjectIndexRow** - One-line row for everything not featured: 64x44 thumbnail (`sm+`, falls back to the project initial when there is no image), title, 2-line description (`md+`), category pill (`sm+`) and month. The whole row is a single link, so the title column and description are hidden on small screens to stay scannable.
 - **RelatedPosts** - Renders tag-based related posts at the bottom of blog posts.
 - **ShareButtons** - Bluesky + X share links (client-side intent URLs, no API calls).
 - **BackToTop** - Fixed circular button that appears after scrolling 400px. When hidden it is `invisible`, `aria-hidden`, and `tabindex="-1"` so keyboard users cannot focus an invisible control.
@@ -118,4 +129,4 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 Add a new blog post: create a `.md` file in `src/content/blog/` with the required frontmatter (`title`, `pubDate`, `description`, `tags`). Add `draft: true` to preview before publishing. Blog posts render with prose styling and tag links. For featured images, place them in `/public/images/` and reference as `/images/filename.png`.
 
-Projects follow the same pattern in `src/content/projects/` with the additional `category` field (`Launched` or `Development`). Add `featured: true` to pin one project at the top of `/projects/`, and `url` for an external "Visit" link. Images need no import or build step - just drop the file in `public/images/` and reference `/images/filename.png`; the optimizer picks it up on the next `npm run dev` / `npm run build`.
+Projects follow the same pattern in `src/content/projects/` with the additional `category` field (`Launched` or `Development`). Add `featured: true` to give a project the full card at the top of `/projects/` (every featured project gets one, and the rest render as compact index rows), and `url` for an external "Visit" link. Images need no import or build step - just drop the file in `public/images/` and reference `/images/filename.png`; the optimizer picks it up on the next `npm run dev` / `npm run build`.

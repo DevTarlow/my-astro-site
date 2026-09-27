@@ -1,0 +1,59 @@
+---
+import ContentImage from './ContentImage.astro'
+import type { ProjectDisplay } from '../lib/project-browse'
+import { categoryClass } from '../lib/project-browse'
+
+export interface Props {
+  item: ProjectDisplay
+}
+
+const { item } = Astro.props
+const { project, href, shortTitle, month, category } = item
+
+// The compact index loses the screenshot at small widths; the row keeps its
+// thumbnail from `sm` up so every project stays visually anchored.
+const titleClass =
+  'font-sans text-base text-ink no-underline transition-colors group-hover:text-terracotta'
+---
+
+<a
+  href={href}
+  class="group flex items-center gap-4 py-2.5 no-underline"
+>
+  <span class="hidden shrink-0 overflow-hidden rounded border border-terracotta/10 sm:block">
+    {
+      project.data.image ? (
+        <ContentImage
+          src={project.data.image}
+          alt=""
+          sizes="96px"
+          class="h-11 w-16 object-cover"
+        />
+      ) : (
+        <span class="flex h-11 w-16 items-center justify-center bg-terracotta/10 font-mono text-sm text-terracotta">
+          {shortTitle.charAt(0)}
+        </span>
+      )
+    }
+  </span>
+
+  <span class:list={[titleClass, 'hidden w-56 shrink-0 sm:block']}>{shortTitle}</span>
+  <span class:list={[titleClass, 'min-w-0 flex-1 sm:hidden']}>{shortTitle}</span>
+
+  <span class="hidden min-w-0 flex-1 md:block">
+    <span class="block max-w-[46rem] text-sm text-muted line-clamp-2">{project.data.description}</span>
+  </span>
+
+  <span class="flex shrink-0 items-center gap-3 text-xs">
+    {
+      category && (
+        <span class:list={['hidden rounded px-1.5 py-0.5 sm:inline', categoryClass(category)]}>
+          {category}
+        </span>
+      )
+    }
+    <time datetime={project.data.pubDate.toISOString().slice(0, 10)} class="font-mono text-[11px] uppercase tracking-wider text-muted">
+      {month}
+    </time>
+  </span>
+</a>
