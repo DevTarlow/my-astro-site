@@ -1,5 +1,5 @@
 ---
-title: How I'm Building Moss Toolbox - A Growing Suite of Useful Tools
+title: How I'm Building Moss Toolbox - AI Tools That Know Your Business
 pubDate: 2026-08-21
 draft: false
 tags:
@@ -8,65 +8,58 @@ tags:
   - AI
   - ProductLaunch
 description: >-
-  Moss Toolbox is my growing set of free web tools and AI powered member tools
-  under one membership. Here is what is in it, how I am building it, and the
-  friction I hit along the way.
-featuredimage: /images/moss-toolbox-hero-section.png
+  Moss Toolbox is my growing set of AI tools for small businesses. Fill in your
+  profile once, every tool starts from it, and the credits are pay-as-you-go.
+  Here is what is in the box and how I am building it.
+featuredimage: /images/moss-toolbox-ai-tools.png
 ---
 
 Most of my tools start the same way. A small problem that keeps showing up, and a fix that's too useful to leave as a bookmark.
 
 For a while, each tool got its own little site. It works, but it scatters. One tool here, one tool there, separate logins, separate payments, and every new idea means another domain to look after.
 
-So I built one place for them. [Moss Toolbox](https://mosstoolbox.com) is where my tools live now. Free ones that anyone can use, AI powered ones behind one simple membership. It's live, it's growing, and new tools are getting built and tested all the time.
+So I built one place for them. [Moss Toolbox](https://mosstoolbox.com) is where my tools live now. It's live, it's growing, and new tools are getting built and tested all the time.
+
+> Update, September 2026: the toolbox has changed since this was written. The free browser tools are retired, the monthly membership is gone, and the whole box is AI tools on pay-as-you-go credits. I've updated the details below to match.
 
 ### What's In the Toolbox
 
-The free tools are ready the second you open the page. No account, no sign-up, nothing to install:
+The toolbox is built around one idea: you shouldn't have to explain your business every time you open a tool.
 
-- **Etsy Fee Calculator** - enter a sale price and see what you actually keep after fees
-- **Etsy Listing Checker** - checks title length, tags, and description against the rules that matter
-- **Etsy Photo Size Checker** - makes sure your photos meet Etsy's size requirements before you upload
-- **ChatGPT Prompts Library** - ready-to-use prompts you can search, copy, and paste
-- **Instagram Captions Library** - captions by vibe, from short and funny to travel and aesthetic
+You fill in a business profile once. Your name, what you sell, who buys it, how you write, your logo and colours, and the answers you give again and again. Every tool after that starts from it and only asks for what's new.
 
-The first three are for Etsy sellers, the corner of my work I know best.
+The tools cover the jobs that eat a seller's time:
 
-The member tools run on AI and cost one credit per use:
-
+- **Review Response Generator** - paste a customer review and get three replies in your tone, calm and professional even when the review isn't
+- **Customer Reply Generator** - the same thing for a message from a customer
+- **Product Listing Writer** - pick a product you've saved and get titles, a description in your voice, the features, and the tags that fit the platform
 - **AI Image Prompt Generator** - describe the picture you want, get a detailed prompt ready for Midjourney, Flux, or any image tool
-- **AI Product Name Generator** - tell it what you're selling, get names that don't sound like everything else on the shelf
-- **AI Caption Generator** - subject and vibe in, three captions out
-- **AI Custom Prompt Generator** - describe the job, get a custom prompt for ChatGPT or any chatbot
+- **AI Image Studio** - generate an image from a description, then keep editing it in plain words until it's right
 
-One membership covers every tool, including the ones I haven't built yet.
+That's the whole box right now. New tools land as I build them, and every credit works on all of them.
 
-### Free Tools, Member Tools
+### Why It Runs on Credits
 
-The split is about cost, not greed.
+The AI tools call real models, and every call costs me money. That's the same math I wrote about with [CopySprout](/blog/how-i-built-copysprout-an-ai-writing-tool-for-etsy-sellers), so the toolbox runs on credits.
 
-Free tools run entirely in the browser. They cost me almost nothing to serve, so they stay free with no account, forever. That part is easy.
+The first version of that was a subscription. The current one is simpler. A new account starts with 20 free credits, no card needed, so you can try any tool before you pay. After that you buy a pack when you need one: $3 for 100 credits, $5 for 250, or $7 for 500. They never expire, and there's nothing to cancel.
 
-Member tools call real AI models, and every call costs me money. That's the same math I wrote about with [CopySprout](/blog/how-i-built-copysprout-an-ai-writing-tool-for-etsy-sellers), so the toolbox runs on credits: one credit per run, 1,000 fresh credits a month, $9.99 a month or $99 a year, cancel anytime. Predictable for me, predictable for the people using it.
+Most tools cost one credit per run. The AI Image Studio costs five per image, whether you create one or change one, and every tool shows its price before it runs.
 
 ### The Hard Parts
 
 Building the tools was the easy part. The friction showed up everywhere else.
 
-- **The headline.** I rewrote the front page headline about eight times in one night. Clever versions, punchy versions, one about the daily grind that read like a motivational poster. They all sounded like ads. The one that stuck is the plain one: "The Toolbox. Free tools built to save you time." It tells the truth without promising a revolution. I also learned to keep the price out of the hero. A number up front makes people bounce before they know what the thing is.
+- **The headline.** I rewrote the front page headline about eight times in one night. Clever versions, punchy versions, one about the daily grind that read like a motivational poster. They all sounded like ads. The one that stuck then was the plain one: "The Toolbox. Free tools built to save you time." The headline has changed since the free tools retired, but the rule held. Say what the thing does and who it's for.
 
-- **Letting an AI tool loose on the internet.** Member tools take free text and feed it to a model. If you let people type anything, the model will happily help with anything. So every generator has limits: input caps, filters for jailbreak attempts, hate, and private info like card numbers, plus a refusal line baked into each prompt. A blocked input never spends a credit, and a filtered result refunds it. It's not the glamorous part of building AI tools, but it's the part that makes them safe to leave running.
+- **Letting an AI tool loose on the internet.** The tools take free text and feed it to a model. If you let people type anything, the model will happily help with anything. So every generator has limits: input caps, filters for jailbreak attempts, hate, and private info like card numbers, plus a refusal line baked into each prompt. A blocked input never spends a credit, and a filtered result refunds it. It's not the glamorous part of building AI tools, but it's the part that makes them safe to leave running.
 
 - **The plumbing.** A tool looks like a single page, but there's a lot behind it: accounts, payments, credits. Once that plumbing is in place, a new tool is mostly a page and a function, not a whole new app. I can keep adding tools without rebuilding anything.
 
 ### What's Next
 
-It's a work in progress on purpose. I'm building toward a proper suite of useful tools for business people, marketers, and everyday users who want an edge without installing another app or learning another dashboard.
+It's a work in progress on purpose. I'm building toward a proper suite of tools for small businesses and the people who run them, without another app to install or another dashboard to learn.
 
-If you need a small job done and don't want to sign up for anything, start with the free tools. If you want the AI ones, the membership is one simple choice.
+If you need a small job done, make an account and spend the 20 free credits. If you want more, buy a pack when you need one.
 
 [Try Moss Toolbox →](https://mosstoolbox.com)
-
----
-
-*P.S. Moss Toolbox is part of [Moss AI Studio](https://mossaistudio.com) - my shop for local-first, privacy-respecting tools. I wrote about building [CopySprout](/blog/how-i-built-copysprout-an-ai-writing-tool-for-etsy-sellers) and [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click) here too.*

@@ -1,43 +1,40 @@
 ---
-title: Moss Toolbox - AI Tools for Creators and Sellers
+title: Moss Toolbox - AI Tools That Know Your Business
 pubDate: 2026-09-01
 draft: false
 featured: true
 category: Launched
-url: https://mossaistudio.com
+url: https://mosstoolbox.com/
 tags:
   - ai-tools
-  - membership
+  - business
   - credits
-  - subscription
+  - pay-as-you-go
   - tool
 description: >-
-  A growing set of AI tools for makers and sellers. Free tools anyone can
-  use, plus member tools on a simple credits plan.
-image: /images/moss-toolbox-hero-section.png
+  AI tools for small businesses. Fill in your business profile once and every
+  tool starts from it. 20 free credits to start, then packs from $3 that never
+  expire.
+image: /images/moss-toolbox-ai-tools.png
 ---
 
-Moss Toolbox is my growing collection of AI tools for people who make and sell things. Small, focused tools that do one job and do it well.
+Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool starts from it instead of asking the same questions again.
 
-Some of it is free. Listing checkers, fee calculators, image resizers, prompt libraries. Tools anyone can use without signing up for anything.
+The tools cover the jobs that eat a seller's time. Review Response Generator writes three replies to a customer review in your tone, and Customer Reply Generator does the same for messages. Product Listing Writer turns a saved product into titles, a description, the features, and the tags. AI Image Prompt Generator writes prompts for Midjourney, Flux, or whatever image tool you use. AI Image Studio makes an image from a description, then keeps editing it while you say what to change.
 
-The rest is member-only. Deeper AI tools like product descriptions, captions, brand voice, and image generation, all on a simple credits plan. No tiers, no add-ons, no surprises. One membership, a pool of credits, and every tool draws from the same pool.
-
-The toolbox is built around a simple idea: you should spend your time making, not fighting software. Every tool is designed to get you an answer you can use in a couple of minutes.
+The toolbox runs on credits. A new account starts with 20 free credits, no card needed. After that you buy a pack when you need one, and credits never expire. $3 for 100, $5 for 250, or $7 for 500. There is no subscription, and each tool shows its price before it runs. Most tools cost one credit. AI Image Studio costs five per image, whether you create one or change one.
 
 The toolbox grew out of where I've been. Before this I ran BoosterBots, a software company building Windows automation for internet marketers. The tools worked and people paid for them, but they fought the platforms they ran on, and I didn't want to spend my life making software that could get shut down at any moment.
 
-I stepped back for a while, and when I came back I knew what I didn't want to build: anything that works by fighting a platform or getting around a rule. Moss Toolbox is the opposite of that. Every tool here helps you make something, write something, or sell something better. None of it fights a platform, and none of it can get shut down.
-
-I wrote more about the build, the friction, and what's next in [How I'm Building Moss Toolbox](/blog/how-im-building-moss-toolbox/).
+I stepped back for a while, and when I came back I knew what I didn't want to build: anything that works by fighting a platform or getting around a rule. Moss Toolbox is the opposite of that. Every tool here helps you make something, write something, or sell something better.
 
 Here's how it works:
 
-1. **Pick a tool.** Free or member, whatever matches what you're working on.
-2. **Answer a few questions.** What are you making, who is it for, what should it say.
-3. **Get something you can edit.** It comes back ready to paste or tweak.
-4. **Spend credits only when you use AI.** Free tools stay free, member tools cost one credit per run.
+1. **Create an account.** You get 20 free credits to try any tool, no card needed.
+2. **Fill in your business profile.** Your name, what you sell, who buys it, how you write, your logo and colours, and the answers you give again and again. It takes a few minutes, and you only do it once.
+3. **Pick a tool.** It starts from what you saved and only asks for what's new.
+4. **Get something you can use.** Paste it, tweak it, or send it. The tool takes its price from your credits when it runs.
 
-New tools land as I build them. The list keeps growing.
+New tools land as I build them, and the credits work on all of them. Moss Toolbox is built by Moss AI Studio.
 
-[Try Moss Toolbox →](https://mosstoolbox.com)
+[Try Moss Toolbox →](https://mosstoolbox.com/)
