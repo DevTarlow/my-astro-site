@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import ContentImage from './ContentImage.astro'
+import { dateParts } from '../lib/dates'
+import { excerpt } from '../lib/excerpt'
+
+export interface Props {
+  post: CollectionEntry<'blog'>
+  /**
+   * h2 when the page heading is the listing itself, h3 when the card sits under
+   * its own section heading (the home page's "Latest Posts").
+   */
+  headingLevel?: 'h2' | 'h3'
+}
+
+const { post, headingLevel = 'h2' } = Astro.props
+
+// The listing markup used to be copy-pasted per page, which is how the home
+// page and the blog ended up with different link and heading structure.
+const Heading = headingLevel
+const href = `/blog/${post.id}/`
+const datetime = post.data.pubDate.toISOString().slice(0, 10)
+const image = post.data.featuredimage
+const summary = excerpt(post.body ?? '', 250)
+---
+
+<article>
+  {
+    image && (
+      <ContentImage
+        src={image}
+        alt=""
+        class="w-full h-36 object-cover rounded-lg mb-3"
+      />
+    )
+  }
+  <time datetime={datetime} class="block text-sm text-muted mb-1.5">
+    {dateParts(post.data.pubDate).long}
+  </time>
+  <!-- One link per card: the title. The image and a separate "Read More" used to
+       link to the same post, so each card was three tab stops with no useful
+       label on the first one. -->
+  <Heading class="font-sans text-xl text-ink">
+    <a
+      href={href}
+      class="text-inherit no-underline transition-colors hover:text-terracotta"
+    >
+      {post.data.title}
+    </a>
+  </Heading>
+  <p class="mt-2 text-sm text-muted leading-relaxed">{summary}</p>
+</article>

@@ -3,10 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import Sidebar from '../../components/Sidebar.astro'
 import BlogSearch from '../../components/BlogSearch.astro'
 import Pagination from '../../components/Pagination.astro'
+import PostCard from '../../components/PostCard.astro'
 import { getPublicBlog } from '../../lib/posts'
-import { excerpt } from '../../lib/excerpt'
-import ContentImage from '../../components/ContentImage.astro'
-import { dateParts } from '../../lib/dates'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -21,7 +19,13 @@ const pagePosts = posts.slice(0, pageSize)
 <BaseLayout title="Blog" description="Latest posts from Tarlow on projects, local-first tools, and AI exploration." image={latestImage}>
   <div class="flex flex-col lg:flex-row justify-center lg:gap-8">
     <main class="w-full max-w-[65ch] px-6 py-20">
-      <h1 class="sr-only">Blog</h1>
+      <header class="mb-10">
+        <h1 class="font-sans text-3xl font-semibold tracking-tight">Blog</h1>
+        <p class="mt-2 text-sm text-muted">
+          Posts on projects, local-first tools, and AI experiments.
+        </p>
+        <div class="mt-4 h-0.5 w-12 rounded bg-terracotta"></div>
+      </header>
       <BlogSearch />
 
       <div id="default-content">
@@ -29,38 +33,8 @@ const pagePosts = posts.slice(0, pageSize)
           {
             pagePosts.map((post) => (
             <li>
-              <article>
-                {
-                  post.data.featuredimage && (
-                    <a href={`/blog/${post.id}/`}>
-                      <ContentImage
-                        src={post.data.featuredimage}
-                        alt=""
-                        class="w-full h-36 object-cover rounded-lg mb-3"
-                      />
-                    </a>
-                  )
-                }
-                <time class="block text-sm text-muted mb-1.5">
-                    {dateParts(post.data.pubDate).long}
-                  </time>
-                  <a
-                    href={`/blog/${post.id}/`}
-                    class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
-                  >
-                    {post.data.title}
-                  </a>
-                  <p class="mt-2 text-sm text-muted leading-relaxed">
-                    {excerpt(post.body ?? '', 250)}
-                  </p>
-                  <a
-                    href={`/blog/${post.id}/`}
-                    class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
-                  >
-                    Read More →
-                  </a>
-                </article>
-              </li>
+              <PostCard post={post} />
+            </li>
             ))
           }
         </ul>

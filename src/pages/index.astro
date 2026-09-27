@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { getPublicBlog } from '../lib/posts'
-import { excerpt } from '../lib/excerpt'
 import ContentImage from '../components/ContentImage.astro'
+import PostCard from '../components/PostCard.astro'
 import PostActivityGraph from '../components/PostActivityGraph.astro'
-import { dateParts } from '../lib/dates'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -21,7 +20,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
         fetchpriority="high"
         class="mx-auto h-24 w-24 rounded-full object-cover border-2 border-terracotta/20 sm:h-32 sm:w-32"
       />
-      <h1 class="mt-4 text-lg text-muted font-sans">
+      <h1 class="mt-4 text-2xl text-ink font-sans">
         <strong>Hello! 👋 I'm Tarlow.</strong>
       </h1>
       <div class="mt-5 flex items-center justify-center gap-3">
@@ -90,37 +89,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
       {
         posts.slice(0, 5).map((post) => (
           <li>
-            <article>
-              {
-                post.data.featuredimage && (
-                  <a href={`/blog/${post.id}/`}>
-                    <ContentImage
-                      src={post.data.featuredimage}
-                      alt=""
-                      class="w-full h-36 object-cover rounded-lg mb-3"
-                    />
-                  </a>
-                )
-              }
-              <time class="block text-sm text-muted mb-1.5">
-                {dateParts(post.data.pubDate).long}
-              </time>
-              <a
-                href={`/blog/${post.id}/`}
-                class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
-              >
-                {post.data.title}
-              </a>
-              <p class="mt-2 text-sm text-muted leading-relaxed">
-                {excerpt(post.body ?? '', 250)}
-              </p>
-              <a
-                href={`/blog/${post.id}/`}
-                class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
-              >
-                Read More →
-              </a>
-            </article>
+            <PostCard post={post} headingLevel="h3" />
           </li>
         ))
       }
@@ -131,7 +100,7 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
         href="/blog/"
         class="font-sans text-lg text-terracotta no-underline transition-opacity hover:opacity-80 border-b-2 border-terracotta pb-0.5"
       >
-        Read More →
+        Browse all posts →
       </a>
     </div>
   </main>

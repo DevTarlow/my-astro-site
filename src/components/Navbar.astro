@@ -29,6 +29,7 @@ const links = [
           return (
             <a
               href={href}
+              aria-current={isActive ? 'page' : undefined}
               class={`
                 font-sans text-lg tracking-tight no-underline
                 border-b-2 transition-colors duration-300

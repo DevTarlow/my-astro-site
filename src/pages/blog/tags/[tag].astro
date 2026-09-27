@@ -1,9 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro'
-import { excerpt } from '../../../lib/excerpt'
-import ContentImage from '../../../components/ContentImage.astro'
+import PostCard from '../../../components/PostCard.astro'
 import { getPublicBlog } from '../../../lib/posts'
-import { dateParts } from '../../../lib/dates'
 
 export async function getStaticPaths() {
   const posts = await getPublicBlog()
@@ -47,37 +45,7 @@ const filtered = posts
       {
         filtered.map((post) => (
           <li>
-            <article>
-              {
-                post.data.featuredimage && (
-                  <a href={`/blog/${post.id}/`}>
-                    <ContentImage
-                      src={post.data.featuredimage}
-                      alt=""
-                      class="w-full h-36 object-cover rounded-lg mb-3"
-                    />
-                  </a>
-                )
-              }
-              <time class="block text-sm text-muted mb-1.5">
-                {dateParts(post.data.pubDate).long}
-              </time>
-              <a
-                href={`/blog/${post.id}/`}
-                class="font-sans text-xl text-ink no-underline hover:text-terracotta transition-colors"
-              >
-                {post.data.title}
-              </a>
-              <p class="mt-2 text-sm text-muted leading-relaxed">
-                {excerpt(post.body ?? '', 250)}
-              </p>
-              <a
-                href={`/blog/${post.id}/`}
-                class="mt-2 inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity"
-              >
-                Read More →
-              </a>
-            </article>
+            <PostCard post={post} />
           </li>
         ))
       }
