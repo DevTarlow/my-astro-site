@@ -2,7 +2,7 @@
 title: How to Install LM Studio and Run Gemma 4 Locally for Private LLM Use
 pubDate: 2026-05-08
 description: A step-by-step guide to running LLMs on your own hardware using LM Studio and Google's Gemma 4 models for private, offline AI.
-tags: [local-llm, gemma4, run-llm-locally, llm-privacy, on-device-ai]
+tags: [local-llm]
 featuredimage: /images/how-to-install-lm-studio-and-run-gemma4-locally.png
 ---
 

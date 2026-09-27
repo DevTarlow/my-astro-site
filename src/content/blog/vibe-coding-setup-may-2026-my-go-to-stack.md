@@ -2,7 +2,7 @@
 title: 'Vibe Coding Setup May 2026 - My Go-To Stack for AI Development'
 description: 'Ditch the manual labor. See my 2026 Vibe Coding setup: How Gemini, OpenCode, and local LLMs let me build features fast, affordably, and privately.'
 pubDate: 2026-05-11
-tags: [vibe-coding, ai-development, deepseek, gemini]
+tags: [workflow, models]
 featuredimage: /images/vibe-coding-setup-may-2026.png
 ---
 

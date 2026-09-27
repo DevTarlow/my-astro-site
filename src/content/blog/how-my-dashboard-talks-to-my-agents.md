@@ -3,10 +3,9 @@ title: 'How My Dashboard Talks to My Agents - One Click From Task to Done'
 pubDate: 2026-09-01
 draft: false
 tags:
-  - ai-agents
-  - hermes-agent
-  - productivity
-  - dashboard
+  - agents
+  - dashboards
+  - workflow
 description: >-
   I built a dashboard that pulls my whole day into one place. Then I wired it
   to my AI agents so a task can go from a checkbox to a working chat session

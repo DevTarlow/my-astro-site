@@ -3,11 +3,8 @@ title: How I Built CopySprout - An AI Writing Tool for Etsy Sellers
 pubDate: 2026-08-08
 draft: false
 tags:
-  - CopySprout
-  - Etsy
-  - AI
-  - ProductLaunch
-  - MossAIStudio
+  - launches
+  - etsy
 description: >-
   CopySprout is my subscription AI writing tool for Etsy sellers. Here is
   how I built it, why I went with a subscription, and what I learned

@@ -2,7 +2,7 @@
 title: How My Stack Shifted Again - From Hermes Agent to a Harness of My Own
 pubDate: 2026-09-17
 description: I moved my stack again. The DeepSeek harness for projects, DeepSeek v4.1 Flash through the direct API, and my own agentic harness Marimo Desktop. Here is what changed, and why the low cost matters.
-tags: [deepseek, marimo, ai-agents, hermes-agent, ai-development]
+tags: [agents, models]
 featuredimage: /images/marimo-desktop-screenshot.png
 ---
 

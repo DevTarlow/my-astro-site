@@ -2,7 +2,7 @@
 title: Sunshine Family Dashboard Major Update v2.0
 pubDate: 2026-06-27
 description: Calendar, Weekly Planner, Recipe Hub, Stats & More.
-tags: [family-dashboard, local-app, personal-project, web-development]
+tags: [dashboards, web-development]
 featuredimage: /images/sunshine-family-dashboard-dining-out-to-do-grocery-list.jpg
 ---
 

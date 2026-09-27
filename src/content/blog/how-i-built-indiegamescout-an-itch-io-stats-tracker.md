@@ -3,10 +3,7 @@ title: How I Built IndieGameScout - An itch.io Stats Tracker
 pubDate: 2026-08-09
 draft: false
 tags:
-  - IndieGameScout
-  - ItchIo
-  - ProductLaunch
-  - MossAIStudio
+  - launches
 description: >-
   IndieGameScout is my desktop app that tracks itch.io stats over time -
   ratings, jam ranks, views, downloads, and earnings - on your own machine.

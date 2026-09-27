@@ -2,7 +2,7 @@
 title: 'New Blog & Home for Ideas'
 description: 'Brief introduction of my new space for sharing and innovation. Follow me on my journey exploring new possibilities'
 pubDate: 2026-04-22
-tags: [local-first apps, local llm, technology sharing, new blog, developer journey]
+tags: [local-first, local-llm]
 featuredimage: /images/new-blog-and-home.jpeg
 ---
 ## The New Blog Space - Welcome in traveler!

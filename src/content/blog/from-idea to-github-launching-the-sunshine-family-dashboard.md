@@ -2,7 +2,7 @@
 title: 'From Idea to GitHub: Launching the Sunshine Family Dashboard'
 description: 'How and why I created the Sunshine Family Dashboard. A simple private, self-hosted digital dashboard to keep your family organized and your data/lifestyle off the internet. '
 pubDate: 2026-04-28
-tags: [family-dashboard, local-app, personal-project, web-development]
+tags: [dashboards, web-development]
 featuredimage: /images/sunshine-family-dashboard-dining-out-to-do-grocery-list.jpg
 ---
 ## Sunshine Family Dashboard Launched!

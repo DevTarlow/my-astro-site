@@ -2,7 +2,7 @@
 title: Taking Control - How Gemma 4 Powers My Local AI Ecosystem
 pubDate: 2026-06-30
 description: See how I use Gemma 4 locally. A look into powering tools like Open WebUI, n8n agents, and Chrome extensions on your own hardware.
-tags: [local-llm, gemma4, run-llm-locally, llm-privacy, on-device-ai]
+tags: [local-llm]
 featuredimage: /images/open-webui-gemma-4.png
 ---
 

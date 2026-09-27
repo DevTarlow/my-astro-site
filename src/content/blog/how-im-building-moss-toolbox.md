@@ -3,10 +3,7 @@ title: How I'm Building Moss Toolbox - AI Tools That Know Your Business
 pubDate: 2026-08-21
 draft: false
 tags:
-  - MossToolbox
-  - MossAIStudio
-  - AI
-  - ProductLaunch
+  - launches
 description: >-
   Moss Toolbox is my growing set of AI tools for small businesses. Fill in your
   profile once, every tool starts from it, and the credits are pay-as-you-go.

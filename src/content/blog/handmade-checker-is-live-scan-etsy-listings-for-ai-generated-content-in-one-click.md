@@ -3,12 +3,9 @@ title: Handmade Checker Is Live - Detect AI-Generated Listings on Etsy in One Cl
 pubDate: 2026-07-21
 draft: false
 tags:
-  - HandmadeChecker
-  - ChromeExtension
-  - AI
-  - Etsy
-  - ProductLaunch
-  - MossAIStudio
+  - launches
+  - browser-extensions
+  - etsy
 description: >-
   AI-generated and dropshipped listings are flooding Etsy. Handmade Checker
   tells you what's real in one click. Free Chrome extension, live now on the

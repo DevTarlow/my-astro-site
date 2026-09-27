@@ -2,7 +2,7 @@
 title: 'How To Make An Automated Weather Report with Discord Updates Using N8N and LM Studio'
 description: 'Get personalized weather updates on Discord! See how to combine N8N, LM Studio, and local LLMs for automated workflows.'
 pubDate: 2026-06-14
-tags: [AI automation, local llms, N8N, LM Studio, Workflow Automation]
+tags: [local-llm, workflow]
 featuredimage: /images/weather-workflow-discord-n8n.png
 ---
 

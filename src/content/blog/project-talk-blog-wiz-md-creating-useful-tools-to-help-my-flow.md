@@ -3,10 +3,8 @@ title: Project Talk - Blog Wiz MD - Creating Useful Tools to Help My Flow
 pubDate: 2026-05-18T00:00:00.000Z
 draft: false
 tags:
-  - astro
-  - markdown
-  - vibe-coding
-  - tool
+  - web-development
+  - workflow
   - local-first
 description: >-
   Removing Barriers for writing and publishing on my Astro blog. This is why I

@@ -3,11 +3,9 @@ title: Project Talk - SkyBuddy - Posting on Bluesky Faster Than The Speed of Tho
 pubDate: 2026-07-05
 draft: false
 tags:
-  - Bluesky
-  - LLM
-  - ChromeExtension
-  - AI
-  - productivity
+  - browser-extensions
+  - local-llm
+  - workflow
 description: >-
   SkyBuddy is a Chrome extension that uses local LLMs to help you engage thoughtfully and reply to Bluesky posts faster than thought.
 featuredimage: /images/skybuddy-glow.png

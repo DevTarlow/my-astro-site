@@ -2,7 +2,7 @@
 title: Hello, World. New Theme, New Vibe.
 pubDate: 2026-05-08
 description: Just vibe coded myself a new Astro theme for my website/blog. Here is how I built it.
-tags: [astro, ai coding, web development, theme design, generative ai]
+tags: [web-development]
 featuredimage: /images/tarlow-old-site-preview.png
 ---
 

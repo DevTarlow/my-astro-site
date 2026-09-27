@@ -3,11 +3,8 @@ title: 'Moss AI Studio Is Up and Running - What It Is and How It Got Here'
 pubDate: 2026-08-04
 draft: false
 tags:
-  - MossAIStudio
-  - AI
-  - ProductLaunch
-  - LocalFirst
-  - IndieHacker
+  - launches
+  - local-first
 description: >-
   Moss AI Studio is a one-man studio for AI tools and custom software. Here's
   what it is now, and the journey that got me here.

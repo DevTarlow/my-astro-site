@@ -3,10 +3,8 @@ title: 'How My Coding Workflow Changed - From VS Code to a Team of Agents'
 pubDate: 2026-08-23
 draft: false
 tags:
-  - vibe-coding
-  - ai-agents
-  - ai-development
-  - hermes-agent
+  - agents
+  - workflow
 description: >-
   I used to build everything in VS Code with the OpenChamber plugin running
   OpenCode. Then I found Hermes Agent, and it has been weeks since I opened VS

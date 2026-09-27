@@ -3,10 +3,8 @@ title: The 2am Cron Job - Letting My AI Dream While I Sleep
 pubDate: 2026-09-07
 draft: false
 tags:
-  - AI
-  - HermesAgent
-  - Automation
-  - MossAIStudio
+  - agents
+  - workflow
 description: >-
   I built a cron job that dreams at 2am. Here's what happens when your AI
   works the night shift, and the strange insights that come from it.

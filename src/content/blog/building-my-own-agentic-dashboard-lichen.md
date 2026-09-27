@@ -2,7 +2,7 @@
 title: Building My Own Agentic Dashboard - Lichen, and the Agent Living Inside It
 pubDate: 2026-09-27
 description: I built a dashboard that talked to Hermes Agent. This one grew out of Marimo Desktop, and it has its own agent built in. Here is what Lichen does for me.
-tags: [marimo, ai-agents, dashboard, local-first, hermes-agent, deepseek, openrouter]
+tags: [agents, models, local-first, dashboards]
 featuredimage: /images/Lichen-Agentic-Dashboard.png
 draft: false
 ---

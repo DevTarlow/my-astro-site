@@ -42,7 +42,13 @@ Date helper: [src/lib/dates.ts](src/lib/dates.ts) - `dateParts(date)` returns `l
 
 **Always format frontmatter dates through `dateParts`.** `pubDate: 2026-09-27` is parsed by Zod into a Date at UTC midnight, so calling `toLocaleDateString()` without `timeZone: 'UTC'` renders the previous day for anyone west of UTC (a post dated the 27th displayed as September 26). `dateParts` pins every format to UTC so the displayed date always matches the frontmatter. This applies to every surface that shows a date, including the client-side `BlogSearch` results, which is why it receives a pre-formatted `date` string instead of a raw timestamp. `<time datetime>` uses `toISOString().slice(0, 10)` to stay a date-only value that agrees with the visible text. Anchors that only need ordering (`pubDate.getTime()`) are unaffected.
 
-Plain-text excerpt helper: [src/lib/excerpt.ts](src/lib/excerpt.ts) - `excerpt(body, max)` strips frontmatter, links, images, headings, lists, blockquotes, tables, and markdown from post bodies.
+Plain-text excerpt helper: [src/lib/excerpt.ts](src/lib/excerpt.ts) - `plainText(body)` strips frontmatter, links, images, headings, lists, blockquotes, tables, and markdown from a post body; `excerpt(body, max)` is the same text truncated on a word boundary.
+
+### Tags
+
+Blog tags are a deliberately small, lowercase, hyphenated set (currently 10: `agents`, `browser-extensions`, `dashboards`, `etsy`, `launches`, `local-first`, `local-llm`, `models`, `web-development`, `workflow`). Keep it that way: no near-duplicates (`AI` vs `AI automation` vs `ai-development`), no case variants (tag URLs are case sensitive), and no tag that only ever covers one post.
+
+Retiring or renaming a tag means adding its old address to `folded` (a surviving tag covers the same ground) or `dropped` (no successor, so it points at the tag index) in [src/lib/tag-redirects.mjs](src/lib/tag-redirects.mjs). `astro.config.mjs` passes that map to `redirects`, and Astro emits a redirect page per entry, so old links keep working. Note that Astro treats two static routes differing only by case as a collision, so a lower-case alias cannot sit alongside the original spelling.
 
 ### Images
 
@@ -69,6 +75,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 | `/about/` | `about.astro` | About page |
 | `404` | `404.astro` | Custom 404 |
 | `/rss.xml` | `rss.xml.js` | RSS feed via `@astrojs/rss` |
+| `/search-index.json` | `search-index.json.ts` | Plain text of every post body, fetched by `BlogSearch` on first interaction (see below) |
 
 ### Components
 
@@ -79,12 +86,13 @@ Key components in [src/components/](src/components/):
 - **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout, inside `#app-shell` before BackToTop. Wordmark + blurb + copyright on the left, then three link groups: Explore (nav), Elsewhere (GitHub, Bluesky, X, Moss AI Studio - the external accounts that exist nowhere else in the chrome), and Follow (RSS, email). Left column spans `1.4fr` and the groups `2fr` at `md+`, stacking on mobile.
 - **Sidebar** - Blog sidebar shown at `lg+` on blog listing pages, sticky (`lg:sticky lg:top-8`) and tag cloud (top 8). Takes a `showRecent` prop: page 1 passes `showRecent={false}` (the main list already shows the newest posts) and renders an About card instead; pages 2+ show Recent Posts. No search - that lives in `BlogSearch`.
 - **MobilePanel** - Slide-in mobile nav (`< md`) with nav links, theme toggle row, and Recent Posts. No search/posts data. Script is `data-astro-rerun` + delegated (via `window.__menuCleanup`) to survive View Transitions; manages `inert` on `#app-shell`/panel, focus trap + return, Escape, backdrop/close clicks, and auto-close on resize past `md`.
-- **BlogSearch** - Search box rendered above the post list on `/blog` listing pages at all sizes (filters title, description, and tags client-side; results replace the list via `#default-content` / `#search-results`). The only component that inlines post metadata (`define:vars`). The script renders *before* `#default-content`/`#search-results`, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
+- **BlogSearch** - Search box rendered above the post list on `/blog` listing pages at all sizes. Titles, descriptions and tags are inlined (`define:vars`); post bodies come from `/search-index.json`, fetched on first focus or input and cached for the session, so a word that only appears in a post body still matches. Results replace the list via `#default-content` / `#search-results` and reuse the `PostCard` shape (640w WebP thumbnail, date, heading link, description, tag pills). If the body index fails to load, search falls back to the inlined metadata and says so in the results. The script renders *before* `#default-content`/`#search-results`, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
+- **PostCard** - The blog listing card, used by the home page (`headingLevel="h3"`, under the "Latest Posts" heading), the blog index, the pagination pages and the tag pages. Renders the featured image (decorative `alt=""`), the date, the title as a heading containing the only link, and the excerpt. One link per card on purpose: the image, the title and a separate "Read More" all used to point at the same post.
 - **Pagination** - Prev/Next with page numbers, ellipsis for long ranges, configurable `basePath` (defaults to `/blog`). Links are 44px hit targets and the current page carries `aria-current="page"`; the `<nav>` is labelled "Pagination".
 - **ContentImage** - Reads the build-time image manifest and emits responsive `<picture>`/WebP `srcset` markup. Accepts `src` (public path), `alt`, `class`, `sizes`, `loading`, and `fetchpriority`; falls back to a plain `<img>` with `sharp` dimensions when the manifest is absent.
 - **ImageZoom** - Global click-to-zoom overlay for blog/project article images.
 - **ProjectFeaturedCard** - Full-width lead card for a project with `featured: true`: 16rem screenshot column at `sm+`, date + category meta, title, 3-line description, tags, and GitHub/Visit links. Takes a single `ProjectDisplay` row.
-- **ProjectIndexRow** - One-line row for everything not featured: 64x44 thumbnail (`sm+`, falls back to the project initial when there is no image), title, 2-line description (`md+`), category pill (`sm+`) and month. The whole row is a single link, so the title column and description are hidden on small screens to stay scannable.
+- **ProjectIndexRow** - Row for everything not featured. From `md` it is a single line: 64x44 thumbnail (`sm+`, falls back to the project initial when there is no image), title column, 2-line description, category pill and month. Below `md` it stacks into two lines so phones keep the description and the pill; only the row's thumbnail is dropped there. The whole row is a single link.
 - **RelatedPosts** - Renders tag-based related posts at the bottom of blog posts.
 - **ShareButtons** - Bluesky + X share links (client-side intent URLs, no API calls).
 - **BackToTop** - Fixed circular button that appears after scrolling 400px. When hidden it is `invisible`, `aria-hidden`, and `tabindex="-1"` so keyboard users cannot focus an invisible control.
@@ -127,6 +135,6 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 ## Content Writing
 
-Add a new blog post: create a `.md` file in `src/content/blog/` with the required frontmatter (`title`, `pubDate`, `description`, `tags`). Add `draft: true` to preview before publishing. Blog posts render with prose styling and tag links. For featured images, place them in `/public/images/` and reference as `/images/filename.png`.
+Add a new blog post: create a `.md` file in `src/content/blog/` with the required frontmatter (`title`, `pubDate`, `description`, `tags`). Pick `tags` from the fixed set described under [Tags](#tags) rather than inventing a new one. Add `draft: true` to preview before publishing. Blog posts render with prose styling and tag links. For featured images, place them in `/public/images/` and reference as `/images/filename.png`.
 
 Projects follow the same pattern in `src/content/projects/` with the additional `category` field (`Launched` or `Development`). Add `featured: true` to give a project the full card at the top of `/projects/` (every featured project gets one, and the rest render as compact index rows), and `url` for an external "Visit" link. Images need no import or build step - just drop the file in `public/images/` and reference `/images/filename.png`; the optimizer picks it up on the next `npm run dev` / `npm run build`.
