@@ -20,8 +20,8 @@ const TERRACOTTA = '#A8483A'
 
 mkdirSync(IMAGES, { recursive: true })
 
-// Lato is used because the card is rasterised at build time and Inter is only
-// available over the network at runtime.
+// Inter ships as woff2 for the browser, which librsvg cannot read, so the card
+// is rasterised with the system Lato instead.
 const FONT = 'Lato, DejaVu Sans, sans-serif'
 
 const W = 1200

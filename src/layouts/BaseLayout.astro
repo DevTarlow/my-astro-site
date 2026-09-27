@@ -4,6 +4,7 @@ import { ClientRouter } from 'astro:transitions'
 import Navbar from '../components/Navbar.astro'
 import MobilePanel from '../components/MobilePanel.astro'
 import BackToTop from '../components/BackToTop.astro'
+import ConsentBanner from '../components/ConsentBanner.astro'
 import Footer from '../components/footer/FooterColumns.astro'
 import { getImageEntry } from '../lib/image-manifest'
 
@@ -73,51 +74,91 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
         }
       })()
     </script>
-    <ClientRouter />
-    <!-- Google tag (gtag.js). The library is ~170KB, so it is loaded after the
-         page is interactive and the queue in dataLayer is flushed on arrival. -->
     <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(...args){dataLayer.push(args);}
-      gtag('js', new Date());
-      gtag('config', 'G-H879GPJ4GM');
-
+      // Reveals the consent banner before paint, but only when no choice has
+      // been stored yet (see the .consent-banner rules in global.css).
       (function () {
-        let loaded = false;
-        function loadGtag () {
-          if (loaded) return
-          loaded = true
+        try {
+          if (!localStorage.getItem('analytics-consent')) {
+            document.documentElement.classList.add('consent-pending')
+          }
+        } catch { /* storage may be unavailable */ }
+      })()
+    </script>
+    <ClientRouter />
+    <!-- Google tag (gtag.js). Analytics sets cookies, so nothing is loaded until
+         the visitor allows it: the library is ~170KB and is fetched after load +
+         idle once consent is stored. The dataLayer queue is flushed on arrival. -->
+    <script is:inline>
+      (function () {
+        const MEASUREMENT_ID = 'G-H879GPJ4GM'
+        const CONSENT_KEY = 'analytics-consent'
+
+        function readConsent () {
+          try { return localStorage.getItem(CONSENT_KEY) } catch { return null }
+        }
+
+        function writeConsent (value) {
+          try { localStorage.setItem(CONSENT_KEY, value) } catch { /* storage may be unavailable */ }
+        }
+
+        function enableAnalytics () {
+          if (window.__gaEnabled) return
+          window.__gaEnabled = true
+
+          window.dataLayer = window.dataLayer || []
+          window.gtag = function (...args) { window.dataLayer.push(args) }
+          window.gtag('js', new Date())
+          window.gtag('config', MEASUREMENT_ID)
+
           const script = document.createElement('script')
           script.async = true
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-H879GPJ4GM'
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID
           document.head.appendChild(script)
         }
-        const schedule = function () {
-          if (typeof window.requestIdleCallback === 'function') {
-            window.requestIdleCallback(loadGtag, { timeout: 3000 })
-          } else {
-            setTimeout(loadGtag, 1500)
-          }
-        }
-        if (document.readyState === 'complete') schedule()
-        else window.addEventListener('load', schedule, { once: true })
-      })()
 
-      document.addEventListener('astro:page-load', function () {
-        gtag('config', 'G-H879GPJ4GM', { page_path: location.pathname })
-      })
+        window.__enableAnalytics = enableAnalytics
+
+        if (readConsent() === 'granted') {
+          const schedule = function () {
+            if (typeof window.requestIdleCallback === 'function') {
+              window.requestIdleCallback(enableAnalytics, { timeout: 3000 })
+            } else {
+              setTimeout(enableAnalytics, 1500)
+            }
+          }
+          if (document.readyState === 'complete') schedule()
+          else window.addEventListener('load', schedule, { once: true })
+        }
+
+        document.addEventListener('astro:page-load', function () {
+          if (window.__gaEnabled) {
+            window.gtag('config', MEASUREMENT_ID, { page_path: location.pathname })
+          }
+        })
+
+        // Delegated so it survives View Transition navigation, which recreates
+        // the banner element on every page.
+        if (window.__consentHandlers) {
+          document.removeEventListener('click', window.__consentHandlers.click)
+        }
+        const handleClick = function (e) {
+          if (!e.target.closest('[data-consent-accept], [data-consent-decline]')) return
+          const accept = !!e.target.closest('[data-consent-accept]')
+          writeConsent(accept ? 'granted' : 'denied')
+          document.documentElement.classList.remove('consent-pending')
+          if (accept) enableAnalytics()
+        }
+        window.__consentHandlers = { click: handleClick }
+        document.addEventListener('click', handleClick)
+      })()
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#F9F9F8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
 
     <title>{pageTitle}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -169,6 +210,9 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
         <slot />
         <Footer />
         <BackToTop />
+        <!-- Inside the shell so the mobile panel's scrim covers it and it goes
+             inert with everything else while the menu is open. -->
+        <ConsentBanner />
       </div>
       <MobilePanel />
     </div>

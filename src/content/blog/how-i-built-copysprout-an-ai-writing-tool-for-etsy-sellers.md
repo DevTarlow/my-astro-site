@@ -20,7 +20,7 @@ Most AI writing tools are built for marketers. They spit out hype. Words like "e
 
 So I built [CopySprout](https://copysprout.app/).
 
-<a href="https://copysprout.app/" target="_blank" rel="noopener noreferrer"><img src="/images/copy-sprout-logo-white.png" alt="CopySprout Logo" /></a>
+[![CopySprout Logo](/images/copy-sprout-logo-white.png)](https://copysprout.app/)
 
 ### What CopySprout Is
 

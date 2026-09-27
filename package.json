@@ -16,7 +16,8 @@
     "astro": "astro",
     "check": "astro check",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "fonts": "node scripts/fetch-fonts.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",

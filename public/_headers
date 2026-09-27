@@ -1,3 +1,8 @@
+# GitHub Pages ignores this file (it has no custom-header support), so these
+# rules do not apply to the live site today and the file is served as a static
+# blob at /_headers. It is kept for a host that does read it, such as Netlify or
+# Cloudflare Pages. See the Deployment section of AGENTS.md.
+#
 # Always check for fresh HTML
 /*.html
   Cache-Control: no-cache

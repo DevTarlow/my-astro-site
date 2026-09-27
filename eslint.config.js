@@ -19,6 +19,7 @@ export default [
         process: 'readonly',
         console: 'readonly',
         Buffer: 'readonly',
+        fetch: 'readonly',
       },
     },
   },
