@@ -2,7 +2,6 @@
 title: Moss Toolbox - AI Tools That Know Your Business
 pubDate: 2026-09-01
 draft: false
-featured: true
 category: Launched
 url: https://mosstoolbox.com/
 tags:
