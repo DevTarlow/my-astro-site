@@ -5,6 +5,7 @@ draft: false
 featured: true
 category: Development
 github: https://github.com/DevTarlow/marimo-bot
+url: https://marimobot.com/
 tags:
   - agents
   - desktop-app
@@ -70,7 +71,7 @@ Marimo Bot is at 0.1.0, under active development, and I use it every day. I fix 
 
 Will it run on your machine? Only the Linux AppImage has been built and run. The Windows and macOS installers are written but not built. There is no automatic updater, no signed release, and no public download yet.
 
-The source is public on [GitHub](https://github.com/DevTarlow/marimo-bot) under Apache-2.0, and the design for the rebuilt core is in `docs/harness-v2.md`.
+The source is public on [GitHub](https://github.com/DevTarlow/marimo-bot) under Apache-2.0, and the design for the rebuilt core is in `docs/harness-v2.md`. There's a site for it now at [marimobot.com](https://marimobot.com/), and it tells the truth about where things are: under active development, expect rough edges.
 
 If you want to follow along, you don't have to wait for a download, because I'm in the repo most days and the commits show what I changed and why.
 
