@@ -47,6 +47,8 @@ A Space is a folder. The app can read and write the files in it and nowhere else
 
 Memory has two layers: a fact about me follows me between Spaces, and a note about how a project is set up stays with that project. When an answer misses I press Not quite, and it keeps the correction for the next time it reads that chat. The memory file is plain markdown, so I can read it without the app.
 
+![A chat in the main window, with Marimo writing a new fact to memory while it answers](/images/marimo-bot-chat-screenshot.png)
+
 One bot can hand work to another, so Marimo takes the request, Writer drafts, and Marketer checks the angle. `ask_agent` asks a helper a question in the same chat. `start_task` gives it its own conversation, returns right away, and posts the result back when it's done.
 
 Depth is one by construction.

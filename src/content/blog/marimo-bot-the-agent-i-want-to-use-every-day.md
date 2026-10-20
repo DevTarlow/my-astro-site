@@ -59,6 +59,8 @@ That last one matters, because the companion is there when I want it and gone wh
 
 The first version was mostly blog work. A Writer bot drafted, Marimo kept the thread, and I edited. Social posts came next.
 
+![A chat in the main window, with Marimo writing a new fact to memory while it answers](/images/marimo-bot-chat-screenshot.png)
+
 That's still the job, and I'm rebuilding the system around it so drafting isn't the only thing it's good at. But the busy part is what I want off my plate. I still proofread, edit, and put the final thing together.
 
 What does the draft look like when it comes back? Closer to my voice than a blank page, most days.
