@@ -59,9 +59,17 @@ I reworked the core of the app this month. Every turn now runs on a frozen, vers
 
 The old core had 23 invariants, each one from a real failure, and 1,471 tests, and I'm carrying those across instead of starting clean.
 
-The rebuild is also where I learned the most about recursive self improvement. A turn records a trace: the spec hash, the prompt hashes, the tool calls, the gates, the model pair, the outcome. From those traces and the signals around them, a reviewer proposes a change. It might be a memory to add, a skill to keep, or a tool grant. Then I approve it or turn it down, and it lands as a new version I can roll back.
+## Learning
 
-The agent never proposes an edit to the Role, the Persona, or the app's own contract. Those are mine to write. It never grants itself a tool, and `run_shell` is never proposed at all. Nothing applies itself, and the model doesn't get to judge its own run.
+The rebuild is also where I learned the most about recursive self improvement. The app has a place for it now, called Learning. A bot can ask me to remember a fact, ask for a tool or a connector it kept needing, or suggest a change to how it runs. Each request waits in Learning with the reason it gave and the part of the conversation it came from.
+
+A memory suggestion shows the sentence it was drawn from, so I can check the fact before I keep it. A change to how it runs covers how memory is recalled, how much room a turn has before it is compacted, and how many tool calls a turn may spend. If I say no, it remembers that for about six months and stops asking, and the Learning card lists those refusals so I can clear them.
+
+It looks after its own notes too. When memory passes the limit I set, it can suggest forgetting the oldest fact. When a skill has not been used in a while, it can suggest retiring it. Both wait for me.
+
+A skill is a procedure the bot can pick up: a folder with a `SKILL.md` inside, a short note and the steps underneath. It sees the name and the note in every conversation and reads the steps only when a task matches, and the app keeps earlier versions so the old wording is still there when the new wording turns out worse.
+
+The agent never proposes an edit to the Role, the Persona, or the app's own contract. Those are mine to write. It never grants itself a tool, and `run_shell` is never proposed at all. Nothing applies itself.
 
 That's the part I care about most. I want an agent that shows me the change and waits for a yes, so I can hand it a folder and not worry about what it does when I look away.
 

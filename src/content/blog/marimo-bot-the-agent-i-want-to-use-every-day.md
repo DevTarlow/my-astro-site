@@ -35,13 +35,13 @@ I've been thinking about recursive self improvement for a while. The rebuild is 
 
 The rule is simple. The bot proposes, and I approve. That's it.
 
-It can notice a fact about a project and ask me to remember it. It can write down a way of working as a skill and show me what it's about to save. The rest of that loop is what I'm building now: a tool grant, a memory policy, a change to how the bot runs. Every one of those goes through me first.
-
-A bot can't change its own Role, its own Persona, or the rules of the app, and it can never grant itself a tool. `run_shell` is never proposed, not once.
+It can notice a fact about a project and ask me to remember it. It can write down a way of working as a skill and show me what it's about to save. It can ask for a tool or a connector it kept needing, or suggest a change to how the bot runs. All of it waits in Learning, with the reason it gave and the part of the conversation it came from. Every one of those goes through me first.
 
 Memory is the clearest example. After a conversation goes quiet, the app reads back what was said and proposes the facts worth keeping. A preference I mentioned once, a decision we settled on, how a project is set up. I see the line before it's written, and I accept it or I don't.
 
 Why so careful? Because memory goes into every conversation after it. A wrong entry is not a wrong answer once. It's a wrong belief the bot carries into everything else.
+
+A bot can't change its own Role, its own Persona, or the rules of the app, and it can never grant itself a tool. `run_shell` is never proposed, not once. If I say no, it remembers that for about six months and stops asking, and the Learning card lists the refusals so I can clear them. It also looks after its own notes: when memory is over the limit, it can suggest dropping the oldest fact, and when a skill hasn't been used in a while, it can suggest retiring it.
 
 I don't need a smarter model, I need it to get quicker at my work. My projects, my tasks, my jobs, and the things it does for itself. The twentieth time I ask for a launch post, I want to explain less than I did the first time. That is what makes it feel like it's actually helping.
 
