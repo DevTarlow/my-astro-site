@@ -35,7 +35,7 @@ The app carries no chat model. I point it at DeepSeek, Google Gemini, OpenCode G
 
 The moss ball floats above my other windows with its own chat bar, and it shares one conversation with the window, so a question I ask from the corner is waiting for me when I open the app.
 
-![The companion window with a short chat, the moss ball sitting above the message box](/images/marimo-companion.png)
+![The companion window with a short chat, the moss ball sitting above the message box](/images/marimo-bot-companion-ss.png)
 
 Settings decides how long its answers run, how many messages float above it, whether it stays on top, and whether a click passes through it to the window behind. That last one sounds small. It isn't. A companion that sits on top of the thing you're reading is just in the way.
 

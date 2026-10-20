@@ -49,7 +49,7 @@ I don't need a smarter model, I need it to get quicker at my work. My projects, 
 
 The first thing anyone notices is the moss ball.
 
-![The companion window with a short chat, the moss ball sitting above the message box](/images/marimo-companion.png)
+![The companion window with a short chat, the moss ball sitting above the message box](/images/marimo-bot-companion-ss.png)
 
 It floats above my other windows with its own chat bar, and it shares one conversation with the main window, so a question I ask from the corner is waiting for me when I open the app. How much should it show? Settings decides how long its answers run, how many messages float above it, whether it stays on top, and whether a click passes through it to the window behind.
 
