@@ -18,6 +18,36 @@ This file provides guidance to AI coding agents when working with this repositor
 
 Use `npm ci --legacy-peer-deps` for reproducible installs (`.npmrc` sets `legacy-peer-deps=true`).
 
+## Development Workflow
+
+This repo is developed directly on `main`: history is linear, there are no feature branches or pull requests, and work lands as local commits that go out when the user says to push. The loop is **change -> verify -> commit locally -> report -> push only when asked**.
+
+### The loop
+
+1. **Change** the smallest set of files that does the job. Unrelated cleanup is its own commit, not a drive-by edit.
+2. **Verify** before committing:
+   - `npm run lint` and `npm run check` on every change. CI runs neither, so they never fail a deploy - a lint or type error is only caught here.
+   - `npm run build` for anything touching content frontmatter, routing, config, or images. It finishes in a couple of seconds and is the only gate CI enforces, so a clean local build is what "it works" means.
+   - `npm run dev` for visual changes: check `localhost:4321` at a narrow width and in dark mode, since most styling is token-driven.
+3. **Commit** once the task is complete and verified. Do not commit half-finished work, and do not leave a finished task uncommitted.
+4. **Report** what changed, which checks ran, and the commit subject or hash. Do not push.
+5. **Push** only on an explicit instruction ("push", "ship it", "deploy"). `git push` on `main` deploys production.
+
+### Commits
+
+- Conventional Commits, matching the history: `feat`, `fix`, `refactor`, `perf`, `chore`, `content` (posts and project copy), `docs`. No scope is used.
+- Subject: imperative mood, lowercase by convention, no trailing period, short enough to read at a glance. Example: `feat: add the Pixel Juice Studio project page`.
+- Add a body when the "why" is not obvious - blank line after the subject, then a sentence or two. Recent commits do this and it makes `git log` worth reading.
+- One logical change per commit. A new post, a component refactor, and a config bump are three commits even when they land in one session.
+- Stage deliberately (`git add <paths>`) and check `git status` before committing. `dist/`, `public/images/_opt/`, `.astro/`, and editor or scratch files are gitignored and should never appear in a commit.
+- Never rewrite pushed history: no `git push --force`, no amending a commit already on `origin/main`. `gh-pages` is a legacy branch - do not push to it.
+
+### Pushing
+
+- `git push` only after the user asks. This is the one step that is never automatic.
+- Before pushing, `git status` should show a clean tree and `main` ahead of `origin/main`. A push with nothing to send, or a branch that needs a rebase first, means a step was skipped.
+- A push to `main` runs `npm ci --legacy-peer-deps`, `npm run build`, then `actions/deploy-pages` to GitHub Pages. A failed build leaves the previous deployment live; fix forward rather than shipping around it.
+
 ## Architecture
 
 This is a static site built with **Astro 6**, **Tailwind CSS 3**, and **TypeScript**. Content is published as flat HTML - no server runtime. The site uses **View Transitions** (`<ClientRouter />` in BaseLayout) so client-side scripts must be re-entrant: use inline scripts with `data-astro-rerun` or listen to `astro:page-load`, and guard against duplicate handler registration on `window`.
@@ -133,7 +163,7 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 ## Style Conventions
 
 - Use single dashes (-) instead of em dashes (--) in all content and code.
-- Commit messages follow conventional style (`feat:`, `fix:`, `refactor:`, `chore:`, etc.) as seen in git history.
+- Commit messages follow the conventions under [Development Workflow](#commits) - conventional type, imperative subject, body only when the "why" needs one.
 - Do not commit editor metadata: `.frontmatter/`, `.opencode/`, `.vscode/` settings other than the tracked `extensions.json`/`launch.json` are gitignored or untracked.
 
 ## Content Writing
