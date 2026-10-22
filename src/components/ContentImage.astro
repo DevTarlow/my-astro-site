@@ -24,12 +24,16 @@ const {
 
 // Variants come from scripts/optimize-images.mjs (run via predev/prebuild).
 // If the manifest is missing (e.g. first run before the script), fall back to
-// sharp for intrinsic dimensions so the layout still reserves space.
+// sharp for intrinsic dimensions so the layout still reserves space. Only for
+// the formats that script accepts: sharp's bundled libheif decodes AVIF/HEIC,
+// which is a remote-code-execution path (GHSA-26w7-cxv4-gfx2), so an image the
+// optimizer skips is left without dimensions rather than handed to sharp.
+const DECODABLE_RE = /\.(png|jpe?g|webp)$/i
 const entry = getImageEntry(src)
 
 let width = entry?.width
 let height = entry?.height
-if (!width || !height) {
+if ((!width || !height) && DECODABLE_RE.test(src)) {
   try {
     const cleanSrc = src.replace(/^\//, '')
     const meta = await sharp(path.join(process.cwd(), 'public', cleanSrc)).metadata()

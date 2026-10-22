@@ -21,7 +21,11 @@ const MANIFEST_PATH = path.join(OUT_DIR, 'manifest.json')
 
 const WIDTHS = [320, 640, 1280]
 const WEBP_QUALITY = 78
-const INPUT_RE = /\.(png|jpe?g|webp|avif)$/i
+// AVIF is deliberately excluded. This pipeline only ever emits WebP, so
+// accepting AVIF input buys nothing, and decoding it goes through sharp's
+// bundled libheif, where a malicious file can reach remote code execution
+// (GHSA-26w7-cxv4-gfx2). Untouched sources still render via the <img> fallback.
+const INPUT_RE = /\.(png|jpe?g|webp)$/i
 // Generated for social unfurls and home-screen icons; never rendered as page
 // content, so responsive variants would be dead weight in the build.
 const SKIP_RE = /^(og-default\.png|apple-touch-icon\.png)$/
