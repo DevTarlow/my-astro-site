@@ -148,7 +148,7 @@ Blog posts and projects with `draft: true` in frontmatter are excluded at build 
 
 ### Deployment
 
-Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml): Node 22, `npm ci --legacy-peer-deps`, `npm run build`, then `actions/deploy-pages` to the `github-pages` environment. The `gh-pages` branch is a legacy artifact and should not be pushed to.
+Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml): Node 24 (read from `.nvmrc`), `npm ci --legacy-peer-deps`, `npm run build`, then `actions/deploy-pages` to the `github-pages` environment. The `gh-pages` branch is a legacy artifact and should not be pushed to.
 
 - Custom domain: `public/CNAME` (root-level `CNAME` was removed - do not re-add)
 - Cache headers: `public/_headers` - **GitHub Pages ignores this file**, so the rules are not live and the file is served as a static blob. It is kept for a host that reads it (Netlify, Cloudflare Pages).
