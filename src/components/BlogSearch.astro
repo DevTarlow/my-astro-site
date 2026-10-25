@@ -125,8 +125,10 @@ const postsData = sorted.map(p => ({
       function resultHtml (post) {
         let html = '<li><article>'
         if (post.thumb) {
-          html += '<img src="' + escapeHtml(post.thumb.url) + '" width="' + post.thumb.w + '" height="' + post.thumb.h +
-            '" alt="" loading="lazy" decoding="async" class="w-full h-36 object-cover rounded-lg mb-3" />'
+          html += '<a href="/blog/' + post.id + '/" tabindex="-1" aria-hidden="true" class="block mb-3">' +
+            '<img src="' + escapeHtml(post.thumb.url) + '" width="' + post.thumb.w + '" height="' + post.thumb.h +
+            '" alt="" loading="lazy" decoding="async" class="w-full h-36 object-cover rounded-lg" />' +
+            '</a>'
         }
         html += '<time datetime="' + escapeHtml(post.datetime) + '" class="block text-sm text-muted mb-1.5">' + escapeHtml(post.date) + '</time>'
         html += '<h2 class="font-sans text-xl text-ink">' +
