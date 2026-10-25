@@ -7,7 +7,10 @@ export const FEATURED_POST_SLUG = 'how-i-built-an-ai-that-dreams-for-me'
  */
 export const NOW = {
   label: 'October 2026',
-  building: 'Marimo Bot + Moss Toolbox',
+  building: [
+    { label: 'Marimo Bot', href: 'https://marimobot.com/' },
+    { label: 'Moss Toolbox', href: 'https://mossaistudio.com/' },
+  ],
   practicing: 'Awareness, patience, getting outside',
   home: 'Portland, Oregon',
   openTo: 'New builds + good conversations',

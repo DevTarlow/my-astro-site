@@ -5,7 +5,17 @@ import { NOW } from '../lib/site'
 <div class="now-card">
   <p class="label">Now / {NOW.label}</p>
   <ul class="now-list">
-    <li><span class="now-key">Building</span><span class="now-value">{NOW.building}</span></li>
+    <li>
+      <span class="now-key">Building</span>
+      <span class="now-value">
+        {NOW.building.map((item, index) => (
+          <span class="now-building">
+            {index > 0 && <span class="now-sep" aria-hidden="true"> + </span>}
+            <a href={item.href} target="_blank" rel="noopener noreferrer">{item.label}</a>
+          </span>
+        ))}
+      </span>
+    </li>
     <li><span class="now-key">Practicing</span><span class="now-value">{NOW.practicing}</span></li>
     <li><span class="now-key">At home</span><span class="now-value">{NOW.home}</span></li>
     <li><span class="now-key">Open to</span><span class="now-value">{NOW.openTo}</span></li>

@@ -5039,3 +5039,21 @@ html {
     transform: rotate(-4.5deg);
   }
 }
+
+
+.now-value a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(207, 174, 123, 0.35);
+  text-underline-offset: 3px;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.now-value a:hover {
+  color: var(--brass-bright);
+  text-decoration-color: var(--brass);
+}
+
+.now-sep {
+  color: var(--faint);
+}
