@@ -10,7 +10,8 @@ This file provides guidance to AI coding agents when working with this repositor
 | `npm run build` | Build production site to `./dist/` (runs image optimization first) |
 | `npm run preview` | Preview production build |
 | `npm run images` | Regenerate responsive WebP variants + manifest in `public/images/_opt/` |
-| `npm run og:image` | Regenerate the default social card and Apple touch icon (`public/images/og-default.png`, `apple-touch-icon.png`) |
+| `npm run fonts` | Refresh the self-hosted Inter and Instrument Serif files in `public/fonts/` |
+| `npm run og:image` | Regenerate the social card, Apple touch icon, and favicon fallbacks (`public/images/og-default.png`, `apple-touch-icon.png`, `public/favicon.png`, `public/favicon.ico`) |
 | `npm run check` | Run astro check (type-check Astro files) |
 | `npm run lint` | ESLint check all files |
 | `npm run lint:fix` | ESLint auto-fix |
@@ -28,7 +29,7 @@ This repo is developed directly on `main`: history is linear, there are no featu
 2. **Verify** before committing:
    - `npm run lint` and `npm run check` on every change. CI runs neither, so they never fail a deploy - a lint or type error is only caught here.
    - `npm run build` for anything touching content frontmatter, routing, config, or images. It finishes in a couple of seconds and is the only gate CI enforces, so a clean local build is what "it works" means.
-   - `npm run dev` for visual changes: check `localhost:4321` at a narrow width and in dark mode, since most styling is token-driven.
+   - `npm run dev` for visual changes: check `localhost:4321` at a narrow width (390) and a wide one (1440). The site is dark-only, so there is no light-mode pass to run.
 3. **Commit** once the task is complete and verified. Do not commit half-finished work, and do not leave a finished task uncommitted.
 4. **Report** what changed, which checks ran, and the commit subject or hash. Do not push.
 5. **Push** only on an explicit instruction ("push", "ship it", "deploy"). `git push` on `main` deploys production.
@@ -69,6 +70,12 @@ Project listing helpers are in [src/lib/project-browse.ts](src/lib/project-brows
 - `toDisplay(projects)` / `groupByYear(rows)` - pre-format the dates and titles the projects page renders (`ProjectDisplay` carries `title`, `shortTitle`, `year`, `month`, `monthYear`, `href`, `category`)
 - `categoryClass(category)` - shared `Launched` / `Development` pill styling
 
+Observatory helpers:
+- [src/lib/atlas.ts](src/lib/atlas.ts) - groups every public post into `agents`, `local-first`, `workflow`, or `launches` from its tags, assigns stable 1000x600 stage coordinates, and builds constellation lines plus the featured entry.
+- [src/lib/reading.ts](src/lib/reading.ts) - rough reading time from a Markdown body at 220 words per minute.
+- [src/lib/site.ts](src/lib/site.ts) - the featured entry slug, the editable `NOW` copy, and Portland coordinates shared by the home and About pages.
+- [src/lib/tag-redirects.mjs](src/lib/tag-redirects.mjs) - retired tag aliases passed to Astro's redirects in `astro.config.mjs`.
+
 Date helper: [src/lib/dates.ts](src/lib/dates.ts) - `dateParts(date)` returns `long` / `short` / `monthYear` / `month` / `year`.
 
 **Always format frontmatter dates through `dateParts`.** `pubDate: 2026-09-27` is parsed by Zod into a Date at UTC midnight, so calling `toLocaleDateString()` without `timeZone: 'UTC'` renders the previous day for anyone west of UTC (a post dated the 27th displayed as September 26). `dateParts` pins every format to UTC so the displayed date always matches the frontmatter. This applies to every surface that shows a date, including the client-side `BlogSearch` results, which is why it receives a pre-formatted `date` string instead of a raw timestamp. `<time datetime>` uses `toISOString().slice(0, 10)` to stay a date-only value that agrees with the visible text. Anchors that only need ordering (`pubDate.getTime()`) are unaffected.
@@ -77,7 +84,7 @@ Plain-text excerpt helper: [src/lib/excerpt.ts](src/lib/excerpt.ts) - `plainText
 
 ### Tags
 
-Blog tags are a deliberately small, lowercase, hyphenated set (currently 10: `agents`, `browser-extensions`, `dashboards`, `etsy`, `launches`, `local-first`, `local-llm`, `models`, `web-development`, `workflow`). Keep it that way: no near-duplicates (`AI` vs `AI automation` vs `ai-development`), no case variants (tag URLs are case sensitive), and no tag that only ever covers one post.
+Blog tags are a deliberately small, lowercase, hyphenated set. Prefer the established tags shown on `/blog/tags/` and keep it that way: no near-duplicates (`AI` vs `AI automation` vs `ai-development`), no case variants (tag URLs are case sensitive), and no new tag that only ever covers one post.
 
 Retiring or renaming a tag means adding its old address to `folded` (a surviving tag covers the same ground) or `dropped` (no successor, so it points at the tag index) in [src/lib/tag-redirects.mjs](src/lib/tag-redirects.mjs). `astro.config.mjs` passes that map to `redirects`, and Astro emits a redirect page per entry, so old links keep working. Note that Astro treats two static routes differing only by case as a collision, so a lower-case alias cannot sit alongside the original spelling.
 
@@ -89,7 +96,7 @@ Images live in `public/images/` and are referenced by public URL (`/images/foo.p
 - [plugins/rehype-optimize-images.mjs](plugins/rehype-optimize-images.mjs) does the same for markdown body images, and stamps `width`/`height`/`loading="lazy"` to prevent layout shift.
 - `<picture>` uses `class="contents"` so the existing sizing classes on the `<img>` keep working.
 
-**The file extension must match the bytes.** Two images shipped with the wrong extension (a 2.6MB JPEG named `.png`, a PNG named `.jpg`), which made the `og:image` content type disagree with the file. `scripts/optimize-images.mjs` skips `og-default.png` and `apple-touch-icon.png` because they are generated for unfurls and icons rather than page content. `scripts/make-og-image.mjs` (`npm run og:image`) rasterises the default share card with the system Lato, because librsvg cannot read the woff2 Inter the browser uses.
+**The file extension must match the bytes.** Two images shipped with the wrong extension (a 2.6MB JPEG named `.png`, a PNG named `.jpg`), which made the `og:image` content type disagree with the file. `scripts/optimize-images.mjs` skips `og-default.png` and `apple-touch-icon.png` because they are generated for unfurls and icons rather than page content. `scripts/make-og-image.mjs` (`npm run og:image`) rasterises the default share card with system DejaVu Serif and Lato, because librsvg cannot read the woff2 Inter or Instrument Serif the browser uses. It also generates the dark Apple touch icon, `favicon.png`, and a PNG-in-ICO `favicon.ico` from [public/favicon.svg](public/favicon.svg).
 
 ### Routing
 
@@ -97,15 +104,15 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 | Route | File | Key Details |
 |---|---|---|
-| `/` | `index.astro` | Home with profile image + greeting, shows 5 latest posts |
-| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with a `BlogSearch` box above the list and a `Sidebar` at `lg+` |
+| `/` | `index.astro` | Observatory home: hero, constellation atlas of every entry, featured and recent journal, work in orbit, and the editable Now band |
+| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with the Observatory search panel and a sticky sidebar above 1024px |
 | `/blog/page/[page]/` | `blog/page/[page].astro` | Pagination pages 2+ |
-| `/blog/[...slug]/` | `blog/[...slug].astro` | Individual blog post via `getStaticPaths()` |
-| `/blog/tags/` | `blog/tags/index.astro` | Tag cloud with post counts |
+| `/blog/[...slug]/` | `blog/[...slug].astro` | Long-form entry with reading progress, tags, sharing, and nearby notes |
+| `/blog/tags/` | `blog/tags/index.astro` | Tag index |
 | `/blog/tags/[tag]/` | `blog/tags/[tag].astro` | Posts filtered by tag |
-| `/projects/` | `projects/index.astro` | Showcase; projects flagged `featured: true` get full cards, the rest collapse into a compact index grouped by year |
-| `/projects/[...slug]/` | `projects/[...slug].astro` | Individual project detail |
-| `/about/` | `about.astro` | About page |
+| `/projects/` | `projects/index.astro` | Featured project lead card, then the complete work index grouped by year |
+| `/projects/[...slug]/` | `projects/[...slug].astro` | Project detail with a hero image, actions, and prose |
+| `/about/` | `about.astro` | The long way back: chapters, a small practice, Now, and contact |
 | `404` | `404.astro` | Custom 404 |
 | `/rss.xml` | `rss.xml.js` | RSS feed via `@astrojs/rss` |
 | `/search-index.json` | `search-index.json.ts` | Plain text of every post body, fetched by `BlogSearch` on first interaction (see below) |
@@ -114,33 +121,54 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 Key components in [src/components/](src/components/):
 
-- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, inline dark-mode bootstrap script (`localStorage` `theme`, falling back to `prefers-color-scheme`, applied before paint), a single delegated theme controller (`data-theme-toggle` / `data-theme-sun` / `data-theme-moon` / `data-theme-label`), a skip link (`#skip-link`, off-screen until focused) that targets `#main-content`, Google Analytics (G-H879GPJ4GM, consent-gated - see below), self-hosted Inter, OG/Twitter meta, Navbar, `#app-shell` wrapper (Navbar + slot + FooterColumns + BackToTop), and the MobilePanel and ConsentBanner siblings. **Every page must render `<main id="main-content">`** or the skip link has nowhere to go; the post and project pages wrap their `<article>` in one. Props beyond title/description/image/ogType: `noindex` (drops the canonical and emits `robots noindex`, used by the 404), `publishedTime` + `articleTags` (emit `article:*` meta on `og:type=article` pages) and `jsonLd` (one object or an array, serialised with `<` escaped). Pages without their own `image` fall back to `/images/og-default.png`, a generated 1200x630 card; per-post images declare `og:image:width/height` from the build-time manifest.
-- **Navbar** - Header with "Tarlow" wordmark (links to `/`), centered inline nav links (Home, Blog, Projects, About, shown from `md`) with active-state highlighting (border-underline style), and a right cluster with the hamburger trigger (`data-menu-trigger`, `< md`, `aria-expanded` managed by MobilePanel) plus the theme toggle. No theme script of its own - BaseLayout owns theming.
-- **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout, inside `#app-shell` before BackToTop. Wordmark + blurb + copyright on the left, then three link groups: Explore (nav), Elsewhere (GitHub, Bluesky, X, Moss AI Studio - the external accounts that exist nowhere else in the chrome), and Follow (RSS, email). Left column spans `1.4fr` and the groups `2fr` at `md+`, stacking on mobile.
-- **Sidebar** - Blog sidebar shown at `lg+` on blog listing pages, sticky (`lg:sticky lg:top-8`) and tag cloud (top 8). Takes a `showRecent` prop: page 1 passes `showRecent={false}` (the main list already shows the newest posts) and renders an About card instead; pages 2+ show Recent Posts. No search - that lives in `BlogSearch`.
-- **MobilePanel** - Slide-in mobile nav (`< md`) with nav links, theme toggle row, and Recent Posts. No search/posts data. Script is `data-astro-rerun` + delegated (via `window.__menuCleanup`) to survive View Transitions; manages `inert` on `#app-shell`/panel, focus trap + return, Escape, backdrop/close clicks, and auto-close on resize past `md`.
-- **BlogSearch** - Search box rendered above the post list on `/blog` listing pages at all sizes. Titles, descriptions and tags are inlined (`define:vars`); post bodies come from `/search-index.json`, fetched on first focus or input and cached for the session, so a word that only appears in a post body still matches. Results replace the list via `#default-content` / `#search-results` and reuse the `PostCard` shape (640w WebP thumbnail, date, heading link, description, tag pills). If the body index fails to load, search falls back to the inlined metadata and says so in the results. The script renders *before* `#default-content`/`#search-results`, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
-- **PostCard** - The blog listing card, used by the home page (`headingLevel="h3"`, under the "Latest Posts" heading), the blog index, the pagination pages and the tag pages. Renders the featured image (decorative `alt=""`, wrapped in a link to the post that is `aria-hidden` + `tabindex="-1"`), the date, the title as a heading containing the card's only tab stop, and the excerpt. The image navigates to the post; on the post page the featured image stays unlinked so `ImageZoom` can still open it larger.
+- **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, a dark-only `#app-shell`, self-hosted font preloads, consent-gated Google Analytics (G-H879GPJ4GM), OG/Twitter meta, JSON-LD, Navbar, slot, FooterColumns, BackToTop, and ConsentBanner. It also renders the global `Sky` (fixed canvas starfield, grain, shooting star) and `SiteScripts` outside the shell content. There is no theme script and no theme toggle. **Every page must render `<main id="main-content">`** or the skip link has nowhere to go; the post and project pages wrap their `<article>` in one. The `view` prop (`home` | `essay` | `about` | `page`) sets `body[data-view]`, which drives sky opacity and the article progress bar. Other props beyond title/description/image/ogType: `noindex` (drops the canonical and emits `robots noindex`, used by the 404), `publishedTime` + `articleTags` (emit `article:*` meta on `og:type=article` pages), `jsonLd` (one object or an array, serialised with `<` escaped), and `bodyClass`. Pages without their own `image` fall back to `/images/og-default.png`, a generated 1200x630 card; per-post images declare `og:image:width/height` from the build-time manifest.
+- **Navbar** - Fixed header with the "Tarlow." wordmark and "field notes" suffix, centered Journal / Atlas / Work / About links with active-state highlighting, a Portland local-time/coordinate cluster, an RSS link, and the mobile index trigger (`data-menu-trigger`, shown at 1020px and below, with `aria-expanded` and `aria-haspopup="dialog"`). Atlas points at `/#atlas`. No theme control.
+- **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout. Wordmark, short blurb, Explore (Home, Journal, Work, About), Elsewhere (GitHub, Bluesky, X, Moss AI Studio, RSS, email), and a bottom row with copyright, "Made under the same sky", and the live Portland time.
+- **Sidebar** - Journal sidebar shown above 1024px (`position: sticky` under the header). Takes a `showRecent` prop: page 1 passes `showRecent={false}` and renders an About card; pages 2+ show recent entries. Also renders the top eight tags with counts. No search - that lives in `BlogSearch`.
+- **MobilePanel** - Full-screen mobile index dialog (`role="dialog"`, `aria-modal`, hidden until opened). Five serif nav links, a close control, coordinates, live time, and social links. Its `data-astro-rerun` script uses `window.__menuCleanup`, manages `inert` on `#app-shell`, traps focus, restores focus, closes on Escape or a nav link, locks body scroll, and auto-closes above 1020px. No theme toggle.
+- **BlogSearch** - Search panel rendered above the post list on `/blog` pages at all sizes. Titles, descriptions and tags are inlined (`define:vars`); post bodies come from `/search-index.json`, fetched on first focus or input and cached per script instance. Results replace the list via `#default-content` / `#search-results` and reuse the `PostCard` shape (640w WebP thumbnail, date, tag line, heading link, description). If the body index fails to load, search falls back to the metadata and says so. The script renders *before* the results container, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
+- **PostCard** - The journal listing card used by the blog index, pagination pages and tag pages (the home page uses its own featured/journal markup). Renders the featured image as a decorative, non-tabbable link (`alt=""`, `aria-hidden`, `tabindex="-1"`), the date and tag line, the title as a heading containing the card's only tab stop, and the excerpt. `headingLevel` defaults to `h2`.
 - **Pagination** - Prev/Next with page numbers, ellipsis for long ranges, configurable `basePath` (defaults to `/blog`). Links are 44px hit targets and the current page carries `aria-current="page"`; the `<nav>` is labelled "Pagination".
 - **ContentImage** - Reads the build-time image manifest and emits responsive `<picture>`/WebP `srcset` markup. Accepts `src` (public path), `alt`, `class`, `sizes`, `loading`, and `fetchpriority`; falls back to a plain `<img>` with `sharp` dimensions when the manifest is absent.
 - **ImageZoom** - Global click-to-zoom overlay for blog/project article images.
-- **ProjectFeaturedCard** - Full-width lead card for a project with `featured: true`: 16rem screenshot column at `sm+`, date + category meta, title, 3-line description, tags, and GitHub/Visit links. Takes a single `ProjectDisplay` row.
-- **ProjectIndexRow** - Row for everything not featured. From `md` it is a single line: 64x44 thumbnail (`sm+`, falls back to the project initial when there is no image), title column, 2-line description, category pill and month. Below `md` it stacks into two lines so phones keep the description and the pill; only the row's thumbnail is dropped there. The whole row is a single link.
-- **RelatedPosts** - Renders tag-based related posts at the bottom of blog posts.
-- **ShareButtons** - Bluesky + X share links (client-side intent URLs, no API calls).
-- **BackToTop** - Fixed circular button that appears after scrolling 400px. When hidden it is `invisible`, `aria-hidden`, and `tabindex="-1"` so keyboard users cannot focus an invisible control.
+- **ProjectFeaturedCard** - Two-column lead card for a project with `featured: true`: screenshot/thumbnail, date and category pill, title, full description, tags, GitHub/Visit actions. Takes a single `ProjectDisplay` row; the title is the only navigation tab stop in the card.
+- **ProjectIndexRow** - Compact row for everything not featured: 64x44 thumbnail (initial fallback), title, one-line description, category pill and month on desktop. On small screens the meta column drops and the description wraps. The whole row is a single link.
+- **RelatedPosts** - Tag-based related notes under an article, with date, title, excerpt, and a compact row layout.
+- **ShareButtons** - Bluesky and X share links plus a client-side copy-link button. Intent URLs only, no API calls.
+- **BackToTop** - Fixed circular control that appears after scrolling 400px and uses the outlined brass treatment. When hidden it is `invisible`, `aria-hidden`, and `tabindex="-1"` so keyboard users cannot focus an invisible control. Hidden entirely below 900px so it never covers the mobile reading column or footer.
+- **Sky** (`src/components/Sky.astro`) - Fixed decorative canvas starfield plus space wash, grain, and a shooting star. About 72-180 seeded stars depending on the viewport, light parallax, and a 15-28s shooting-star interval. Pauses when the document is hidden, renders a still frame under reduced motion, cancels its animation frame and listeners via `window.__skyCleanup`, and supports `?still=1` for deterministic review screenshots.
+- **SiteScripts** (`src/components/SiteScripts.astro`) - One re-entrant inline script that updates the header's `is-scrolled` class, fills `[data-local-time]` with the America/Los_Angeles clock, and drives `#essay-progress-bar`. Installs its window listeners once and refreshes on `astro:page-load`.
+- **ConstellationAtlas** (`src/components/ConstellationAtlas.astro`) - The home atlas. Renders filter controls, an SVG constellation map, star links with accessible labels, a live preview panel, an Atlas/Index toggle, and an all-entries index fallback. At 900px and below the map tools are hidden by CSS and the index becomes the atlas. Uses [src/lib/atlas.ts](src/lib/atlas.ts) for grouping and coordinates; its `data-astro-rerun` script updates the preview on hover/focus and keeps filters, index view, and line states in sync.
+- **NowCard** (`src/components/NowCard.astro`) - Shared Now list for the home band, reading the editable `NOW` object in [src/lib/site.ts](src/lib/site.ts).
 - **CodeCopy** - Adds a "Copy" button to `.prose-custom pre` blocks.
 
 ### Design System
 
-Tailwind theme tokens in [tailwind.config.mjs](tailwind.config.mjs):
+The site is **dark-only**. There is no theme toggle, no light palette, and no `theme` key in `localStorage`; do not reintroduce one. The root is `<html class="dark">` with `color-scheme: dark`, and every surface is part of the same night sky.
 
-- **Colors**: `paper` (light #F9F9F8 / dark #0D0D0D), `ink` (light #1A1A1A / dark #F5F5F5), `muted` (secondary text tier, light #6F6F6F / dark #A5A5A5), `terracotta` (theme-aware accent: light #A8483A / dark #E07A6A)
-- **Dark mode**: `darkMode: 'class'`. `paper`, `ink`, `muted`, and `terracotta` are CSS variables defined in [src/styles/global.css](src/styles/global.css) and swapped by `html.dark`. Always use the semantic tokens (`text-ink`, `bg-paper`, `text-muted`, `text-terracotta`) - never hardcoded hex - or dark mode breaks. Semi-transparent token usage (e.g. `text-ink/60`, `bg-paper/90`) works via the RGB-variable `<alpha-value>` pattern.
-- **Contrast**: the `terracotta` values are tuned so text and `bg-terracotta text-paper` fills clear WCAG AA in both themes. Use `text-muted` (not `text-ink/40` or `/50`) for secondary text - the low-opacity ink steps fail AA on paper.
-- **Fonts**: `font-sans` -> Inter (body + headings), system sans fallback stack
-- **Content prose**: Custom `.prose-custom` class in [src/styles/prose.css](src/styles/prose.css) - not Tailwind's typography plugin. Handles headings, links (terracotta underline), blockquotes, code, tables, images.
-- **Motion**: `prefers-reduced-motion: reduce` disables all transitions and View Transitions (global.css).
+**Tokens** live in [src/styles/observatory.css](src/styles/observatory.css) and [src/styles/global.css](src/styles/global.css):
+
+- `--bg` / `#05070C`, `--bg-deep` / `#030409`, `--panel` / `#090C13`
+- `--ink` / `#EFE8DB`, `--body` / `#D3CCBF`, `--muted` / `#8C94A3`, `--faint` / `#737C8C`
+- `--brass` / `#CFAE7B`, `--brass-bright` / `#E7C796`
+- `--line` and `--line-soft` for hairlines; group colors for Agents, Local-first, Workflow, and Launches
+- `--pad` (responsive page gutter), `--max` (1440px), and `--head-h` (76px desktop / 66px mobile)
+
+Tailwind exposes `paper`, `ink`, `muted`, and `brass` from `--color-*` in global.css. Use those semantic classes for legacy utility markup. The `darkMode: 'class'` config remains for compatibility, but no component may add light/dark variants. The site has one palette.
+
+**Contrast**: `--muted` and `--faint` both clear WCAG AA for normal text on the night ground. `--faint` was lifted to `#737C8C` for the small metadata type; do not lower it again. Informative text should use `body`, `muted`, `ink`, or `brass`, not low-opacity ink. Reserve the faint tier for labels and metadata that remain readable.
+
+**Fonts**: Inter (body, UI) and Instrument Serif (display and editorial italic) are self-hosted from `public/fonts/` and refreshed with `npm run fonts`. `font-sans` is Inter, `font-serif` is Instrument Serif. BaseLayout preloads Inter and both Instrument Serif cuts. Never add a Google Fonts request.
+
+**Type and layout**: Instrument Serif is set large and tight (`letter-spacing` around -0.03em, line-height below 1) for h1/h2 and display; body copy is 16px/1.7 or 18px/1.82 in prose. The page shell maxes at 1440px with a responsive gutter; article prose caps at 68ch and centers. Fixed header, generous section bands, and true hairlines carry the observatory rhythm.
+
+**Motion**: The star canvas, portrait orbits, hero reveal, and shooting star are restrained and optional. `prefers-reduced-motion: reduce` removes transitions and View Transitions globally, stops the sky animation, and reveals content. All new client scripts must either re-run safely under View Transitions or install listeners once and refresh against the new DOM.
+
+**Prose**: [src/styles/prose.css](src/styles/prose.css) is custom, not Tailwind Typography. It covers headings, links, blockquotes, lists, inline code, pre blocks, tables, images, rules, and the `.code-copy-btn`. The drop cap is scoped to `.essay .prose-custom > p:first-of-type` so project notes do not inherit it. Code blocks are horizontally scrollable; tables are wrapped by the rehype table plugin.
+
+**Atlas**: [src/lib/atlas.ts](src/lib/atlas.ts) is the semantic map. Post tags map to Agents, Local-first, Workflow, or Launches (in that priority), with stable 1000x600 coordinates and generated constellation lines. Keep coordinates within the stage and provide a fallback point for new entries. The mobile fallback is the word index; it is not a separate data source.
+
+**Still mode**: Adding `?still=1` adds `html.still` and renders the sky without motion for deterministic screenshots. It is a review aid, not a user-facing theme.
 
 ### Drafts & Production
 
@@ -158,7 +186,7 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 - **Google Analytics** (G-H879GPJ4GM) - consent-gated. Nothing is loaded and no cookie is set until the visitor accepts: `ConsentBanner` renders on every page, a head script adds `consent-pending` to `<html>` when no choice is stored (global.css keys the banner off that class, so there is no flash), and the choice lives in `localStorage` under `analytics-consent`. Once granted, the ~170KB library is injected after `load` + `requestIdleCallback`, and `astro:page-load` sends the path for View Transition navigations.
 - **Bluesky** - share buttons link to bsky.app intent URLs (no API calls)
-- **Inter** - self-hosted from `public/fonts/` (latin + latin-ext variable subsets, refreshed with `npm run fonts`). This replaced the Google Fonts stylesheet, which was render-blocking and needed two extra connections before first paint. Only the subset a page needs is downloaded, thanks to `unicode-range` in [src/styles/global.css](src/styles/global.css).
+- **Inter + Instrument Serif** - self-hosted from `public/fonts/` (Inter latin + latin-ext variable subsets plus Instrument Serif roman/italic, refreshed with `npm run fonts`). This replaced the Google Fonts stylesheet, which was render-blocking and needed two extra connections before first paint. Only the Inter subset a page needs is downloaded, thanks to `unicode-range` in [src/styles/global.css](src/styles/global.css).
 
 ## Style Conventions
 
@@ -168,6 +196,6 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 ## Content Writing
 
-Add a new blog post: create a `.md` file in `src/content/blog/` with the required frontmatter (`title`, `pubDate`, `description`, `tags`). Pick `tags` from the fixed set described under [Tags](#tags) rather than inventing a new one. Add `draft: true` to preview before publishing. Blog posts render with prose styling and tag links. For featured images, place them in `/public/images/` and reference as `/images/filename.png`.
+Add a new blog post: create a `.md` file in `src/content/blog/` with the required frontmatter (`title`, `pubDate`, `description`, `tags`). Prefer the established tags shown on `/blog/tags/` rather than inventing a new one. Add `draft: true` to preview before publishing. Blog posts render with prose styling and tag links. For featured images, place them in `/public/images/` and reference as `/images/filename.png`.
 
 Projects follow the same pattern in `src/content/projects/` with the additional `category` field (`Launched` or `Development`). Add `featured: true` to give a project the full card at the top of `/projects/` (every featured project gets one, and the rest render as compact index rows), and `url` for an external "Visit" link. Images need no import or build step - just drop the file in `public/images/` and reference `/images/filename.png`; the optimizer picks it up on the next `npm run dev` / `npm run build`.

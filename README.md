@@ -1,90 +1,96 @@
 # Tarlow.space
 
-Personal website and blog — built with intention.
+Personal website and field journal, built with intention.
 
-A corner of the web built by [Tarlow](https://github.com/DevTarlow), a developer and creative builder sharing projects, local-first tools, and AI exploration.
+A quiet record of building, attention, and the long way back. Local-first software, agents, and the work of staying present, made by [Tarlow](https://github.com/DevTarlow).
 
 ## Built With
 
-- **Astro 6** — static site generation
-- **Tailwind CSS 3** — utility-first styling
-- **TypeScript** — type safety
+- **Astro 6** - static site generation
+- **Tailwind CSS 3** - utility styling and tokens
+- **TypeScript** - type safety
+- **View Transitions** - client-side navigation without a SPA framework
 
 ## Theme
 
-Minimal Modern Hipster — Digital Paper (`#F9F9F8`) surfaces, Terracotta (`#C05746`) accents, Inter for body and headings.
+**Observatory** - a dark-only night sky. Deep ground (`#05070C`), warm bone type (`#EFE8DB`), brass accents (`#CFAE7B`), Instrument Serif for display and Inter for reading. A fixed star canvas, a constellation atlas of entries, and a warm editorial layout.
 
 ## Prerequisites
 
-- **Node.js 22** or newer (the CI workflow uses Node 22)
-- **npm** (a `package-lock.json` is committed, so use `npm ci` for reproducible installs)
+- **Node.js 24** or newer (`.nvmrc` is the deployment source of truth)
+- **npm** (a `package-lock.json` is committed, so use `npm ci --legacy-peer-deps` for reproducible installs)
 
 ## Commands
 
 | Command | Action |
 |---|---|
-| `npm install` | Install dependencies (use `npm ci` in CI) |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview production build |
-| `npm run check` | Type-check Astro files (astro check) |
+| `npm install` | Install dependencies (use `npm ci --legacy-peer-deps` in CI) |
+| `npm run dev` | Start the dev server at `localhost:4321` |
+| `npm run build` | Build the production site to `./dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run check` | Type-check Astro files |
 | `npm run lint` | ESLint all files |
 | `npm run lint:fix` | ESLint auto-fix |
-| `npm run astro` | Run any astro CLI command |
+| `npm run images` | Regenerate responsive WebP variants |
+| `npm run fonts` | Refresh the self-hosted Inter and Instrument Serif files |
+| `npm run og:image` | Regenerate the social card, touch icon, and favicon fallbacks |
+| `npm run astro` | Run any Astro CLI command |
 
 ## Project Structure
 
 ```
-├── public/              Static assets (images, favicon, CNAME, _headers)
-├── src/
-│   ├── components/      Reusable components (Navbar, Sidebar, etc.)
-│   ├── content/         Content collections (blog, projects)
-│   ├── layouts/         Page layouts (BaseLayout)
-│   ├── lib/             Content access helpers (posts.ts)
-│   ├── pages/           Route pages
-│   └── styles/          Global CSS
-├── astro.config.mjs
-├── tailwind.config.mjs
-└── tsconfig.json
+public/                 Static assets (fonts, images, favicon, CNAME)
+src/
+  components/           Observatory chrome, atlas, search, cards, and utilities
+  content/              Content collections (blog, projects)
+  layouts/              BaseLayout
+  lib/                  Content, atlas, reading time, and site helpers
+  pages/                Routes
+  styles/               Tokens, Observatory layout, and prose
+astro.config.mjs
+tailwind.config.mjs
+tsconfig.json
 ```
 
 ## Pages
 
 | Route | Description |
 |---|---|
-| `/` | Home with latest blog posts |
-| `/blog` | Paginated blog listing (5 per page) with search & recent posts |
-| `/blog/:slug` | Individual blog post |
-| `/blog/tags` | Tag cloud with post counts |
-| `/blog/tags/:tag` | Posts filtered by tag |
-| `/projects` | Project showcase by category (Launched / Development) |
-| `/projects/:slug` | Project detail page |
-| `/about` | About the author |
-| Any unmatched route | Custom 404 page |
+| `/` | Observatory home: hero, constellation atlas of every entry, featured journal, work in orbit, and the current Now |
+| `/blog` | Paginated journal with full-text search, tags, and reading sidebar |
+| `/blog/page/:page` | Journal pages 2+ |
+| `/blog/:slug` | Long-form entry with reading progress, related notes, and sharing |
+| `/blog/tags` | Tag index |
+| `/blog/tags/:tag` | Entries filtered by tag |
+| `/projects` | Featured project and the full work index grouped by year |
+| `/projects/:slug` | Project detail |
+| `/about` | The long way back: chapters, practice, Now, and contact |
+| Any unmatched route | Custom 404 |
 | `/rss.xml` | RSS feed via `@astrojs/rss` |
+| `/search-index.json` | Plain-text post bodies fetched by search on first interaction |
 
 ## Content
 
-Blog posts and project pages are managed via Astro content collections as Markdown with frontmatter.
+Blog posts and projects are Markdown files in Astro content collections.
 
 - **Blog**: `src/content/blog/`
 - **Projects**: `src/content/projects/`
 
-See [AGENTS.md](AGENTS.md) for the full content schemas and contribution conventions.
+See [AGENTS.md](AGENTS.md) for schemas, tag rules, and contribution conventions.
 
-### Drafts & Production
+### Drafts
 
-Posts and projects with `draft: true` in frontmatter are **excluded** at build time (`npm run build`) but **visible** during development (`npm run dev`). Publishing is just flipping `draft` to `false` (or removing the field).
+Posts and projects with `draft: true` are excluded from production builds but visible in development. Publishing is removing the flag.
 
 ## Deployment
 
-Pushing to `main` triggers the [GitHub Actions workflow](.github/workflows/deploy.yml), which builds the site and deploys it to **GitHub Pages** via `actions/deploy-pages`. The site is served from the `github-pages` deployment environment, not a branch.
+Pushing to `main` triggers the [GitHub Actions workflow](.github/workflows/deploy.yml), which builds the site and deploys it to **GitHub Pages** via `actions/deploy-pages`.
 
 - **Site URL**: https://tarlow.space (custom domain via `public/CNAME`)
-- **Cache headers**: `public/_headers`
+- **Cache headers**: `public/_headers` (kept for hosts that read it; GitHub Pages ignores it)
 
 ## External Services
 
-- **Google Analytics** (G-H879GPJ4GM) — loaded in `BaseLayout`
-- **Bluesky** — share buttons link to bsky.app intent URLs
-- **Google Fonts** — Inter served via fonts.googleapis.com
+- **Google Analytics** (`G-H879GPJ4GM`) - consent-gated; nothing loads until the visitor allows analytics.
+- **Bluesky** - share buttons use bsky.app intent URLs; no API calls.
+- **Fonts** - Inter and Instrument Serif are self-hosted in `public/fonts/`; no Google Fonts request at runtime.
