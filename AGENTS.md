@@ -112,7 +112,7 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 | `/blog/tags/[tag]/` | `blog/tags/[tag].astro` | Posts filtered by tag |
 | `/projects/` | `projects/index.astro` | Featured project lead card, then the complete work index grouped by year |
 | `/projects/[...slug]/` | `projects/[...slug].astro` | Project detail with a hero image, actions, and prose |
-| `/about/` | `about.astro` | The long way back: chapters, a small practice, Now, and contact |
+| `/about/` | `about.astro` | A look in the past: chapters, a small practice, Now, and contact |
 | `404` | `404.astro` | Custom 404 |
 | `/rss.xml` | `rss.xml.js` | RSS feed via `@astrojs/rss` |
 | `/search-index.json` | `search-index.json.ts` | Plain text of every post body, fetched by `BlogSearch` on first interaction (see below) |

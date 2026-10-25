@@ -2,7 +2,7 @@
 
 Personal website and field journal, built with intention.
 
-A quiet record of building, attention, and the long way back. Local-first software, agents, and the work of staying present, made by [Tarlow](https://github.com/DevTarlow).
+A quiet record of building, attention, and a look in the past. Local-first software, agents, and the work of staying present, made by [Tarlow](https://github.com/DevTarlow).
 
 ## Built With
 
@@ -64,7 +64,7 @@ tsconfig.json
 | `/blog/tags/:tag` | Entries filtered by tag |
 | `/projects` | Featured project and the full work index grouped by year |
 | `/projects/:slug` | Project detail |
-| `/about` | The long way back: chapters, practice, Now, and contact |
+| `/about` | A look in the past: chapters, practice, Now, and contact |
 | Any unmatched route | Custom 404 |
 | `/rss.xml` | RSS feed via `@astrojs/rss` |
 | `/search-index.json` | Plain-text post bodies fetched by search on first interaction |
