@@ -1,0 +1,75 @@
+---
+/**
+ * Small global behaviours: the header's scrolled state, the local Portland
+ * clock, and the article reading-progress line.
+ *
+ * The script is delegated and re-entrant. It installs one set of window
+ * listeners for the life of the tab and simply re-reads the current DOM after a
+ * View Transition, so navigation cannot stack duplicate handlers.
+ */
+---
+
+<script is:inline data-astro-rerun>
+  (function () {
+    function timeLabel () {
+      try {
+        return new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/Los_Angeles',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).format(new Date())
+      } catch {
+        return ''
+      }
+    }
+
+    function updateClock () {
+      const value = timeLabel()
+      if (!value) return
+      document.querySelectorAll('[data-local-time]').forEach(function (node) {
+        node.textContent = value
+      })
+    }
+
+    function updateHeader () {
+      const header = document.getElementById('site-header')
+      if (!header) return
+      header.classList.toggle('is-scrolled', window.scrollY > 18)
+    }
+
+    function updateProgress () {
+      const bar = document.getElementById('essay-progress-bar')
+      if (!bar) return
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
+      bar.style.transform = 'scaleX(' + progress.toFixed(4) + ')'
+    }
+
+    let scheduled = false
+    function onScroll () {
+      if (scheduled) return
+      scheduled = true
+      window.requestAnimationFrame(function () {
+        scheduled = false
+        updateHeader()
+        updateProgress()
+      })
+    }
+
+    if (!window.__siteChromeInit) {
+      window.__siteChromeInit = true
+      window.addEventListener('scroll', onScroll, { passive: true })
+      window.setInterval(updateClock, 30000)
+      document.addEventListener('astro:page-load', function () {
+        updateClock()
+        updateHeader()
+        updateProgress()
+      })
+    }
+
+    updateClock()
+    updateHeader()
+    updateProgress()
+  })()
+</script>

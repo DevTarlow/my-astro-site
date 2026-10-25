@@ -1,0 +1,201 @@
+---
+/**
+ * The fixed night sky behind every page.
+ *
+ * The canvas is purely decorative. It pauses when the document is hidden and
+ * renders a single static frame when the visitor prefers reduced motion. The
+ * inline script cleans up after itself so View Transition navigation never
+ * leaves duplicate animation loops or listeners running.
+ */
+---
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="space-wash" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<span class="shooting-star" id="shooting-star" aria-hidden="true"></span>
+
+<script is:inline data-astro-rerun>
+  (function () {
+    if (window.__skyCleanup) window.__skyCleanup()
+
+    const params = new URLSearchParams(window.location.search)
+    const stillMode = params.get('still') === '1'
+    if (stillMode) document.documentElement.classList.add('still')
+
+    const canvas = document.getElementById('sky')
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const shootingStar = document.getElementById('shooting-star')
+    let width = 0
+    let height = 0
+    let dpr = 1
+    let stars = []
+    let pointerX = 0
+    let pointerY = 0
+    let currentX = 0
+    let currentY = 0
+    let lastDraw = 0
+    let frame = null
+    let shootTimer = 0
+    let visibilityHandler = null
+    let resizeHandler = null
+    let pointerHandler = null
+    let reduceHandler = null
+
+    const seeded = (function () {
+      let value = 42
+      return function () {
+        value = (value * 1664525 + 1013904223) % 4294967296
+        return value / 4294967296
+      }
+    })()
+
+    function animate () {
+      return !reduceMotion.matches && !stillMode && !document.hidden
+    }
+
+    function makeStars () {
+      const count = Math.min(180, Math.max(72, Math.round((width * height) / 12500)))
+      stars = Array.from({ length: count }, function (_, index) {
+        const bright = index % 29 === 0
+        const warm = index % 17 === 0
+        return {
+          x: seeded(),
+          y: seeded(),
+          radius: bright ? 1.4 + seeded() * 0.9 : 0.45 + seeded() * 0.9,
+          alpha: bright ? 0.5 + seeded() * 0.35 : 0.16 + seeded() * 0.32,
+          phase: seeded() * Math.PI * 2,
+          speed: 0.18 + seeded() * 0.35,
+          bright: bright,
+          warm: warm,
+        }
+      })
+    }
+
+    function resize () {
+      width = window.innerWidth
+      height = window.innerHeight
+      dpr = Math.min(2, window.devicePixelRatio || 1)
+      canvas.width = Math.round(width * dpr)
+      canvas.height = Math.round(height * dpr)
+      canvas.style.width = width + 'px'
+      canvas.style.height = height + 'px'
+      makeStars()
+      draw(0)
+    }
+
+    function draw (time) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.scale(dpr, dpr)
+      const drift = reduceMotion.matches || stillMode ? 0 : 1
+      currentX += (pointerX - currentX) * 0.045
+      currentY += (pointerY - currentY) * 0.045
+      const offsetX = currentX * 8 * drift
+      const offsetY = currentY * 6 * drift
+
+      for (const star of stars) {
+        const twinkle = reduceMotion.matches || stillMode
+          ? 1
+          : 0.72 + 0.28 * Math.sin(time * 0.00032 * star.speed * 6 + star.phase)
+        const x = star.x * width + offsetX * (star.radius > 1.2 ? 1.4 : 0.5)
+        const y = star.y * height + offsetY * (star.radius > 1.2 ? 1.4 : 0.5)
+        const alpha = star.alpha * twinkle
+        ctx.beginPath()
+        ctx.arc(x, y, star.radius, 0, Math.PI * 2)
+        ctx.fillStyle = star.warm
+          ? 'rgba(216, 184, 137, ' + alpha.toFixed(3) + ')'
+          : 'rgba(236, 231, 219, ' + alpha.toFixed(3) + ')'
+        ctx.fill()
+        if (star.bright) {
+          ctx.beginPath()
+          ctx.arc(x, y, star.radius * 3.4, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(207, 174, 123, ' + (alpha * 0.07).toFixed(3) + ')'
+          ctx.fill()
+        }
+      }
+    }
+
+    function loop (time) {
+      if (time - lastDraw > 74) {
+        draw(time)
+        lastDraw = time
+      }
+      frame = window.requestAnimationFrame(loop)
+    }
+
+    function start () {
+      if (!animate() || frame) return
+      frame = window.requestAnimationFrame(loop)
+    }
+
+    function stop () {
+      if (frame) window.cancelAnimationFrame(frame)
+      frame = null
+    }
+
+    function scheduleShootingStar () {
+      window.clearTimeout(shootTimer)
+      if (!shootingStar || reduceMotion.matches || stillMode) return
+      shootTimer = window.setTimeout(function () {
+        if (!document.hidden) {
+          shootingStar.style.top = 6 + Math.random() * 22 + '%'
+          shootingStar.style.left = 62 + Math.random() * 24 + '%'
+          shootingStar.classList.remove('is-shooting')
+          void shootingStar.offsetWidth
+          shootingStar.classList.add('is-shooting')
+          window.setTimeout(function () { shootingStar.classList.remove('is-shooting') }, 2000)
+        }
+        scheduleShootingStar()
+      }, 15000 + Math.random() * 13000)
+    }
+
+    resize()
+    draw(0)
+    start()
+
+    resizeHandler = function () {
+      resize()
+      if (reduceMotion.matches || stillMode) draw(0)
+    }
+    pointerHandler = function (event) {
+      if (!animate()) return
+      pointerX = (event.clientX / width) * 2 - 1
+      pointerY = (event.clientY / height) * 2 - 1
+    }
+    visibilityHandler = function () {
+      if (document.hidden) {
+        stop()
+      } else {
+        start()
+      }
+    }
+    reduceHandler = function () {
+      if (reduceMotion.matches) {
+        stop()
+        draw(0)
+      } else {
+        start()
+      }
+    }
+
+    window.addEventListener('resize', resizeHandler)
+    window.addEventListener('pointermove', pointerHandler, { passive: true })
+    document.addEventListener('visibilitychange', visibilityHandler)
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', reduceHandler)
+    if (!reduceMotion.matches && !stillMode) scheduleShootingStar()
+
+    window.__skyCleanup = function () {
+      stop()
+      window.clearTimeout(shootTimer)
+      window.removeEventListener('resize', resizeHandler)
+      window.removeEventListener('pointermove', pointerHandler)
+      document.removeEventListener('visibilitychange', visibilityHandler)
+      if (reduceMotion.removeEventListener) reduceMotion.removeEventListener('change', reduceHandler)
+      window.__skyCleanup = null
+    }
+  })()
+</script>

@@ -12,41 +12,22 @@ const { posts } = Astro.props
 
 {
   posts.length > 0 && (
-    <section class="mt-16 border-t border-ink/10 pt-10">
-      <h2 class="font-sans text-xl font-semibold mb-6">Related Posts</h2>
-      <ul class="space-y-6">
-        {
-          posts.map((post) => (
-            <li>
-              <article>
-                <time
-                  datetime={post.data.pubDate.toISOString().slice(0, 10)}
-                  class="block text-xs text-muted mb-1"
-                >
-                  {dateParts(post.data.pubDate).short}
-                </time>
-                <a
-                  href={`/blog/${post.id}/`}
-                  class="font-sans text-lg text-ink no-underline hover:text-terracotta transition-colors"
-                >
-                  {post.data.title}
-                </a>
-                <p class="mt-1 text-sm text-muted leading-relaxed">
-                  {excerpt(post.body ?? '', 200)}
-                </p>
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <ul class="flex gap-2 mt-2">
-                    {post.data.tags.slice(0, 3).map((tag) => (
-                      <li class="text-xs text-terracotta bg-terracotta/5 px-2 py-0.5 rounded">
-                        <a href={`/blog/tags/${encodeURIComponent(tag)}/`} class="no-underline text-inherit">#{tag}</a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </article>
-            </li>
-          ))
-        }
+    <section class="related" aria-labelledby="related-title">
+      <p class="label"><span class="label-line" aria-hidden="true"></span>Continue reading</p>
+      <h2 class="related-title" id="related-title">Nearby notes.</h2>
+      <ul class="related-list">
+        {posts.map((post) => (
+          <li>
+            <a class="related-row" href={`/blog/${post.id}/`}>
+              <span class="related-date">{dateParts(post.data.pubDate).short}</span>
+              <span class="related-copy">
+                <span class="related-name">{post.data.title}</span>
+                <span class="related-excerpt">{excerpt(post.body ?? '', 150)}</span>
+              </span>
+              <span class="related-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </section>
   )

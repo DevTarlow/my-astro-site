@@ -9,31 +9,14 @@
  */
 ---
 
-<div
-  class="consent-banner fixed bottom-4 left-4 z-40 max-w-[calc(100vw-2rem)] rounded-lg border border-terracotta/30 bg-paper/95 p-4 shadow-lg backdrop-blur sm:max-w-md"
-  role="region"
-  aria-label="Analytics consent"
->
-  <p class="text-sm text-ink">
-    I use Google Analytics to see which posts get read. It sets cookies.
+<div class="consent-banner" role="region" aria-label="Analytics consent">
+  <p class="consent-title">A small note about analytics</p>
+  <p class="consent-copy">
+    I use Google Analytics to see which notes get read. It sets cookies. Saying no changes nothing about how
+    the site works.
   </p>
-  <p class="mt-1 text-xs text-muted">
-    Saying no changes nothing about how the site works.
-  </p>
-  <div class="mt-3 flex flex-wrap items-center gap-2">
-    <button
-      type="button"
-      data-consent-accept
-      class="inline-flex h-9 items-center rounded-md bg-terracotta px-3 font-sans text-sm font-medium text-paper transition-opacity hover:opacity-90"
-    >
-      Allow analytics
-    </button>
-    <button
-      type="button"
-      data-consent-decline
-      class="inline-flex h-9 items-center rounded-md border border-ink/50 px-3 font-sans text-sm text-ink transition-colors hover:border-terracotta hover:text-terracotta"
-    >
-      No thanks
-    </button>
+  <div class="consent-actions">
+    <button type="button" data-consent-accept class="btn btn-solid">Allow analytics</button>
+    <button type="button" data-consent-decline class="btn btn-quiet">No thanks</button>
   </div>
 </div>

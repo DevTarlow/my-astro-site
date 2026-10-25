@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><rect width="200" height="200" fill="url('#gradient')"></rect><defs><linearGradient id="gradient" gradientTransform="rotate(0 0.5 0.5)"><stop offset="0%" stop-color="#f9f9f8"></stop><stop offset="100%" stop-color="#ffffff"></stop></linearGradient></defs><g><g fill="#000000" transform="matrix(10.268131868131869,0,0,10.268131868131869,35.36316718504979,173.0057938198467)" stroke="#c05746" stroke-width="0.2"><path d="M12.24-14.22L12.24-11.57L7.97-11.57L7.97 0L4.54 0L4.54-11.57L0.35-11.57L0.35-14.22L12.24-14.22Z"></path></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#05070C"/>
+  <circle cx="32" cy="32" r="18.5" fill="none" stroke="#CFAE7B" stroke-opacity="0.42" stroke-width="1.2"/>
+  <circle cx="32" cy="32" r="4.2" fill="#EFE8DB"/>
+  <path d="M32 7v5M32 52v5M7 32h5M52 32h5" stroke="#CFAE7B" stroke-width="1.2" stroke-linecap="round" opacity="0.75"/>
+  <circle cx="47.5" cy="18.5" r="1.8" fill="#CFAE7B"/>
+</svg>

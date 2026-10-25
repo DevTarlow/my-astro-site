@@ -10,32 +10,32 @@ for (const post of posts) {
     tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
   }
 }
-
-const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1])
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
 ---
 
-<BaseLayout title="Tags" description="Browse blog posts by topic.">
-  <main id="main-content" class="mx-auto max-w-[65ch] px-6 py-20">
-    <header class="mb-12 text-center">
-      <h1 class="font-sans text-3xl font-semibold tracking-tight">Tags</h1>
-      <div class="mx-auto mt-4 h-0.5 w-12 rounded bg-terracotta"></div>
-      <p class="mt-4 text-sm text-muted">
-        Browse blog posts by topic
-      </p>
-    </header>
+<BaseLayout title="Tags" description="Browse Tarlow's field notes by topic." view="page">
+  <main id="main-content">
+    <div class="page-shell">
+      <header class="page-head">
+        <p class="label"><span class="label-line" aria-hidden="true"></span>Journal / tags</p>
+        <div class="page-head-row">
+          <h1>Follow a <em>thread.</em></h1>
+          <div class="page-head-aside">
+            <p>A small set of recurring threads, carried across the journal. Start anywhere.</p>
+            <p><a class="text-link" href="/blog/">Back to the journal</a></p>
+          </div>
+        </div>
+      </header>
 
-    <div class="flex flex-wrap justify-center gap-3">
-      {
-        sortedTags.map(([tag, count]) => (
-          <a
-            href={`/blog/tags/${encodeURIComponent(tag)}/`}
-            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-terracotta/20 text-ink no-underline hover:bg-terracotta/5 hover:border-terracotta/40 transition-colors font-sans"
-          >
-            <span>#{tag}</span>
-            <span class="text-xs text-terracotta font-sans">{count}</span>
-          </a>
-        ))
-      }
+      <div class="tag-cloud tag-cloud-large">
+        {
+          sortedTags.map(([tag, count]) => (
+            <a class="tag-chip" href={`/blog/tags/${encodeURIComponent(tag)}/`}>
+              #{tag} <span>{count}</span>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </main>
 </BaseLayout>

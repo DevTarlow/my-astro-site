@@ -8,69 +8,60 @@ export interface Props {
 }
 
 const { item } = Astro.props
-const { project, href, title, monthYear, category } = item
+const { project, href, shortTitle, monthYear, category } = item
 const tags = (project.data.tags ?? []).slice(0, 4)
-const linkClass = 'text-ink no-underline hover:text-terracotta transition-colors'
 ---
 
-<article class="grid gap-4 rounded-lg border border-terracotta/15 bg-white/50 p-4 sm:grid-cols-[16rem_1fr] dark:bg-white/5">
+<article class="project-feature">
   {
-    project.data.image && (
-      <a href={href} tabindex="-1" aria-hidden="true" class="block overflow-hidden rounded-md">
+    project.data.image ? (
+      <a href={href} tabindex="-1" aria-hidden="true" class="project-feature-media">
         <ContentImage
           src={project.data.image}
           alt=""
-          sizes="(max-width: 640px) 100vw, 256px"
-          class="h-40 w-full object-cover"
+          sizes="(max-width: 760px) 100vw, 300px"
+          class="h-full w-full object-cover"
         />
       </a>
+    ) : (
+      <div class="project-feature-media project-placeholder" aria-hidden="true">
+        {shortTitle.charAt(0)}
+      </div>
     )
   }
 
-  <div class="flex min-w-0 flex-col">
-    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-      <time datetime={project.data.pubDate.toISOString().slice(0, 10)} class="font-mono text-xs uppercase tracking-[0.15em] text-muted">
-        {monthYear}
-      </time>
-      {category && <span class:list={['rounded px-1.5 py-0.5 text-[11px]', categoryClass(category)]}>{category}</span>}
+  <div class="project-feature-copy">
+    <div class="project-feature-meta">
+      <time datetime={project.data.pubDate.toISOString().slice(0, 10)}>{monthYear}</time>
+      {category && <span class={categoryClass(category)}>{category}</span>}
     </div>
 
-    <h3 class="mt-1 font-sans text-xl font-semibold leading-snug">
-      <a href={href} class={linkClass}>{title}</a>
+    <h3 class="project-feature-title">
+      <a href={href}>{shortTitle}</a>
     </h3>
 
-    <p class="mt-1.5 max-w-2xl text-sm leading-relaxed text-muted line-clamp-3">
-      {project.data.description}
-    </p>
+    <p class="project-feature-desc">{project.data.description}</p>
 
-    <div class="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-3 text-xs">
-      {tags.map((tag) => <span class="text-terracotta">#{tag}</span>)}
-      <span class="ml-auto flex items-center gap-3">
+    <div class="project-feature-foot">
+      {
+        tags.length > 0 && (
+          <ul class="project-tags" aria-label="Tags">
+            {tags.map((tag) => <li>#{tag}</li>)}
+          </ul>
+        )
+      }
+      <div class="project-actions">
         {
           project.data.github && (
-            <a
-              href={project.data.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-muted no-underline transition-colors hover:text-terracotta"
-            >
-              GitHub
-            </a>
+            <a href={project.data.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           )
         }
         {
           project.data.url && (
-            <a
-              href={project.data.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-terracotta no-underline transition-opacity hover:opacity-80"
-            >
-              Visit →
-            </a>
+            <a href={project.data.url} target="_blank" rel="noopener noreferrer">Visit ↗</a>
           )
         }
-      </span>
+      </div>
     </div>
   </div>
 </article>

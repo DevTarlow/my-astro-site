@@ -6,52 +6,39 @@ import { excerpt } from '../lib/excerpt'
 
 export interface Props {
   post: CollectionEntry<'blog'>
-  /**
-   * h2 when the page heading is the listing itself, h3 when the card sits under
-   * its own section heading (the home page's "Latest Posts").
-   */
   headingLevel?: 'h2' | 'h3'
 }
 
 const { post, headingLevel = 'h2' } = Astro.props
-
-// The listing markup used to be copy-pasted per page, which is how the home
-// page and the blog ended up with different link and heading structure.
 const Heading = headingLevel
 const href = `/blog/${post.id}/`
 const datetime = post.data.pubDate.toISOString().slice(0, 10)
 const image = post.data.featuredimage
-const summary = excerpt(post.body ?? '', 250)
+const summary = excerpt(post.body ?? '', 220)
+const tags = (post.data.tags ?? []).slice(0, 3)
 ---
 
-<article>
-  <!-- The image is a shortcut to the post, not a second tab stop: it carries
-       aria-hidden and tabindex="-1" so the title stays the card's only link
-       for keyboard and screen-reader users. -->
+<article class="post-card">
   {
     image && (
-      <a href={href} tabindex="-1" aria-hidden="true" class="block mb-3">
+      <a href={href} tabindex="-1" aria-hidden="true" class="post-card-media">
         <ContentImage
           src={image}
           alt=""
-          class="w-full h-36 object-cover rounded-lg"
+          sizes="(max-width: 760px) 100vw, 190px"
+          class="h-full w-full object-cover"
         />
       </a>
     )
   }
-  <time datetime={datetime} class="block text-sm text-muted mb-1.5">
-    {dateParts(post.data.pubDate).long}
-  </time>
-  <!-- One labelled link per card: the title. The image points at the same post
-       but is kept out of the tab order, and a separate "Read More" was removed,
-       so each card is a single tab stop with a useful label. -->
-  <Heading class="font-sans text-xl text-ink">
-    <a
-      href={href}
-      class="text-inherit no-underline transition-colors hover:text-terracotta"
-    >
-      {post.data.title}
-    </a>
-  </Heading>
-  <p class="mt-2 text-sm text-muted leading-relaxed">{summary}</p>
+  <div class="post-card-body">
+    <div class="post-card-meta">
+      <time datetime={datetime}>{dateParts(post.data.pubDate).short}</time>
+      {tags.length > 0 && <span class="post-card-tagline">{tags.join(' / ')}</span>}
+    </div>
+    <Heading class="post-card-title">
+      <a href={href}>{post.data.title}</a>
+    </Heading>
+    <p class="post-card-excerpt">{summary}</p>
+  </div>
 </article>

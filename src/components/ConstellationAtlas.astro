@@ -1,0 +1,304 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { buildAtlas } from '../lib/atlas'
+
+export interface Props {
+  posts: CollectionEntry<'blog'>[]
+  featuredSlug?: string
+}
+
+const { posts, featuredSlug } = Astro.props
+const atlas = buildAtlas(posts, featuredSlug)
+const selected = atlas.featured
+const initialGroup = atlas.groups.find((group) => group.id === selected.group)
+---
+
+<div class="atlas-inner">
+  <div class="atlas-tools">
+    <div class="filter-set" role="group" aria-label="Filter the atlas by constellation">
+      <button class="filter-btn" type="button" data-atlas-filter="all" aria-pressed="true">
+        <span class="filter-dot" aria-hidden="true"></span>All <span class="filter-count">{String(atlas.entries.length).padStart(2, '0')}</span>
+      </button>
+      {
+        atlas.groups.map((group) => (
+          <button
+            class="filter-btn"
+            type="button"
+            data-atlas-filter={group.id}
+            aria-pressed="false"
+            style={`--g: ${group.color}`}
+          >
+            <span class="filter-dot" aria-hidden="true"></span>{group.label}{' '}
+            <span class="filter-count">{String(group.count).padStart(2, '0')}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="view-toggle" role="group" aria-label="Atlas view">
+      <button class="view-btn" type="button" data-atlas-view="atlas" aria-pressed="true">Atlas</button>
+      <button class="view-btn" type="button" data-atlas-view="index" aria-pressed="false">Index</button>
+    </div>
+  </div>
+
+  <div class="atlas-board" id="atlas-board">
+    <div class="atlas-stage" id="atlas-stage">
+      <p class="stage-corner tl">RA 04h 12m / DEC +12° 08'<br />THE QUIET SKY</p>
+      <p class="stage-corner br">N<br />E</p>
+      <p class="stage-corner bl">APRIL 2026 - NOW</p>
+      <p class="stage-note">Hover a star to read the record</p>
+
+      <svg
+        class="constellation-svg"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        {
+          atlas.groups.map((group) => (
+            <polyline
+              class:list={['constellation-line', group.id === selected.group && 'is-active']}
+              points={group.points}
+              data-atlas-line={group.id}
+              style={`--g: ${group.color}`}
+            />
+          ))
+        }
+      </svg>
+
+      {
+        atlas.groups.map((group) => (
+          <span
+            class:list={['constellation-label', group.id === selected.group && 'is-active']}
+            data-atlas-group-label={group.id}
+            style={`left: ${group.labelX}%; top: ${group.labelY}%; --g: ${group.color}`}
+          >
+            {group.label} / {String(group.count).padStart(2, '0')}
+          </span>
+        ))
+      }
+
+      {
+        atlas.entries.map((entry) => {
+          const meta = atlas.groups.find((group) => group.id === entry.group)!
+          const isInitial = entry.post.id === selected.post.id
+          return (
+            <a
+              href={entry.href}
+              class:list={['star', isInitial && 'is-active', entry.post.id === featuredSlug && 'is-featured']}
+              style={`--x: ${entry.x / 10}%; --y: ${entry.y / 6}%; --g: ${meta.color}`}
+              data-atlas-star
+              data-title={entry.post.data.title}
+              data-date={entry.date}
+              data-tags={entry.tags}
+              data-group={meta.label}
+              data-group-id={entry.group}
+              data-excerpt={entry.excerpt}
+              data-reading={`${entry.readingTime} min read`}
+              data-href={entry.href}
+              data-label={entry.x > 760 ? 'left' : undefined}
+              aria-label={`${entry.post.data.title}, ${entry.date}, ${meta.label}. Open the entry.`}
+              tabindex="0"
+            >
+              <span class="star-label">{entry.post.data.title}</span>
+            </a>
+          )
+        })
+      }
+    </div>
+
+    <aside class="atlas-panel" aria-label="Selected entry">
+      <div class="panel-top">
+        <span>Object / selected</span>
+        <span id="atlas-count">
+          {String(atlas.entries.findIndex((entry) => entry.post.id === selected.post.id) + 1).padStart(2, '0')} / {String(atlas.entries.length).padStart(2, '0')}
+        </span>
+      </div>
+      <div class="panel-body">
+        <p class="panel-kicker" id="atlas-panel-kicker" style={`color: ${initialGroup?.color ?? 'var(--brass)'}`}>
+          {initialGroup?.label ?? 'Entry'} / field note
+        </p>
+        <h3 class="panel-title" id="atlas-panel-title">{selected.post.data.title}</h3>
+        <p class="panel-meta" id="atlas-panel-meta">
+          <span>{selected.date}</span>
+          <span>{selected.tags}</span>
+          <span>{selected.readingTime} min</span>
+        </p>
+        <p class="panel-excerpt" id="atlas-panel-excerpt">{selected.excerpt}</p>
+        <a class="panel-open" id="atlas-panel-open" href={selected.href}>
+          <span>Read this entry</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+        <div class="panel-legend" aria-hidden="true">
+          {atlas.groups.map((group) => (
+            <span class="legend-item" style={`--g: ${group.color}`}>
+              <span class="legend-dot"></span>{group.label}
+            </span>
+          ))}
+        </div>
+        <p class="panel-hint">Tab through the stars. The index below has the same map, in words.</p>
+      </div>
+    </aside>
+  </div>
+
+  <p class="mobile-atlas-note">
+    The atlas is an instrument for wider skies. Here is the same map in words - all {atlas.entries.length} entries,
+    newest first.
+  </p>
+
+  <div class="atlas-index" id="atlas-index" aria-label="All entries">
+    {
+      atlas.entries.map((entry, index) => {
+        const meta = atlas.groups.find((group) => group.id === entry.group)!
+        return (
+          <a
+            class:list={['index-row', entry.post.id === selected.post.id && 'is-demo']}
+            href={entry.href}
+            style={`--g: ${meta.color}`}
+          >
+            <span class="index-num">{String(index + 1).padStart(3, '0')}</span>
+            <span class="index-date">{entry.post.data.pubDate.toISOString().slice(0, 10).replaceAll('-', '.')}</span>
+            <span class="index-title">{entry.post.data.title}</span>
+            <span class="index-group">{meta.label}</span>
+          </a>
+        )
+      })
+    }
+  </div>
+</div>
+
+<script is:inline data-astro-rerun>
+  (function () {
+    const root = document.getElementById('atlas')
+    if (!root) return
+
+    const stars = Array.from(root.querySelectorAll('[data-atlas-star]'))
+    const filters = Array.from(root.querySelectorAll('[data-atlas-filter]'))
+    const viewButtons = Array.from(root.querySelectorAll('[data-atlas-view]'))
+    const lines = Array.from(root.querySelectorAll('[data-atlas-line]'))
+    const groupLabels = Array.from(root.querySelectorAll('[data-atlas-group-label]'))
+    const board = root.querySelector('#atlas-board')
+    const index = root.querySelector('#atlas-index')
+    const filterSet = root.querySelector('.filter-set')
+    const count = root.querySelector('#atlas-count')
+    const kicker = root.querySelector('#atlas-panel-kicker')
+    const title = root.querySelector('#atlas-panel-title')
+    const meta = root.querySelector('#atlas-panel-meta')
+    const excerpt = root.querySelector('#atlas-panel-excerpt')
+    const open = root.querySelector('#atlas-panel-open')
+    let activeStar = root.querySelector('.star.is-active') || stars[0]
+    let view = window.matchMedia('(max-width: 900px)').matches ? 'index' : 'atlas'
+
+    function setView (next) {
+      view = next
+      viewButtons.forEach(function (button) {
+        button.setAttribute('aria-pressed', String(button.dataset.atlasView === next))
+      })
+      if (board) board.hidden = next === 'index'
+      if (index) index.classList.toggle('is-active', next === 'index')
+      if (filterSet) filterSet.hidden = next === 'index'
+    }
+
+    function setActive (star) {
+      if (!star) return
+      activeStar = star
+      stars.forEach(function (candidate) {
+        candidate.classList.toggle('is-active', candidate === star)
+      })
+
+      const groupId = star.dataset.groupId
+      const group = filters.find(function (button) {
+        return button.dataset.atlasFilter === groupId
+      })
+      const groupLabel = group ? group.textContent.replace(/\s+/g, ' ').trim() : star.dataset.group
+      const groupColor = group ? getComputedStyle(group).getPropertyValue('--g').trim() : 'var(--brass)'
+      const groupName = groupLabel.replace(/\s+\d+$/, '')
+
+      if (kicker) {
+        kicker.textContent = groupName + ' / field note'
+        kicker.style.color = groupColor || 'var(--brass)'
+      }
+      if (title) title.textContent = star.dataset.title
+      if (excerpt) excerpt.textContent = star.dataset.excerpt
+
+      if (meta) {
+        meta.replaceChildren()
+        ;[star.dataset.date, star.dataset.tags, star.dataset.reading].filter(Boolean).forEach(function (value) {
+          const span = document.createElement('span')
+          span.textContent = value
+          meta.appendChild(span)
+        })
+      }
+
+      if (open) {
+        open.href = star.dataset.href
+      }
+
+      const visibleStars = stars.filter(function (candidate) {
+        return !candidate.classList.contains('is-dim')
+      })
+      const position = visibleStars.indexOf(star) + 1
+      if (count) {
+        count.textContent = String(position).padStart(2, '0') + ' / ' + String(visibleStars.length).padStart(2, '0')
+      }
+
+      lines.forEach(function (line) {
+        line.classList.toggle('is-active', line.dataset.atlasLine === groupId)
+      })
+      groupLabels.forEach(function (label) {
+        label.classList.toggle('is-active', label.dataset.atlasGroupLabel === groupId)
+      })
+    }
+
+    function applyFilter (next, initial) {
+      filters.forEach(function (button) {
+        button.setAttribute('aria-pressed', String(button.dataset.atlasFilter === next))
+      })
+
+      stars.forEach(function (star) {
+        const dim = next !== 'all' && star.dataset.groupId !== next
+        star.classList.toggle('is-dim', dim)
+        star.tabIndex = dim ? -1 : 0
+      })
+      lines.forEach(function (line) {
+        line.classList.toggle('is-dim', next !== 'all' && line.dataset.atlasLine !== next)
+      })
+      groupLabels.forEach(function (label) {
+        label.classList.toggle('is-dim', next !== 'all' && label.dataset.atlasGroupLabel !== next)
+      })
+
+      if (!initial) {
+        const first = stars.find(function (star) {
+          return !star.classList.contains('is-dim')
+        })
+        if (first) setActive(first)
+      }
+    }
+
+    stars.forEach(function (star) {
+      star.addEventListener('mouseenter', function () { setActive(star) })
+      star.addEventListener('focus', function () { setActive(star) })
+    })
+
+    filters.forEach(function (button) {
+      button.addEventListener('click', function () {
+        applyFilter(button.dataset.atlasFilter)
+      })
+    })
+
+    viewButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        setView(button.dataset.atlasView)
+      })
+    })
+
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      applyFilter('all', true)
+    } else {
+      setView(view)
+      setActive(activeStar)
+    }
+  })()
+</script>

@@ -8,10 +8,11 @@ export default {
         paper: 'rgb(var(--color-paper) / <alpha-value>)',
         ink: 'rgb(var(--color-ink) / <alpha-value>)',
         muted: 'rgb(var(--color-muted) / <alpha-value>)',
-        terracotta: 'rgb(var(--color-terracotta) / <alpha-value>)',
+        brass: 'rgb(var(--color-brass) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        serif: ['Instrument Serif', 'Iowan Old Style', 'Georgia', 'Times New Roman', 'serif'],
       },
     },
   },

@@ -7,13 +7,9 @@ export async function getStaticPaths() {
   const posts = await getPublicBlog()
   const tags = new Set<string>()
   for (const post of posts) {
-    for (const tag of post.data.tags ?? []) {
-      tags.add(tag)
-    }
+    for (const tag of post.data.tags ?? []) tags.add(tag)
   }
-  return [...tags].map((tag) => ({
-    params: { tag },
-  }))
+  return [...tags].map((tag) => ({ params: { tag } }))
 }
 
 const tag = Astro.params.tag!
@@ -23,32 +19,34 @@ const filtered = posts
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 ---
 
-<BaseLayout title={`#${tag}`} description={`Posts tagged with "${tag}".`}>
-  <main id="main-content" class="mx-auto max-w-[65ch] px-6 py-20">
-    <header class="mb-12">
-      <a
-        href="/blog/tags/"
-        class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
-      >
-        ← All Tags
-      </a>
-      <h1 class="font-sans text-3xl font-semibold tracking-tight">
-        #<span class="text-terracotta">{tag}</span>
-      </h1>
-      <p class="mt-2 text-sm text-muted">
-        {filtered.length} {filtered.length === 1 ? 'post' : 'posts'}
-      </p>
-      <div class="mt-4 h-0.5 w-12 rounded bg-terracotta"></div>
-    </header>
+<BaseLayout title={`#${tag}`} description={`Field notes tagged with "${tag}".`} view="page">
+  <main id="main-content">
+    <div class="page-shell">
+      <header class="page-head">
+        <p class="label"><span class="label-line" aria-hidden="true"></span>Journal / tag</p>
+        <div class="page-head-row">
+          <h1>#<em>{tag}</em></h1>
+          <div class="page-head-aside">
+            <p>
+              {filtered.length} {filtered.length === 1 ? 'entry' : 'entries'} in this thread. Follow it, or
+              wander back into the archive.
+            </p>
+            <p><a class="text-link" href="/blog/tags/">All tags</a></p>
+          </div>
+        </div>
+      </header>
 
-    <ul class="space-y-12">
-      {
-        filtered.map((post) => (
-          <li>
+      <div class="post-list">
+        {
+          filtered.map((post) => (
             <PostCard post={post} />
-          </li>
-        ))
-      }
-    </ul>
+          ))
+        }
+      </div>
+
+      <div class="archive-back">
+        <a class="text-link" href="/blog/">← Back to the journal</a>
+      </div>
+    </div>
   </main>
 </BaseLayout>

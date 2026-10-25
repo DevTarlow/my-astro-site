@@ -9,6 +9,7 @@ import RelatedPosts from '../../components/RelatedPosts.astro'
 import ShareButtons from '../../components/ShareButtons.astro'
 import { getPublicBlog, getRelatedPosts } from '../../lib/posts'
 import { dateParts } from '../../lib/dates'
+import { readingMinutes } from '../../lib/reading'
 
 export async function getStaticPaths() {
   const posts = await getPublicBlog()
@@ -26,9 +27,12 @@ if (!post) {
 const { Content } = await render(post)
 const allPosts = await getPublicBlog()
 const related = getRelatedPosts(post, allPosts)
+const date = dateParts(post.data.pubDate)
+const minutes = readingMinutes(post.body)
+const tags = post.data.tags ?? []
 
 // BlogPosting gives search engines the author, dates and tags they need for
-// article rich results; the blog had none at all before.
+// article rich results.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -53,57 +57,83 @@ const jsonLd = {
   image={post.data.featuredimage}
   ogType="article"
   publishedTime={post.data.pubDate.toISOString()}
-  articleTags={post.data.tags ?? []}
+  articleTags={tags}
   jsonLd={jsonLd}
+  view="essay"
 >
+  <div class="essay-progress" aria-hidden="true">
+    <div class="essay-progress-bar" id="essay-progress-bar"></div>
+  </div>
+
   <main id="main-content">
-    <article class="mx-auto max-w-[65ch] px-6 py-20">
-    <a
-      href="/blog/"
-      class="inline-block text-sm text-terracotta no-underline hover:opacity-80 transition-opacity mb-6"
-    >
-      ← Back to Blog
-    </a>
-    {
-      post.data.featuredimage && (
-        <ContentImage
-          src={post.data.featuredimage}
-          alt=""
-          class="w-full h-48 object-cover rounded-lg mb-8"
-        />
-      )
-    }
-    <header class="mb-12">
-      <h1 class="font-sans text-3xl font-semibold leading-tight">
-        {post.data.title}
-      </h1>
-
-      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-        <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>
-          {dateParts(post.data.pubDate).long}
-        </time>
-
-        {post.data.tags && post.data.tags.length > 0 && (
-          <ul class="flex flex-wrap gap-2">
-            {post.data.tags.map((tag) => (
-              <li class="text-xs text-terracotta bg-terracotta/5 px-2 py-0.5 rounded hover:bg-terracotta/10 transition-colors">
-                <a href={`/blog/tags/${encodeURIComponent(tag)}/`} class="no-underline text-inherit">#{tag}</a>
-              </li>
-            ))}
-          </ul>
-        )}
+    <article class="essay">
+      <div class="essay-crumb">
+        <a href="/blog/">Journal</a>
+        <span class="crumb-sep">/</span>
+        <span>Field note</span>
       </div>
-    </header>
 
-    <div class="prose-custom">
-      <Content />
-    </div>
-    <ShareButtons title={post.data.title} />
-    <RelatedPosts posts={related} />
+      <header class="essay-head">
+        <div class="essay-kicker">
+          {tags[0] && <span class="kicker-type">{tags[0]}</span>}
+          <time datetime={post.data.pubDate.toISOString().slice(0, 10)}>{date.long}</time>
+          <span>{minutes} min read</span>
+        </div>
+
+        <h1>{post.data.title}</h1>
+        <p class="essay-deck">{post.data.description}</p>
+
+        <p class="essay-byline">
+          <span><strong>Words + code</strong> / Tarlow</span>
+          <span>Portland, Oregon</span>
+          <span>Published {post.data.pubDate.toISOString().slice(0, 10).replaceAll('-', '.')}</span>
+        </p>
+      </header>
+
+      {
+        post.data.featuredimage && (
+          <figure class="essay-hero">
+            <ContentImage
+              src={post.data.featuredimage}
+              alt=""
+              sizes="(max-width: 1000px) 100vw, 1100px"
+              loading="eager"
+            />
+            <figcaption>
+              <span>From the field notes.</span>
+              <span>Entry / {post.id.replaceAll('-', ' ')}</span>
+            </figcaption>
+          </figure>
+        )
+      }
+
+      <h2 class="visually-hidden">The entry</h2>
+      <div class="prose-custom">
+        <Content />
+      </div>
+
+      <div class="essay-after">
+        <div class="essay-tags" aria-label="Tags">
+          {tags.map((tag) => (
+            <a class="essay-tag" href={`/blog/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>
+          ))}
+        </div>
+
+        <ShareButtons title={post.data.title} />
+
+        <a class="next-entry" href="/blog/">
+          <span>
+            <span class="next-label">Return to</span>
+            <span class="next-title">The journal</span>
+          </span>
+          <span class="next-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <RelatedPosts posts={related} />
+      </div>
     </article>
   </main>
+
   <ImageZoom />
   <CodeCopy />
 </BaseLayout>
-
-

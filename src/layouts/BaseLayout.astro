@@ -1,10 +1,13 @@
 ---
 import '../styles/global.css'
+import '../styles/observatory.css'
 import { ClientRouter } from 'astro:transitions'
 import Navbar from '../components/Navbar.astro'
 import MobilePanel from '../components/MobilePanel.astro'
 import BackToTop from '../components/BackToTop.astro'
 import ConsentBanner from '../components/ConsentBanner.astro'
+import Sky from '../components/Sky.astro'
+import SiteScripts from '../components/SiteScripts.astro'
 import Footer from '../components/footer/FooterColumns.astro'
 import { getImageEntry } from '../lib/image-manifest'
 
@@ -20,6 +23,10 @@ export interface Props {
   articleTags?: string[]
   /** schema.org data; rendered as one or more ld+json blocks. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+  /** Drives the fixed sky level and the article progress bar. */
+  view?: 'home' | 'essay' | 'about' | 'page'
+  /** Extra body classes, for page-specific scopes. */
+  bodyClass?: string
 }
 
 const {
@@ -31,12 +38,14 @@ const {
   publishedTime,
   articleTags = [],
   jsonLd,
+  view = 'page',
+  bodyClass,
 } = Astro.props
 
 const siteUrl = 'https://tarlow.space'
 const siteName = 'Tarlow.space'
-const pageTitle = title ? `${title} - ${siteName} | Developer` : `${siteName} | Developer`
-const defaultDesc = 'A blog about Tarlows projects, local-first tools, and AI exploration.'
+const pageTitle = title ? `${title} - ${siteName}` : `${siteName} - quiet tools, a slower life`
+const defaultDesc = 'A field journal from Tarlow, a solo developer in Portland, Oregon. Local-first tools, a slower way of building, and the long way back.'
 const pageDesc = description || defaultDesc
 
 function absUrl(src: string): string {
@@ -62,29 +71,8 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
-    <script is:inline>
-      (function () {
-        let stored = null
-        try { stored = localStorage.getItem('theme') } catch { /* storage may be unavailable */ }
-        const dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (dark) {
-          document.documentElement.classList.add('dark')
-        }
-      })()
-    </script>
-    <script is:inline>
-      // Reveals the consent banner before paint, but only when no choice has
-      // been stored yet (see the .consent-banner rules in global.css).
-      (function () {
-        try {
-          if (!localStorage.getItem('analytics-consent')) {
-            document.documentElement.classList.add('consent-pending')
-          }
-        } catch { /* storage may be unavailable */ }
-      })()
-    </script>
     <ClientRouter />
     <!-- Google tag (gtag.js). Analytics sets cookies, so nothing is loaded until
          the visitor allows it: the library is ~170KB and is fetched after load +
@@ -133,9 +121,9 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
 
         document.addEventListener('astro:page-load', function () {
           // Astro's router copies the next page's <html> attributes onto the
-          // live root, which strips `consent-pending`, and this head script does
-          // not re-run. Without re-applying it here, a reader who clicks any
-          // internal link before answering would never see the notice again.
+          // live root, which can strip the consent marker. Re-apply it when no
+          // choice is stored so a reader who navigates before answering still
+          // sees the notice.
           if (!readConsent()) document.documentElement.classList.add('consent-pending')
           if (window.__gaEnabled) {
             window.gtag('config', MEASUREMENT_ID, { page_path: location.pathname })
@@ -156,21 +144,30 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
         }
         window.__consentHandlers = { click: handleClick }
         document.addEventListener('click', handleClick)
+
+        // Reveal the banner before paint only when no choice is stored.
+        try {
+          if (!localStorage.getItem(CONSENT_KEY)) {
+            document.documentElement.classList.add('consent-pending')
+          }
+        } catch { /* storage may be unavailable */ }
       })()
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#F9F9F8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#05070C" />
 
     <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-latin-italic.woff2" as="font" type="font/woff2" crossorigin />
 
     <title>{pageTitle}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={new URL(Astro.url.pathname, siteUrl)} />}
-    <link rel="alternate" type="application/rss+xml" title="Tarlow.space" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
 
     <meta name="description" content={pageDesc} />
     <meta property="og:site_name" content={siteName} />
@@ -179,7 +176,7 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={new URL(Astro.url.pathname, siteUrl)} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content={image ? pageTitle : 'Tarlow, developer in the Pacific Northwest'} />
+    <meta property="og:image:alt" content={image ? pageTitle : 'Tarlow, independent developer in the Pacific Northwest'} />
     {
       ogDimensions && (
         <>
@@ -195,97 +192,23 @@ const serialize = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDesc} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={image ? pageTitle : 'Tarlow, developer in the Pacific Northwest'} />
+    <meta name="twitter:image:alt" content={image ? pageTitle : 'Tarlow, independent developer in the Pacific Northwest'} />
     {jsonLdBlocks.map((block) => <script is:inline type="application/ld+json" set:html={serialize(block)} />)}
   </head>
-  <body class="bg-paper">
-    <!-- Keyboard users land here first; it slides in on focus and is plain
-         off-screen the rest of the time. Kept out of `sr-only` because mixing
-         `not-sr-only` with a positioning utility is order-dependent. -->
-    <a
-      id="skip-link"
-      href="#main-content"
-      class="absolute left-4 top-4 z-[100] -translate-y-20 rounded-md bg-terracotta px-4 py-2 font-sans text-sm font-medium text-paper no-underline shadow-lg transition-transform focus:translate-y-0"
-    >
-      Skip to content
-    </a>
-    <div class="bg-paper text-ink font-sans leading-relaxed antialiased min-h-screen">
-      <div id="app-shell">
-        <Navbar />
-        <slot />
-        <Footer />
-        <BackToTop />
-        <!-- Inside the shell so the mobile panel's scrim covers it and it goes
-             inert with everything else while the menu is open. -->
-        <ConsentBanner />
-      </div>
-      <MobilePanel />
+  <body data-view={view} class={bodyClass}>
+    <a id="skip-link" class="skip-link" href="#main-content">Skip to content</a>
+
+    <Sky />
+
+    <div id="app-shell">
+      <Navbar />
+      <slot />
+      <Footer />
+      <BackToTop />
+      <ConsentBanner />
     </div>
 
-    <!-- Single theme controller: delegated so it survives View Transition navigation.
-         Re-runs on every navigation (data-astro-rerun) and swaps the old handler.
-         Astro's router copies the next page's <html> attributes onto the live root,
-         which strips class="dark" on client-side navigation - so applyTheme() must
-         re-run on every page load. -->
-    <script is:inline data-astro-rerun>
-      (function () {
-        function currentDark () {
-          return document.documentElement.classList.contains('dark')
-        }
-
-        function desiredDark () {
-          let stored = null
-          try { stored = localStorage.getItem('theme') } catch { /* storage may be unavailable */ }
-          return stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
-        }
-
-        function persistTheme (dark) {
-          try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch { /* storage may be unavailable */ }
-        }
-
-        function syncControls (dark) {
-          document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
-            const sun = btn.querySelector('[data-theme-sun]')
-            const moon = btn.querySelector('[data-theme-moon]')
-            const label = btn.querySelector('[data-theme-label]')
-            if (sun) sun.classList.toggle('hidden', !dark)
-            if (moon) moon.classList.toggle('hidden', dark)
-            if (label) label.textContent = dark ? 'Light Mode' : 'Dark Mode'
-          })
-        }
-
-        function setTheme (dark) {
-          document.documentElement.classList.toggle('dark', dark)
-          persistTheme(dark)
-          syncControls(dark)
-        }
-
-        // Restore the stored/system theme without persisting anything.
-        // Runs once per navigation to undo the router's attribute swap.
-        function applyTheme () {
-          const dark = desiredDark()
-          document.documentElement.classList.toggle('dark', dark)
-          syncControls(dark)
-        }
-
-        applyTheme()
-
-        if (window.__themeHandlers) {
-          document.removeEventListener('click', window.__themeHandlers.click)
-        }
-        const handleClick = function (e) {
-          if (!e.target.closest('[data-theme-toggle]')) return
-          setTheme(!currentDark())
-        }
-        window.__themeHandlers = { click: handleClick }
-        document.addEventListener('click', handleClick)
-
-        if (window.__themeOnPageLoad) {
-          document.removeEventListener('astro:page-load', window.__themeOnPageLoad)
-        }
-        window.__themeOnPageLoad = applyTheme
-        document.addEventListener('astro:page-load', applyTheme)
-      })()
-    </script>
+    <MobilePanel />
+    <SiteScripts />
   </body>
 </html>

@@ -57,4 +57,4 @@ export function groupByYear(rows: ProjectDisplay[]) {
 }
 
 export const categoryClass = (category: string | undefined) =>
-  category === 'Launched' ? 'bg-terracotta/10 text-terracotta' : 'bg-ink/5 text-muted'
+  category === 'Launched' ? 'category-pill category-pill-launched' : 'category-pill category-pill-development'
