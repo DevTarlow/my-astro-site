@@ -13,7 +13,7 @@ A quiet record of building, attention, and a look in the past. Local-first softw
 
 ## Theme
 
-**Observatory** - a dark-only night sky. Deep ground (`#05070C`), warm bone type (`#EFE8DB`), brass accents (`#CFAE7B`), Instrument Serif for display and Inter for reading. A fixed star canvas, a constellation atlas of entries, and a warm editorial layout.
+**Field Journal** - a dark-only night sky. Deep ground (`#05070C`), warm bone type (`#EFE8DB`), brass accents (`#CFAE7B`), Instrument Serif for display and Inter for reading. A fixed star canvas, one editorial home page, a compact journal, and no instrument-panel chrome.
 
 ## Prerequisites
 
@@ -41,12 +41,12 @@ A quiet record of building, attention, and a look in the past. Local-first softw
 ```
 public/                 Static assets (fonts, images, favicon, CNAME)
 src/
-  components/           Observatory chrome, atlas, search, cards, and utilities
+  components/           Field Journal chrome, search, cards, and utilities
   content/              Content collections (blog, projects)
   layouts/              BaseLayout
   lib/                  Content, atlas, reading time, and site helpers
   pages/                Routes
-  styles/               Tokens, Observatory layout, and prose
+  styles/               Tokens, Field Journal layout, and prose
 astro.config.mjs
 tailwind.config.mjs
 tsconfig.json
@@ -56,15 +56,15 @@ tsconfig.json
 
 | Route | Description |
 |---|---|
-| `/` | Observatory home: hero, constellation atlas of every entry, featured journal, work in orbit, and the current Now |
-| `/blog` | Paginated journal with full-text search, tags, and reading sidebar |
+| `/` | Field Journal home: split hero, latest note, recent entries, selected work, four thread links, and Now |
+| `/blog` | Paginated journal with compact live full-text search and tags; no sidebar |
 | `/blog/page/:page` | Journal pages 2+ |
-| `/blog/:slug` | Long-form entry with reading progress, related notes, and sharing |
+| `/blog/:slug` | Long-form entry with a 68ch measure, reading progress, tags, sharing, and two nearby notes |
 | `/blog/tags` | Tag index |
 | `/blog/tags/:tag` | Entries filtered by tag |
 | `/projects` | Featured project and the full work index grouped by year |
 | `/projects/:slug` | Project detail |
-| `/about` | A look in the past: chapters, practice, Now, and contact |
+| `/about` | A look in the past: chapters, practice, Now, and contact, with the full story kept intact |
 | Any unmatched route | Custom 404 |
 | `/rss.xml` | RSS feed via `@astrojs/rss` |
 | `/search-index.json` | Plain-text post bodies fetched by search on first interaction |

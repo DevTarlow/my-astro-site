@@ -70,10 +70,10 @@ Project listing helpers are in [src/lib/project-browse.ts](src/lib/project-brows
 - `toDisplay(projects)` / `groupByYear(rows)` - pre-format the dates and titles the projects page renders (`ProjectDisplay` carries `title`, `shortTitle`, `year`, `month`, `monthYear`, `href`, `category`)
 - `categoryClass(category)` - shared `Launched` / `Development` pill styling
 
-Observatory helpers:
-- [src/lib/atlas.ts](src/lib/atlas.ts) - groups every public post into `agents`, `local-first`, `workflow`, or `launches` from its tags, assigns stable 1000x600 stage coordinates, and builds constellation lines plus the featured entry.
+Other helpers:
+- **Legacy** [src/lib/atlas.ts](src/lib/atlas.ts) - groups every public post into `agents`, `local-first`, `workflow`, or `launches` from its tags and assigns 1000x600 stage coordinates. The current home page no longer renders the atlas; the four thread links use the real tags and their per-tag counts. Keep this helper only while the unused atlas component remains.
 - [src/lib/reading.ts](src/lib/reading.ts) - rough reading time from a Markdown body at 220 words per minute.
-- [src/lib/site.ts](src/lib/site.ts) - the featured entry slug, the editable `NOW` copy, and Portland coordinates shared by the home and About pages.
+- [src/lib/site.ts](src/lib/site.ts) - the featured entry slug, the editable `NOW` copy, and the Portland location.
 - [src/lib/tag-redirects.mjs](src/lib/tag-redirects.mjs) - retired tag aliases passed to Astro's redirects in `astro.config.mjs`.
 
 Date helper: [src/lib/dates.ts](src/lib/dates.ts) - `dateParts(date)` returns `long` / `short` / `monthYear` / `month` / `year`.
@@ -104,10 +104,10 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 
 | Route | File | Key Details |
 |---|---|---|
-| `/` | `index.astro` | Observatory home: hero, constellation atlas of every entry, featured and recent journal, work in orbit, and the editable Now band |
-| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with the Observatory search panel and a sticky sidebar above 1024px |
+| `/` | `index.astro` | Field Journal home: split hero, one featured note, three recent rows, selected work rows, four thread links, and the editable Now band |
+| `/blog/` | `blog/index.astro` | Paginated listing (5/page) with a compact live full-text search, browse-by-tag link, and no sidebar |
 | `/blog/page/[page]/` | `blog/page/[page].astro` | Pagination pages 2+ |
-| `/blog/[...slug]/` | `blog/[...slug].astro` | Long-form entry with reading progress, tags, sharing, and nearby notes |
+| `/blog/[...slug]/` | `blog/[...slug].astro` | Long-form entry with a 68ch measure, reading progress, tags, sharing, and nearby notes |
 | `/blog/tags/` | `blog/tags/index.astro` | Tag index |
 | `/blog/tags/[tag]/` | `blog/tags/[tag].astro` | Posts filtered by tag |
 | `/projects/` | `projects/index.astro` | Featured project lead card, then the complete work index grouped by year |
@@ -122,37 +122,37 @@ Pages use Astro file-based routing in [src/pages/](src/pages/):
 Key components in [src/components/](src/components/):
 
 - **BaseLayout** (`src/layouts/BaseLayout.astro`) - Root layout with `ClientRouter`, a dark-only `#app-shell`, self-hosted font preloads, consent-gated Google Analytics (G-H879GPJ4GM), OG/Twitter meta, JSON-LD, Navbar, slot, FooterColumns, BackToTop, and ConsentBanner. It also renders the global `Sky` (fixed canvas starfield, grain, shooting star) and `SiteScripts` outside the shell content. There is no theme script and no theme toggle. **Every page must render `<main id="main-content">`** or the skip link has nowhere to go; the post and project pages wrap their `<article>` in one. The `view` prop (`home` | `essay` | `about` | `page`) sets `body[data-view]`, which drives sky opacity and the article progress bar. Other props beyond title/description/image/ogType: `noindex` (drops the canonical and emits `robots noindex`, used by the 404), `publishedTime` + `articleTags` (emit `article:*` meta on `og:type=article` pages), `jsonLd` (one object or an array, serialised with `<` escaped), and `bodyClass`. Pages without their own `image` fall back to `/images/og-default.png`, a generated 1200x630 card; per-post images declare `og:image:width/height` from the build-time manifest.
-- **Navbar** - Fixed header with the "Tarlow." wordmark and "field notes" suffix, centered Journal / Atlas / Work / About links with active-state highlighting, a Portland local-time/coordinate cluster, an RSS link, and the mobile index trigger (`data-menu-trigger`, shown at 1020px and below, with `aria-expanded` and `aria-haspopup="dialog"`). Atlas points at `/#atlas`. No theme control.
-- **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Site footer rendered on every page from BaseLayout. Wordmark, short blurb, Explore (Home, Journal, Work, About), Elsewhere (GitHub, Bluesky, X, Moss AI Studio, RSS, email), and a bottom row with copyright, "Made under the same stars.", and the live Portland time.
-- **Sidebar** - Journal sidebar shown above 1024px (`position: sticky` under the header). Takes a `showRecent` prop: page 1 passes `showRecent={false}` and renders an About card; pages 2+ show recent entries. Also renders the top eight tags with counts. No search - that lives in `BlogSearch`.
-- **MobilePanel** - Full-screen mobile index dialog (`role="dialog"`, `aria-modal`, hidden until opened). Five serif nav links, a close control, coordinates, live time, and social links. Its `data-astro-rerun` script uses `window.__menuCleanup`, manages `inert` on `#app-shell`, traps focus, restores focus, closes on Escape or a nav link, locks body scroll, and auto-closes above 1020px. No theme toggle.
-- **BlogSearch** - Search panel rendered above the post list on `/blog` pages at all sizes. Titles, descriptions and tags are inlined (`define:vars`); post bodies come from `/search-index.json`, fetched on first focus or input and cached per script instance. Results replace the list via `#default-content` / `#search-results` and reuse the `PostCard` shape (640w WebP thumbnail, date, tag line, heading link, description). If the body index fails to load, search falls back to the metadata and says so. The script renders *before* the results container, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
-- **PostCard** - The journal listing card used by the blog index, pagination pages and tag pages (the home page uses its own featured/journal markup). Renders the featured image as a decorative, non-tabbable link (`alt=""`, `aria-hidden`, `tabindex="-1"`), the date and tag line, the title as a heading containing the card's only tab stop, and the excerpt. `headingLevel` defaults to `h2`.
+- **Navbar** - Fixed header with the "Tarlow." wordmark and "space" suffix, centered Journal / Work / About links with active-state highlighting, an RSS link, and the mobile index trigger (`data-menu-trigger`, shown at 1020px and below, with `aria-expanded` and `aria-haspopup="dialog"`). No coordinates, no live clock, no Atlas link, and no theme control.
+- **FooterColumns** (`src/components/footer/FooterColumns.astro`) - Compact site footer rendered on every page from BaseLayout. Wordmark, short blurb, a site group (Journal, Work, About), an elsewhere group (GitHub, Bluesky, X, Moss AI Studio, RSS, email), and a bottom row with copyright, "Made under the same stars.", and the live Portland time.
+- **Sidebar** - Legacy component. It is no longer rendered by the journal; the current journal uses a single 960px column. Keep the file until the next component cleanup.
+- **MobilePanel** - Full-screen mobile index dialog (`role="dialog"`, `aria-modal`, hidden until opened). Four serif nav links (Home, Journal, Work, About), a close control, a Portland line, and social links. Its `data-astro-rerun` script uses `window.__menuCleanup`, manages `inert` on `#app-shell`, traps focus, restores focus, closes on Escape or a nav link, locks body scroll, and auto-closes above 1020px. No theme toggle.
+- **BlogSearch** - One compact live search field above the post list on `/blog` pages. Titles, descriptions and tags are inlined (`define:vars`); post bodies come from `/search-index.json`, fetched on first focus or input and cached per script instance. Typing debounces a search; results replace the list via `#default-content` / `#search-results` and reuse the `PostCard` shape (640w WebP thumbnail, date, one tag, heading link, description). If the body index fails to load, search falls back to the metadata and says so. The script renders *before* the results container, so it defers binding to `DOMContentLoaded` when the document is still parsing - do not remove that guard or search breaks on direct loads/hard refreshes. `#search-results` is an `aria-live="polite"` region.
+- **PostCard** - The journal listing card used by the blog index, pagination pages and tag pages (the home page uses its own featured/journal markup). A 172px image sits left of the body; the image is a decorative, non-tabbable link (`alt=""`, `aria-hidden`, `tabindex="-1"`), followed by a 13px date/tag line, the title as the card's only tab stop, and a 16px description. `headingLevel` defaults to `h2`.
 - **Pagination** - Prev/Next with page numbers, ellipsis for long ranges, configurable `basePath` (defaults to `/blog`). Links are 44px hit targets and the current page carries `aria-current="page"`; the `<nav>` is labelled "Pagination".
 - **ContentImage** - Reads the build-time image manifest and emits responsive `<picture>`/WebP `srcset` markup. Accepts `src` (public path), `alt`, `class`, `sizes`, `loading`, and `fetchpriority`; falls back to a plain `<img>` with `sharp` dimensions when the manifest is absent.
 - **ImageZoom** - Global click-to-zoom overlay for blog/project article images.
 - **ProjectFeaturedCard** - Two-column lead card for a project with `featured: true`: screenshot/thumbnail, date and category pill, title, full description, tags, GitHub/Visit actions. Takes a single `ProjectDisplay` row; the title is the only navigation tab stop in the card.
-- **ProjectIndexRow** - Compact row for everything not featured: 64x44 thumbnail (initial fallback), title, one-line description, category pill and month on desktop. On small screens the meta column drops and the description wraps. The whole row is a single link.
-- **RelatedPosts** - Tag-based related notes under an article, with date, title, excerpt, and a compact row layout.
+- **ProjectIndexRow** - Compact row for everything not featured: 74x50 thumbnail (initial fallback), title, one-line description, category pill and month on desktop. On small screens the meta column drops and the description wraps. The whole row is a single link.
+- **RelatedPosts** - Tag-based related notes under an article, with date, title, and a compact row layout. Titles only; no truncated excerpts.
 - **ShareButtons** - Bluesky and X share links plus a client-side copy-link button. Intent URLs only, no API calls.
 - **BackToTop** - Fixed circular control that appears after scrolling 400px and uses the outlined brass treatment. When hidden it is `invisible`, `aria-hidden`, and `tabindex="-1"` so keyboard users cannot focus an invisible control. Hidden entirely below 900px so it never covers the mobile reading column or footer.
 - **Sky** (`src/components/Sky.astro`) - Fixed decorative canvas starfield plus space wash, grain, and a shooting star. About 72-180 seeded stars depending on the viewport, light parallax, and a 15-28s shooting-star interval. Pauses when the document is hidden, renders a still frame under reduced motion, cancels its animation frame and listeners via `window.__skyCleanup`, and supports `?still=1` for deterministic review screenshots.
 - **SiteScripts** (`src/components/SiteScripts.astro`) - One re-entrant inline script that updates the header's `is-scrolled` class, fills `[data-local-time]` with the America/Los_Angeles clock, and drives `#essay-progress-bar`. Installs its window listeners once and refreshes on `astro:page-load`.
-- **ConstellationAtlas** (`src/components/ConstellationAtlas.astro`) - The home atlas. Renders filter controls, an SVG constellation map, star links with accessible labels, a live preview panel, an Atlas/Index toggle, and an all-entries index fallback. At 900px and below the map tools are hidden by CSS and the index becomes the atlas. Uses [src/lib/atlas.ts](src/lib/atlas.ts) for grouping and coordinates; its `data-astro-rerun` script updates the preview on hover/focus and keeps filters, index view, and line states in sync.
-- **NowCard** (`src/components/NowCard.astro`) - Shared Now list for the home band, reading the editable `NOW` object in [src/lib/site.ts](src/lib/site.ts).
+- **ConstellationAtlas** (`src/components/ConstellationAtlas.astro`) - Legacy component. The current home page no longer renders the atlas; the four thread links use the real tag pages and counts. Keep the file until the next cleanup.
+- **NowCard** (`src/components/NowCard.astro`) - Legacy component. The home and About pages render the editable `NOW` object directly in the Field Journal layout.
 - **CodeCopy** - Adds a "Copy" button to `.prose-custom pre` blocks.
 
 ### Design System
 
 The site is **dark-only**. There is no theme toggle, no light palette, and no `theme` key in `localStorage`; do not reintroduce one. The root is `<html class="dark">` with `color-scheme: dark`, and every surface is part of the same night sky.
 
-**Tokens** live in [src/styles/observatory.css](src/styles/observatory.css) and [src/styles/global.css](src/styles/global.css):
+**Tokens** live in [src/styles/observatory.css](src/styles/observatory.css), with the Field Journal production layer in [src/styles/field-journal.css](src/styles/field-journal.css), plus [src/styles/global.css](src/styles/global.css):
 
 - `--bg` / `#05070C`, `--bg-deep` / `#030409`, `--panel` / `#090C13`
 - `--ink` / `#EFE8DB`, `--body` / `#D3CCBF`, `--muted` / `#8C94A3`, `--faint` / `#737C8C`
 - `--brass` / `#CFAE7B`, `--brass-bright` / `#E7C796`
 - `--line` and `--line-soft` for hairlines; group colors for Agents, Local-first, Workflow, and Launches
-- `--pad` (responsive page gutter), `--max` (1440px), and `--head-h` (76px desktop / 66px mobile)
+- `--pad` (responsive page gutter), `--max` (1440px), and `--head-h` (72px desktop / 66px mobile)
 
 Tailwind exposes `paper`, `ink`, `muted`, and `brass` from `--color-*` in global.css. Use those semantic classes for legacy utility markup. The `darkMode: 'class'` config remains for compatibility, but no component may add light/dark variants. The site has one palette.
 
@@ -160,13 +160,13 @@ Tailwind exposes `paper`, `ink`, `muted`, and `brass` from `--color-*` in global
 
 **Fonts**: Inter (body, UI) and Instrument Serif (display and editorial italic) are self-hosted from `public/fonts/` and refreshed with `npm run fonts`. `font-sans` is Inter, `font-serif` is Instrument Serif. BaseLayout preloads Inter and both Instrument Serif cuts. Never add a Google Fonts request.
 
-**Type and layout**: Instrument Serif is set large and tight (`letter-spacing` around -0.03em, line-height below 1) for h1/h2 and display; body copy is 16px/1.7 or 18px/1.82 in prose. The page shell maxes at 1440px with a responsive gutter; article prose caps at 68ch and centers. Fixed header, generous section bands, and true hairlines carry the observatory rhythm.
+**Type and layout**: Instrument Serif is set large and tight (`letter-spacing` around -0.03em, line-height around 1) for h1/h2 and display. Body copy is 19px/1.8 in prose; metadata is 13px; labels are 12px. The Field Journal home caps at 1120px, the journal at 960px, the article at 1080px with 68ch prose. The fixed header is 72px, the footer is compact, and section bands use true hairlines. Do not reintroduce 8-10px informative call-outs.
 
-**Motion**: The star canvas, portrait orbits, hero reveal, and shooting star are restrained and optional. `prefers-reduced-motion: reduce` removes transitions and View Transitions globally, stops the sky animation, and reveals content. All new client scripts must either re-run safely under View Transitions or install listeners once and refresh against the new DOM.
+**Motion**: The star canvas, About polaroid, and shooting star are restrained and optional. `prefers-reduced-motion: reduce` removes transitions and View Transitions globally, stops the sky animation, and reveals content. All new client scripts must either re-run safely under View Transitions or install listeners once and refresh against the new DOM.
 
 **Prose**: [src/styles/prose.css](src/styles/prose.css) is custom, not Tailwind Typography. It covers headings, links, blockquotes, lists, inline code, pre blocks, tables, images, rules, and the `.code-copy-btn`. The drop cap is scoped to `.essay .prose-custom > p:first-of-type` so project notes do not inherit it. Code blocks are horizontally scrollable; tables are wrapped by the rehype table plugin.
 
-**Atlas**: [src/lib/atlas.ts](src/lib/atlas.ts) is the semantic map. Post tags map to Agents, Local-first, Workflow, or Launches (in that priority), with stable 1000x600 coordinates and generated constellation lines. Keep coordinates within the stage and provide a fallback point for new entries. The mobile fallback is the word index; it is not a separate data source.
+**Threads**: The home page links to the real `agents`, `local-first`, `workflow`, and `launches` tag pages, with counts computed per tag. This is the journal's map now; the old constellation atlas is legacy and is no longer rendered. Tag pages remain the archive behind the thread links.
 
 **Still mode**: Adding `?still=1` adds `html.still` and renders the sky without motion for deterministic screenshots. It is a review aid, not a user-facing theme.
 
