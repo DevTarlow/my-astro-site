@@ -340,9 +340,9 @@ body[data-view='about'] #sky {
 
 .fj-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.22fr) minmax(230px, 0.78fr);
+  grid-template-columns: minmax(0, 1.38fr) minmax(230px, 0.62fr);
   align-items: center;
-  gap: clamp(36px, 7vw, 88px);
+  gap: clamp(32px, 5vw, 72px);
   padding: clamp(58px, 9vw, 112px) 0 clamp(56px, 8vw, 92px);
 }
 
@@ -373,7 +373,7 @@ body[data-view='about'] #sky {
   margin-top: 20px;
   color: var(--ink);
   font-family: var(--serif);
-  font-size: clamp(58px, 7.4vw, 94px);
+  font-size: clamp(56px, 6.2vw, 84px);
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.91;
@@ -400,9 +400,17 @@ body[data-view='about'] #sky {
   margin-top: 28px;
 }
 
+.fj-current {
+  max-width: 46ch;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .fj-portrait {
   position: relative;
-  width: min(100%, 286px);
+  width: min(100%, 240px);
   margin: 0;
   justify-self: end;
 }
