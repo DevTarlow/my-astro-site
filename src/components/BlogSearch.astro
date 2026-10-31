@@ -15,41 +15,36 @@ function thumbFor (src?: string) {
   return { url: variant.url, w: variant.w, h: variant.h }
 }
 
-const postsData = sorted.map(p => ({
-  id: p.id,
-  title: p.data.title,
-  description: p.data.description,
-  date: dateParts(p.data.pubDate).short,
-  datetime: p.data.pubDate.toISOString().slice(0, 10),
-  tags: p.data.tags ?? [],
-  thumb: thumbFor(p.data.featuredimage),
+const postsData = sorted.map((post) => ({
+  id: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  date: dateParts(post.data.pubDate).short,
+  datetime: post.data.pubDate.toISOString().slice(0, 10),
+  tags: post.data.tags ?? [],
+  thumb: thumbFor(post.data.featuredimage),
 }))
 ---
 
-<div class="search-panel">
-  <form id="search-form" role="search" class="search-form">
-    <div class="search-heading">
-      <label htmlFor="search-input" class="search-label">Find a note</label>
-      <p id="search-scope" class="search-hint">Titles, descriptions, tags, and the full text of every entry.</p>
-    </div>
-    <div class="search-field-row">
-      <div class="search-field">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <circle cx="11" cy="11" r="6.5"></circle>
-          <path d="M16 16l4.5 4.5"></path>
-        </svg>
-        <input
-          type="search"
-          id="search-input"
-          name="q"
-          aria-label="Search posts"
-          aria-describedby="search-scope"
-          aria-controls="search-results"
-          placeholder="Search the journal..."
-          class="search-input"
-        />
-      </div>
-      <button type="submit" class="search-submit">Search</button>
+<div class="fj-search">
+  <form id="search-form" role="search" class="fj-search-form">
+    <p id="search-scope" class="visually-hidden">Search titles, descriptions, tags, and the full text of every entry.</p>
+    <div class="fj-search-field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="M16 16l4.5 4.5"></path>
+      </svg>
+      <input
+        type="search"
+        id="search-input"
+        name="q"
+        aria-label="Search the journal"
+        aria-describedby="search-scope"
+        aria-controls="search-results"
+        placeholder="Search the journal..."
+        autocomplete="off"
+        class="fj-search-input"
+      />
     </div>
   </form>
 </div>
@@ -66,6 +61,8 @@ const postsData = sorted.map(p => ({
       let bodyIndex = null
       let bodyIndexPromise = null
       let bodyIndexFailed = false
+      let debounceTimer = 0
+      let runId = 0
 
       function loadBodyIndex () {
         if (bodyIndexPromise) return bodyIndexPromise
@@ -81,13 +78,18 @@ const postsData = sorted.map(p => ({
       }
 
       searchInput.addEventListener('focus', loadBodyIndex, { once: true })
-      searchInput.addEventListener('input', loadBodyIndex, { once: true })
+      searchInput.addEventListener('input', function () {
+        loadBodyIndex()
+        window.clearTimeout(debounceTimer)
+        debounceTimer = window.setTimeout(runSearch, 240)
+      })
 
       searchResults.addEventListener('click', function (e) {
         if (e.target.closest('[data-clear]')) clearSearch()
       })
 
       function clearSearch () {
+        runId += 1
         searchInput.value = ''
         searchResults.classList.add('hidden')
         defaultContent.classList.remove('hidden')
@@ -97,7 +99,11 @@ const postsData = sorted.map(p => ({
 
       function escapeHtml (str) {
         if (!str) return ''
-        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
       }
 
       function clearButton () {
@@ -113,7 +119,7 @@ const postsData = sorted.map(p => ({
         }
         html += '<div class="post-card-body">'
         html += '<div class="post-card-meta"><time datetime="' + escapeHtml(post.datetime) + '">' + escapeHtml(post.date) + '</time>'
-        if (post.tags.length) html += '<span class="post-card-tagline">' + escapeHtml(post.tags.slice(0, 3).join(' / ')) + '</span>'
+        if (post.tags.length) html += '<span class="post-card-tagline">' + escapeHtml(post.tags[0]) + '</span>'
         html += '</div>'
         html += '<h2 class="post-card-title"><a href="/blog/' + post.id + '/">' + escapeHtml(post.title) + '</a></h2>'
         html += '<p class="post-card-excerpt">' + escapeHtml(post.description) + '</p>'
@@ -122,18 +128,25 @@ const postsData = sorted.map(p => ({
       }
 
       function haystackFor (post) {
-        return [post.title, post.description, post.tags.join(' '), (bodyIndex && bodyIndex[post.id]) || ''].join(' ').toLowerCase()
+        return [
+          post.title,
+          post.description,
+          post.tags.join(' '),
+          (bodyIndex && bodyIndex[post.id]) || '',
+        ].join(' ').toLowerCase()
       }
 
-      searchForm.addEventListener('submit', async function (e) {
-        e.preventDefault()
+      async function runSearch () {
+        window.clearTimeout(debounceTimer)
         const query = searchInput.value.trim().toLowerCase()
         if (!query) {
           clearSearch()
           return
         }
 
+        const currentRun = ++runId
         if (!bodyIndex) await loadBodyIndex()
+        if (currentRun !== runId) return
 
         const words = query.split(/\s+/)
         const matches = postsData.filter(function (post) {
@@ -144,12 +157,13 @@ const postsData = sorted.map(p => ({
         if (matches.length === 0) {
           searchResults.innerHTML =
             '<div class="search-empty">' +
-            '<p>No results for "<strong>' + escapeHtml(query) + '</strong>".</p>' +
+            '<p>No notes for "<strong>' + escapeHtml(query) + '</strong>".</p>' +
             clearButton() +
             '</div>'
         } else {
           let html = '<div class="search-summary">'
-          html += '<p>' + matches.length + ' result' + (matches.length !== 1 ? 's' : '') + ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
+          html += '<p>' + matches.length + ' note' + (matches.length !== 1 ? 's' : '') +
+            ' for "<strong>' + escapeHtml(query) + '</strong>"</p>'
           html += clearButton()
           html += '</div>'
           if (bodyIndexFailed) {
@@ -163,6 +177,11 @@ const postsData = sorted.map(p => ({
 
         defaultContent.classList.add('hidden')
         searchResults.classList.remove('hidden')
+      }
+
+      searchForm.addEventListener('submit', function (e) {
+        e.preventDefault()
+        runSearch()
       })
     }
 

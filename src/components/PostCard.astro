@@ -14,8 +14,8 @@ const Heading = headingLevel
 const href = `/blog/${post.id}/`
 const datetime = post.data.pubDate.toISOString().slice(0, 10)
 const image = post.data.featuredimage
-const summary = excerpt(post.body ?? '', 220)
-const tags = (post.data.tags ?? []).slice(0, 3)
+const summary = post.data.description || excerpt(post.body ?? '', 220)
+const tags = (post.data.tags ?? []).slice(0, 1)
 ---
 
 <article class="post-card">
@@ -25,7 +25,7 @@ const tags = (post.data.tags ?? []).slice(0, 3)
         <ContentImage
           src={image}
           alt=""
-          sizes="(max-width: 760px) 100vw, 190px"
+          sizes="(max-width: 640px) 96px, 172px"
           class="h-full w-full object-cover"
         />
       </a>

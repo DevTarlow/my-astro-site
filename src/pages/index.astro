@@ -3,10 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import { getPublicBlog, getPublicProjects } from '../lib/posts'
 import { dateParts } from '../lib/dates'
 import { readingMinutes } from '../lib/reading'
-import { FEATURED_POST_SLUG } from '../lib/site'
+import { FEATURED_POST_SLUG, NOW } from '../lib/site'
 import ContentImage from '../components/ContentImage.astro'
-import ConstellationAtlas from '../components/ConstellationAtlas.astro'
-import NowCard from '../components/NowCard.astro'
 
 const posts = await getPublicBlog()
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -19,23 +17,11 @@ const selectedProjects = ['marimo-bot', 'copy-sprout', 'moss-toolbox']
 const workProjects = selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 3)
 
 const featured = posts.find((post) => post.id === FEATURED_POST_SLUG) ?? posts[0]!
-const latest = posts.filter((post) => post.id !== featured.id).slice(0, 4)
+const latest = posts.filter((post) => post.id !== featured.id).slice(0, 3)
 
-const earliest = [...posts].sort(
-  (a, b) => a.data.pubDate.getTime() - b.data.pubDate.getTime(),
-)[0]!
-const since = earliest.data.pubDate.toLocaleDateString('en-US', {
-  timeZone: 'UTC',
-  month: 'long',
-  year: 'numeric',
-})
-
-const titleParts = featured.data.title.split(' - ')
-const featuredMain = titleParts[0]
-const featuredSub = titleParts.slice(1).join(' - ')
 const featuredDate = dateParts(featured.data.pubDate).long
 const featuredMinutes = readingMinutes(featured.body)
-const featuredTags = (featured.data.tags ?? []).join(' / ')
+const featuredTag = (featured.data.tags ?? [])[0] ?? 'Field note'
 
 const firstSentence = (text: string) => text.split(/(?<=[.!?])\s/)[0]
 
@@ -46,6 +32,19 @@ const workTaglines: Record<string, string> = {
   'copy-sprout': 'Plain-language writing tools for Etsy sellers.',
   'moss-toolbox': 'AI tools that know your business.',
 }
+
+// The four threads are the real tags behind the journal. Counts are per tag,
+// so they match the tag pages the links open.
+const threadTags = [
+  { tag: 'agents', label: 'Agents', color: 'var(--group-agents)' },
+  { tag: 'local-first', label: 'Local-first', color: 'var(--group-local)' },
+  { tag: 'workflow', label: 'Workflow', color: 'var(--group-workflow)' },
+  { tag: 'launches', label: 'Launches', color: 'var(--group-launches)' },
+]
+const threads = threadTags.map((thread) => ({
+  ...thread,
+  count: posts.filter((post) => (post.data.tags ?? []).includes(thread.tag)).length,
+}))
 
 const jsonLd = [
   {
@@ -78,238 +77,191 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <main id="main-content">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-top">
-        <p class="hero-eyebrow" data-reveal="1">
-          <span class="eyebrow-star" aria-hidden="true"></span>
-          Independent developer / Portland, Oregon
-        </p>
-        <p class="hero-coord" data-reveal="2">A solo observatory<br />field notes since {since}</p>
-      </div>
+    <div class="fj-home">
+      <header class="fj-hero">
+        <div class="fj-hero-copy">
+          <p class="fj-eyebrow">Independent developer / Portland, Oregon</p>
+          <h1>Notes from a <em>slower build.</em></h1>
+          <p class="fj-deck">
+            I make local-first software, write down what I learn, and try to build at the speed of a
+            life rather than a launch cycle. This is where the notes live.
+          </p>
+          <div class="fj-actions">
+            <a class="text-link" href={`/blog/${featured.id}/`}>
+              Read a field note
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="small-link" href="/about/">A little about me</a>
+          </div>
+        </div>
 
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1 id="hero-title" data-reveal="1">
-            <span class="line">Quiet tools.</span>
-            <span class="line">A slower life.</span>
-          </h1>
+        <figure class="fj-portrait">
+          <ContentImage
+            src="/images/tarlow-past.webp"
+            alt="Tarlow in a teal shirt"
+            sizes="(max-width: 860px) 190px, 286px"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <figcaption><span>Tarlow</span><span>Portland, Oregon</span></figcaption>
+        </figure>
+      </header>
 
-          <div class="hero-lower">
-            <p class="hero-intro" data-reveal="3">
-              I make software, write down what I learn, and try to build at the speed of a life rather
-              than a launch cycle. After years of automation, a long step away, and a return to work I
-              can stand behind, this is the place where I speak my mind and take notes.
+      <section class="fj-section" aria-labelledby="latest-notes">
+        <div class="fj-section-head">
+          <div>
+            <p class="label">From the journal</p>
+            <h2 id="latest-notes">Latest notes</h2>
+          </div>
+          <a class="small-link" href="/blog/">All {posts.length} notes</a>
+        </div>
+
+        <a class="fj-feature" href={`/blog/${featured.id}/`}>
+          <div class="fj-feature-media">
+            {
+              featured.data.featuredimage ? (
+                <ContentImage
+                  src={featured.data.featuredimage}
+                  alt=""
+                  sizes="(max-width: 860px) 100vw, 560px"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="fj-feature-placeholder" aria-hidden="true" />
+              )
+            }
+          </div>
+          <div class="fj-feature-copy">
+            <p class="fj-feature-meta">
+              <span>{featuredDate}</span>
+              <span>{featuredMinutes} min read</span>
+              <span>{featuredTag}</span>
             </p>
-
-            <div class="hero-actions" data-reveal="4">
-              <a class="primary-cta" href={`/blog/${featured.id}/`}>
-                <span class="cta-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-                    <path d="M5 12h14M13 6l6 6-6 6"></path>
-                  </svg>
-                </span>
-                Read a field note
-              </a>
-              <a class="quiet-link" href="#atlas">Look up at the atlas</a>
-            </div>
+            <h2>{featured.data.title}</h2>
+            <p class="fj-feature-excerpt">{featured.data.description}</p>
+            <span class="fj-feature-more">Read the note <span aria-hidden="true">&rarr;</span></span>
           </div>
-        </div>
-
-        <aside class="hero-portrait" data-reveal="2" aria-label="Portrait of Tarlow">
-          <div class="portrait-orbit" aria-hidden="true"></div>
-          <div class="portrait-frame">
-            <ContentImage
-              src="/images/tarlow-past.webp"
-              alt="Tarlow, smiling, in a teal shirt"
-              sizes="(max-width: 720px) 168px, 310px"
-              loading="eager"
-              fetchpriority="high"
-            />
-          </div>
-          <div class="portrait-cap">
-            <span>Tarlow<br />builder + founder</span>
-            <span>Portland, OR<br />under the same stars</span>
-          </div>
-        </aside>
-      </div>
-
-      <div class="hero-foot">
-        <p class="hero-count">
-          <strong>{posts.length}</strong> entries &nbsp;/&nbsp; <strong>{allProjects.length}</strong> projects &nbsp;/&nbsp; since {since}
-        </p>
-        <a class="scroll-cue" href="#atlas">
-          <span class="cue-line" aria-hidden="true"></span>
-          Scroll to look up
         </a>
-        <p class="hero-side-note">A solo site<br />no ads</p>
-      </div>
-    </section>
 
-    <section class="section atlas" id="atlas" aria-labelledby="atlas-title">
-      <div class="section-head">
-        <div>
-          <p class="label"><span class="label-line" aria-hidden="true"></span>02 / The atlas</p>
-          <h2 id="atlas-title">A map of what I've been <em>writing about</em></h2>
-        </div>
-        <div class="section-aside">
-          <p>
-            Every entry is a star, grouped by the questions I keep returning to instead of what might
-            perform. Hover, focus, or open the index to find your way around.
-          </p>
-          <p>{posts.length} entries / four constellations / my night sky.</p>
-        </div>
-      </div>
-
-      <ConstellationAtlas posts={posts} featuredSlug={FEATURED_POST_SLUG} />
-    </section>
-
-    <section class="section journal" id="journal" aria-labelledby="journal-title">
-      <div class="section-head">
-        <div>
-          <p class="label"><span class="label-line" aria-hidden="true"></span>03 / Recent entries</p>
-          <h2 id="journal-title">Lately, on the <em>desk.</em></h2>
-        </div>
-        <div class="section-aside">
-          <p>
-            The most recent notes from the workbench. Agents, tools, and the strange things that happen
-            after dark.
-          </p>
-          <p>Written when there is something worth saying. No schedule, no feed.</p>
-        </div>
-      </div>
-
-      <a class="featured-entry" href={`/blog/${featured.id}/`} data-reveal="1">
-        <div class="featured-visual">
+        <div class="fj-latest-rows">
           {
-            featured.data.featuredimage ? (
-              <ContentImage
-                src={featured.data.featuredimage}
-                alt=""
-                sizes="(max-width: 900px) 100vw, 52vw"
-              />
-            ) : (
-              <div class="featured-placeholder" aria-hidden="true"></div>
-            )
-          }
-          <span class="featured-tag">From the journal</span>
-        </div>
-        <div class="featured-copy">
-          <div class="featured-meta">
-            <span class="featured-type">Featured entry</span>
-            <span>{featuredDate}</span>
-          </div>
-          <h3>{featuredMain}{featuredSub ? <> - <em>{featuredSub}</em></> : null}</h3>
-          <p class="featured-excerpt">{featured.data.description}</p>
-          <div class="featured-foot">
-            <span class="featured-read">
-              Read the entry
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6"></path>
-              </svg>
-            </span>
-            <span class="read-time">{featuredMinutes} min read / {featuredTags}</span>
-          </div>
-        </div>
-      </a>
-
-      <div class="entry-list">
-        {
-          latest.map((post, index) => {
-            return (
-              <a class="entry-row" href={`/blog/${post.id}/`}>
-                <span class="entry-num">{String(index + 1).padStart(3, '0')}</span>
-                <span class="entry-date">{dateParts(post.data.pubDate).short}</span>
-                <span class="entry-title">{post.data.title}</span>
-                <span class="entry-tags">{(post.data.tags ?? []).slice(0, 2).join(' / ')}</span>
-                <span class="entry-arrow" aria-hidden="true">↗</span>
-              </a>
-            )
-          })
-        }
-      </div>
-
-      <div class="journal-foot">
-        <p class="journal-note">Written when there is something worth saying. No schedule, no feed.</p>
-        <a class="text-link" href="/blog/">
-          Open the whole journal
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6"></path>
-          </svg>
-        </a>
-      </div>
-    </section>
-
-    <section class="section work" id="work" aria-labelledby="work-title">
-      <div class="section-head">
-        <div>
-          <p class="label"><span class="label-line" aria-hidden="true"></span>04 / The work</p>
-          <h2 id="work-title">Things I've put into <em>orbit.</em></h2>
-        </div>
-        <div class="section-aside">
-          <p>
-            A few of the products and experiments from Moss AI Studio. Built to be useful, respectful of
-            your data, and quiet about it.
-          </p>
-          <p>{allProjects.length} projects in orbit.</p>
-        </div>
-      </div>
-
-      <div class="work-grid">
-        {
-          workProjects.map((project, index) => (
-            <a class="work-card" href={`/projects/${project.id}/`}>
-              <div class="work-visual">
-                {project.data.image ? (
-                  <ContentImage
-                    src={project.data.image}
-                    alt=""
-                    sizes="(max-width: 760px) 100vw, 33vw"
-                  />
-                ) : (
-                  <div class="work-placeholder" aria-hidden="true">
-                    {project.data.title.charAt(0)}
-                  </div>
-                )}
-                <span class="work-index">
-                  {String(index + 1).padStart(2, '0')} / {(project.data.tags ?? [])[0] ?? 'Studio'}
+            latest.map((post) => (
+              <a class="fj-latest-row" href={`/blog/${post.id}/`}>
+                <span class="fj-latest-meta">
+                  <span>{dateParts(post.data.pubDate).long}</span>
+                  <span class="fj-latest-tag">{(post.data.tags ?? [])[0] ?? 'Field note'}</span>
                 </span>
-                <span class="work-status">{project.data.category ?? 'Project'}</span>
-              </div>
-              <div class="work-copy">
-                <div>
+                <h3>{post.data.title}</h3>
+                <span class="fj-latest-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="fj-section" id="work" aria-labelledby="selected-work">
+        <div class="fj-section-head">
+          <div>
+            <p class="label">Selected work</p>
+            <h2 id="selected-work">Things I've been building</h2>
+          </div>
+          <a class="small-link" href="/projects/">All {allProjects.length} projects</a>
+        </div>
+
+        <div class="fj-work-list">
+          {
+            workProjects.map((project) => (
+              <a class="fj-work-row" href={`/projects/${project.id}/`}>
+                <div class="fj-work-thumb">
+                  {project.data.image ? (
+                    <ContentImage
+                      src={project.data.image}
+                      alt=""
+                      sizes="78px"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="fj-work-placeholder" aria-hidden="true">
+                      {project.data.title.charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <div class="fj-work-copy">
                   <h3>{project.data.title.split(' - ')[0]}</h3>
                   <p>{workTaglines[project.id] ?? firstSentence(project.data.description)}</p>
                 </div>
-                <span class="work-arrow" aria-hidden="true">↗</span>
-              </div>
-            </a>
-          ))
-        }
-      </div>
+                <span class="fj-work-status">
+                  {project.data.category === 'Development' ? 'In development' : (project.data.category ?? 'Project')}
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
 
-      <div class="work-foot">
-        <a class="text-link" href="/projects/">
-          All {allProjects.length} projects
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6"></path>
-          </svg>
-        </a>
-      </div>
-    </section>
-
-    <section class="now-band" aria-labelledby="now-title">
-      <div class="now-inner">
-        <div>
-          <h2 class="label" id="now-title"><span class="label-line" aria-hidden="true"></span>05 / Where I am today</h2>
-          <blockquote class="now-quote">
-            A long break from tech helped shape my purpose: helping others
-            grow while building with <em>grounded intention.</em>
-          </blockquote>
-          <p class="now-attrib">Let's pave a way for good intentions to flourish.</p>
+      <section class="fj-threads" aria-labelledby="threads-title">
+        <div class="fj-threads-head">
+          <div>
+            <p class="label">Threads</p>
+            <h2 id="threads-title">The questions I keep <em>returning to.</em></h2>
+          </div>
         </div>
 
-        <NowCard />
-      </div>
-    </section>
+        <div class="fj-thread-grid">
+          {
+            threads.map((thread) => (
+              <a
+                class="fj-thread"
+                href={`/blog/tags/${encodeURIComponent(thread.tag)}/`}
+                style={`--g: ${thread.color}`}
+              >
+                <span class="fj-thread-star" aria-hidden="true" />
+                <span class="fj-thread-name">{thread.label}</span>
+                <span class="fj-thread-count">{thread.count} notes</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="fj-now" aria-labelledby="now-title">
+        <div class="fj-now-copy">
+          <p class="label">Now / {NOW.label}</p>
+          <h2 id="now-title">Where I am today.</h2>
+          <p>
+            A long break from tech helped shape my purpose: helping others grow while building with
+            grounded intention.
+          </p>
+          <a class="text-link" href="/about/">
+            More about me
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        <div class="fj-now-facts">
+          <div class="fj-now-fact">
+            <span class="fj-now-key">Building</span>
+            <span class="fj-now-value">
+              {
+                NOW.building.map((item, index) => (
+                  <span>
+                    {index > 0 && <span aria-hidden="true"> + </span>}
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">{item.label}</a>
+                  </span>
+                ))
+              }
+            </span>
+          </div>
+          <div class="fj-now-fact">
+            <span class="fj-now-key">Practicing</span>
+            <span class="fj-now-value">{NOW.practicing}</span>
+          </div>
+          <div class="fj-now-fact">
+            <span class="fj-now-key">Open to</span>
+            <span class="fj-now-value">{NOW.openTo}</span>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 </BaseLayout>

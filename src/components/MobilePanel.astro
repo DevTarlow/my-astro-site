@@ -4,7 +4,6 @@ const path = Astro.url.pathname
 const links = [
   { href: '/', label: 'Home', match: null },
   { href: '/blog/', label: 'Journal', match: '/blog' },
-  { href: '/#atlas', label: 'Atlas', match: null },
   { href: '/projects/', label: 'Work', match: '/projects' },
   { href: '/about/', label: 'About', match: '/about' },
 ]
@@ -30,11 +29,10 @@ const links = [
 
   <nav class="mobile-nav" aria-label="Mobile navigation">
     {
-      links.map(({ href, label, match }, index) => {
+      links.map(({ href, label, match }) => {
         const isActive = match ? path === match || path.startsWith(match + '/') : false
         return (
           <a href={href} aria-current={isActive ? 'page' : undefined}>
-            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             {label === 'About' ? <em>{label}</em> : label}
           </a>
         )
@@ -43,11 +41,7 @@ const links = [
   </nav>
 
   <div class="mobile-menu-foot">
-    <p>
-      45.52° N / 122.68° W<br />
-      Portland, Oregon<br />
-      <span data-local-time>--:--</span>
-    </p>
+    <p>Portland, Oregon<br />Under the same stars.</p>
     <div class="socials">
       <a href="https://github.com/DevTarlow/" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://bsky.app/profile/mossaistudio.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>

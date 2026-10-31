@@ -6,8 +6,8 @@
   margin-right: auto;
   color: var(--body, rgb(var(--color-ink) / 0.86));
   font-family: var(--sans);
-  font-size: 18px;
-  line-height: 1.82;
+  font-size: 19px;
+  line-height: 1.8;
   letter-spacing: -0.004em;
 }
 
@@ -36,13 +36,13 @@
 .prose-custom h2 {
   margin-top: 2.2em;
   margin-bottom: 0.65em;
-  font-size: clamp(31px, 3.4vw, 43px);
+  font-size: clamp(30px, 3.4vw, 40px);
 }
 
 .prose-custom h3 {
   margin-top: 1.9em;
   margin-bottom: 0.55em;
-  font-size: clamp(25px, 2.8vw, 33px);
+  font-size: clamp(25px, 2.8vw, 32px);
 }
 
 .prose-custom h4 {
@@ -79,11 +79,11 @@
   border-left: 1px solid var(--brass);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: clamp(24px, 2.8vw, 34px);
+  font-size: clamp(27px, 3.1vw, 34px);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 1.28;
+  line-height: 1.25;
 }
 
 .prose-custom blockquote p {
@@ -200,7 +200,7 @@
 /* The first drop cap belongs to the essay page, not to project notes. */
 .essay .prose-custom > p:first-of-type {
   color: var(--ink);
-  font-size: 1.05em;
+  font-size: 1em;
 }
 
 .essay .prose-custom > p:first-of-type::first-letter {
@@ -208,8 +208,8 @@
   margin: 0.08em 0.11em 0 0;
   color: var(--brass-bright);
   font-family: var(--serif);
-  font-size: 4.55em;
-  line-height: 0.72;
+  font-size: 3.8em;
+  line-height: 0.7;
 }
 
 /* Code copy button (created by CodeCopy.astro). Always reachable on touch

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import Sidebar from '../../components/Sidebar.astro'
 import BlogSearch from '../../components/BlogSearch.astro'
 import Pagination from '../../components/Pagination.astro'
 import PostCard from '../../components/PostCard.astro'
@@ -20,44 +19,34 @@ const pagePosts = posts.slice(0, pageSize)
   view="page"
 >
   <main id="main-content">
-    <div class="page-shell">
-      <header class="page-head">
-        <p class="label"><span class="label-line" aria-hidden="true"></span>Journal / the archive</p>
-        <div class="page-head-row">
-          <h1>The thoughts,<br /><em>in one place.</em></h1>
-          <div class="page-head-aside">
-            <p>
-              {posts.length} entries on local-first tools, agents, and a look in the past. Written when there is
-              something worth saying, not on a schedule.
-            </p>
-            <p><a class="text-link" href="/blog/tags/">Browse by tag</a></p>
-          </div>
-        </div>
+    <div class="fj-journal-page">
+      <header class="fj-journal-head">
+        <p class="label">The journal</p>
+        <h1 id="journal-title">Every note, <em>in one place.</em></h1>
+        <p class="fj-journal-deck">
+          {posts.length} entries on local-first tools, agents, and the long way back. Written when there
+          is something worth saying, not on a schedule.
+        </p>
       </header>
 
-      <div class="journal-layout">
-        <div class="journal-main">
-          <BlogSearch />
+      <div class="fj-journal-tools">
+        <BlogSearch />
+        <a class="small-link" href="/blog/tags/">Browse by tag</a>
+      </div>
 
-          <div id="default-content">
-            <div class="post-list">
-              {
-                pagePosts.map((post) => (
-                  <PostCard post={post} />
-                ))
-              }
-            </div>
-
-            {totalPages > 1 && <Pagination currentPage={1} totalPages={totalPages} />}
-          </div>
-
-          <div id="search-results" class="search-results hidden" aria-live="polite" role="status"></div>
+      <div id="default-content">
+        <div class="post-list">
+          {
+            pagePosts.map((post) => (
+              <PostCard post={post} />
+            ))
+          }
         </div>
 
-        <aside class="journal-aside" aria-label="Journal sidebar">
-          <Sidebar showRecent={false} />
-        </aside>
+        {totalPages > 1 && <Pagination currentPage={1} totalPages={totalPages} />}
       </div>
+
+      <div id="search-results" class="search-results hidden" aria-live="polite" role="status"></div>
     </div>
   </main>
 </BaseLayout>

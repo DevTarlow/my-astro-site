@@ -1,8 +1,7 @@
 ---
 const year = new Date().getFullYear()
 
-const explore = [
-  { href: '/', label: 'Home' },
+const siteLinks = [
   { href: '/blog/', label: 'Journal' },
   { href: '/projects/', label: 'Work' },
   { href: '/about/', label: 'About' },
@@ -20,7 +19,7 @@ const elsewhere = [
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-grid">
+    <div class="footer-main">
       <div class="footer-brand">
         <a class="wordmark" href="/">Tarlow<span class="dot">.</span></a>
         <p>
@@ -28,35 +27,28 @@ const elsewhere = [
         </p>
       </div>
 
-      <div class="footer-col">
-        <h2>Explore</h2>
-        <ul>
-          {explore.map(({ href, label }) => (
-            <li><a href={href}>{label}</a></li>
-          ))}
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h2>Elsewhere</h2>
-        <ul>
-          {elsewhere.map(({ href, label, external }) => (
-            <li>
+      <nav class="footer-nav" aria-label="Footer">
+        <div class="footer-nav-group">
+          {siteLinks.map(({ href, label }) => <a href={href}>{label}</a>)}
+        </div>
+        <div class="footer-nav-group">
+          {
+            elsewhere.map(({ href, label, external }) => (
               <a
                 href={href}
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noopener noreferrer' : undefined}
               >
-                {label}{external && <span aria-hidden="true"> ↗</span>}
+                {label}{external && <span aria-hidden="true"> &nearr;</span>}
               </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+            ))
+          }
+        </div>
+      </nav>
     </div>
 
     <div class="footer-bottom">
-      <span>© {year} Tarlow. All rights reserved.</span>
+      <span>&copy; {year} Tarlow. All rights reserved.</span>
       <span class="sky-line">Made under the same stars.</span>
       <span>Portland <span data-local-time>--:--</span></span>
     </div>

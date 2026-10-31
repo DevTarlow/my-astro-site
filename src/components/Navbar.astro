@@ -3,52 +3,49 @@ const path = Astro.url.pathname
 
 const links = [
   { href: '/blog/', label: 'Journal', match: '/blog' },
-  { href: '/#atlas', label: 'Atlas', match: null },
   { href: '/projects/', label: 'Work', match: '/projects' },
   { href: '/about/', label: 'About', match: '/about' },
 ]
 ---
 
 <header class="site-header" id="site-header">
-  <a class="wordmark" href="/" aria-label="Tarlow - home">
-    Tarlow<span class="dot">.</span><span class="wordmark-space">space</span>
-  </a>
-
-  <nav class="primary-nav" aria-label="Primary">
-    {
-      links.map(({ href, label, match }) => {
-        const isActive = match ? path === match || path.startsWith(match + '/') : false
-        return (
-          <a href={href} aria-current={isActive ? 'page' : undefined}>
-            {label}
-          </a>
-        )
-      })
-    }
-  </nav>
-
-  <div class="header-right">
-    <p class="head-coord">
-      <span>45.52° N / 122.68° W</span>
-      <span class="head-time">Portland <span data-local-time>--:--</span></span>
-    </p>
-    <a class="rss-link" href="/rss.xml">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"></path>
-        <circle cx="5" cy="19" r="1.2" fill="currentColor" stroke="none"></circle>
-      </svg>
-      RSS
+  <div class="header-inner">
+    <a class="wordmark" href="/" aria-label="Tarlow - home">
+      Tarlow<span class="dot">.</span><span class="wordmark-space">space</span>
     </a>
-    <button
-      class="menu-trigger"
-      type="button"
-      data-menu-trigger
-      aria-controls="mobile-panel"
-      aria-expanded="false"
-      aria-haspopup="dialog"
-    >
-      <span class="menu-glyph" aria-hidden="true"><span></span><span></span></span>
-      Index
-    </button>
+
+    <nav class="primary-nav" aria-label="Primary">
+      {
+        links.map(({ href, label, match }) => {
+          const isActive = path === match || path.startsWith(match + '/')
+          return (
+            <a href={href} aria-current={isActive ? 'page' : undefined}>
+              {label}
+            </a>
+          )
+        })
+      }
+    </nav>
+
+    <div class="header-right">
+      <a class="rss-link" href="/rss.xml">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1.2" fill="currentColor" stroke="none"></circle>
+        </svg>
+        RSS
+      </a>
+      <button
+        class="menu-trigger"
+        type="button"
+        data-menu-trigger
+        aria-controls="mobile-panel"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+      >
+        <span class="menu-glyph" aria-hidden="true"><span></span><span></span></span>
+        Menu
+      </button>
+    </div>
   </div>
 </header>

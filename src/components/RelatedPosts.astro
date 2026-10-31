@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { excerpt } from '../lib/excerpt'
 import { dateParts } from '../lib/dates'
 
 export interface Props {
@@ -22,7 +21,6 @@ const { posts } = Astro.props
               <span class="related-date">{dateParts(post.data.pubDate).short}</span>
               <span class="related-copy">
                 <span class="related-name">{post.data.title}</span>
-                <span class="related-excerpt">{excerpt(post.body ?? '', 150)}</span>
               </span>
               <span class="related-arrow" aria-hidden="true">↗</span>
             </a>
