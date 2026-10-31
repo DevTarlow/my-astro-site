@@ -425,7 +425,6 @@ body[data-view='about'] #sky {
   inset: -18px -22px 38px -22px;
   border: 1px solid rgba(207, 174, 123, 0.2);
   border-radius: 50% 50% 4px 4px / 42% 42% 4px 4px;
-  transform: rotate(-5deg);
   pointer-events: none;
 }
 
