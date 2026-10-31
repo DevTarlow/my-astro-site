@@ -73,7 +73,7 @@ Project listing helpers are in [src/lib/project-browse.ts](src/lib/project-brows
 Other helpers:
 - **Legacy** [src/lib/atlas.ts](src/lib/atlas.ts) - groups every public post into `agents`, `local-first`, `workflow`, or `launches` from its tags and assigns 1000x600 stage coordinates. The current home page no longer renders the atlas; the four thread links use the real tags and their per-tag counts. Keep this helper only while the unused atlas component remains.
 - [src/lib/reading.ts](src/lib/reading.ts) - rough reading time from a Markdown body at 220 words per minute.
-- [src/lib/site.ts](src/lib/site.ts) - the featured entry slug, the editable `NOW` copy, and the Portland location.
+- [src/lib/site.ts](src/lib/site.ts) - the editable `NOW` copy and the Portland location.
 - [src/lib/tag-redirects.mjs](src/lib/tag-redirects.mjs) - retired tag aliases passed to Astro's redirects in `astro.config.mjs`.
 
 Date helper: [src/lib/dates.ts](src/lib/dates.ts) - `dateParts(date)` returns `long` / `short` / `monthYear` / `month` / `year`.

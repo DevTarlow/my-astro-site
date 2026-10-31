@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import { getPublicBlog, getPublicProjects } from '../lib/posts'
 import { dateParts } from '../lib/dates'
 import { readingMinutes } from '../lib/reading'
-import { FEATURED_POST_SLUG, NOW } from '../lib/site'
+import { NOW } from '../lib/site'
 import ContentImage from '../components/ContentImage.astro'
 
 const posts = await getPublicBlog()
@@ -16,12 +16,12 @@ const selectedProjects = ['marimo-bot', 'copy-sprout', 'moss-toolbox']
   .filter((project): project is NonNullable<typeof project> => Boolean(project))
 const workProjects = selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 3)
 
-const featured = posts.find((post) => post.id === FEATURED_POST_SLUG) ?? posts[0]!
-const latest = posts.filter((post) => post.id !== featured.id).slice(0, 3)
+const latestPost = posts[0]!
+const recent = posts.slice(1, 4)
 
-const featuredDate = dateParts(featured.data.pubDate).long
-const featuredMinutes = readingMinutes(featured.body)
-const featuredTag = (featured.data.tags ?? [])[0] ?? 'Field note'
+const latestDate = dateParts(latestPost.data.pubDate).long
+const latestMinutes = readingMinutes(latestPost.body)
+const latestTag = (latestPost.data.tags ?? [])[0] ?? 'Field note'
 
 const firstSentence = (text: string) => text.split(/(?<=[.!?])\s/)[0]
 
@@ -92,7 +92,7 @@ const jsonLd = [
             </a>
             <a class="small-link" href="/projects/">See what I'm building</a>
           </div>
-          <p class="fj-current">Currently building Marimo Bot and revamping the Moss Toolbox product.</p>
+          <p class="fj-current">Currently building Marimo Bot and revamping the <span class="fj-nowrap">Moss Toolbox</span> product.</p>
         </div>
 
         <figure class="fj-portrait">
@@ -116,12 +116,12 @@ const jsonLd = [
           <a class="small-link" href="/blog/">All {posts.length} notes</a>
         </div>
 
-        <a class="fj-feature" href={`/blog/${featured.id}/`}>
+        <a class="fj-feature" href={`/blog/${latestPost.id}/`}>
           <div class="fj-feature-media">
             {
-              featured.data.featuredimage ? (
+              latestPost.data.featuredimage ? (
                 <ContentImage
-                  src={featured.data.featuredimage}
+                  src={latestPost.data.featuredimage}
                   alt=""
                   sizes="(max-width: 860px) 100vw, 560px"
                   loading="lazy"
@@ -133,19 +133,19 @@ const jsonLd = [
           </div>
           <div class="fj-feature-copy">
             <p class="fj-feature-meta">
-              <span>{featuredDate}</span>
-              <span>{featuredMinutes} min read</span>
-              <span>{featuredTag}</span>
+              <span>{latestDate}</span>
+              <span>{latestMinutes} min read</span>
+              <span>{latestTag}</span>
             </p>
-            <h2>{featured.data.title}</h2>
-            <p class="fj-feature-excerpt">{featured.data.description}</p>
+            <h2>{latestPost.data.title}</h2>
+            <p class="fj-feature-excerpt">{latestPost.data.description}</p>
             <span class="fj-feature-more">Read the note <span aria-hidden="true">&rarr;</span></span>
           </div>
         </a>
 
         <div class="fj-latest-rows">
           {
-            latest.map((post) => (
+            recent.map((post) => (
               <a class="fj-latest-row" href={`/blog/${post.id}/`}>
                 <span class="fj-latest-meta">
                   <span>{dateParts(post.data.pubDate).long}</span>

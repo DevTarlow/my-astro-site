@@ -408,6 +408,10 @@ body[data-view='about'] #sky {
   line-height: 1.6;
 }
 
+.fj-nowrap {
+  white-space: nowrap;
+}
+
 .fj-portrait {
   position: relative;
   width: min(100%, 240px);
