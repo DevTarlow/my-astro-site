@@ -11,10 +11,16 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 
 const allProjects = await getPublicProjects()
 const projectsById = new Map(allProjects.map((project) => [project.id, project]))
-const selectedProjects = ['marimo-bot', 'copy-sprout', 'moss-toolbox']
+const selectedProjects = [
+  'marimo-bot',
+  'pixel-juice-studio',
+  'background-swapper',
+  'moss-toolbox',
+  'copy-sprout',
+]
   .map((id) => projectsById.get(id))
   .filter((project): project is NonNullable<typeof project> => Boolean(project))
-const workProjects = selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 3)
+const workProjects = selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 5)
 
 const latestPost = posts[0]!
 const recent = posts.slice(1, 4)
@@ -25,12 +31,21 @@ const latestTag = (latestPost.data.tags ?? [])[0] ?? 'Field note'
 
 const firstSentence = (text: string) => text.split(/(?<=[.!?])\s/)[0]
 
-// Short editorial lines for the three objects on the home page. The full
+// Short editorial lines for the five projects on the home page. The full
 // project descriptions live on /projects/.
 const workTaglines: Record<string, string> = {
   'marimo-bot': 'A desktop agent that grows with you.',
-  'copy-sprout': 'Plain-language writing tools for Etsy sellers.',
+  'pixel-juice-studio': 'A browser tool for game juice. One file, nothing to install.',
+  'background-swapper': 'A DeepSeek Harness plugin for your own photos.',
   'moss-toolbox': 'AI tools that know your business.',
+  'copy-sprout': 'Plain-language writing tools for Etsy sellers.',
+}
+
+// The Pixel Juice project hero is an animated GIF. Use its static banner for
+// the tiny home thumbnail so the row stays light.
+const workImages: Record<string, string> = {
+  'pixel-juice-studio': '/images/pixel-juice-studio-banner.png',
+  'background-swapper': '/images/background-swapper-blurred-space.png',
 }
 
 // The four threads are the real tags behind the journal. Counts are per tag,
@@ -170,31 +185,34 @@ const jsonLd = [
 
         <div class="fj-work-list">
           {
-            workProjects.map((project) => (
-              <a class="fj-work-row" href={`/projects/${project.id}/`}>
-                <div class="fj-work-thumb">
-                  {project.data.image ? (
-                    <ContentImage
-                      src={project.data.image}
-                      alt=""
-                      sizes="78px"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span class="fj-work-placeholder" aria-hidden="true">
-                      {project.data.title.charAt(0)}
-                    </span>
-                  )}
-                </div>
-                <div class="fj-work-copy">
-                  <h3>{project.data.title.split(' - ')[0]}</h3>
-                  <p>{workTaglines[project.id] ?? firstSentence(project.data.description)}</p>
-                </div>
-                <span class="fj-work-status">
-                  {project.data.category === 'Development' ? 'In development' : (project.data.category ?? 'Project')}
-                </span>
-              </a>
-            ))
+            workProjects.map((project) => {
+              const workImage = workImages[project.id] ?? project.data.image
+              return (
+                <a class="fj-work-row" href={`/projects/${project.id}/`}>
+                  <div class="fj-work-thumb">
+                    {workImage ? (
+                      <ContentImage
+                        src={workImage}
+                        alt=""
+                        sizes="78px"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span class="fj-work-placeholder" aria-hidden="true">
+                        {project.data.title.charAt(0)}
+                      </span>
+                    )}
+                  </div>
+                  <div class="fj-work-copy">
+                    <h3>{project.data.title.split(' - ')[0]}</h3>
+                    <p>{workTaglines[project.id] ?? firstSentence(project.data.description)}</p>
+                  </div>
+                  <span class="fj-work-status">
+                    {project.data.category === 'Development' ? 'In development' : (project.data.category ?? 'Project')}
+                  </span>
+                </a>
+              )
+            })
           }
         </div>
       </section>
