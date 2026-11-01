@@ -2026,6 +2026,7 @@ body[data-view='essay'] .essay-progress {
 
 .essay-hero {
   margin-top: clamp(40px, 6vw, 66px);
+  margin-bottom: clamp(40px, 5vw, 64px);
   border-top: 1px solid var(--line);
   padding-top: clamp(20px, 3vw, 30px);
 }
