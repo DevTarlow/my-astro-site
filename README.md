@@ -53,4 +53,4 @@ Posts are Markdown files in `src/content/blog/`, and project notes are in `src/c
 
 The words and images are mine. The code is public because the site is built in the open and deployed from this repo.
 
-Working notes for the agents that help me maintain it live in [AGENTS.md](AGENTS.md).
+If you are here to run it or take it apart, [TECH.md](TECH.md) has the commands, routes, and deployment notes. The working notes for the agents that help me maintain it live in [AGENTS.md](AGENTS.md).
