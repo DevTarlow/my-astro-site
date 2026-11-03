@@ -1,96 +1,56 @@
 # Tarlow.space
 
-Personal website and field journal, built with intention.
+The code behind [tarlow.space](https://tarlow.space), my personal site and field journal.
 
-A quiet record of building, attention, and a look in the past. Local-first software, agents, and the work of staying present, made by [Tarlow](https://github.com/DevTarlow).
+I write about the tools I build, the agents I run on my own machine, and the slower work of paying attention. Most posts start as something that happened that week: a launch, a rebuild, a lesson that cost me a weekend. Some are project notes, some are release write-ups, and a few are just a thought I wanted to keep.
 
-## Built With
+## What is here
 
-- **Astro 6** - static site generation
-- **Tailwind CSS 3** - utility styling and tokens
-- **TypeScript** - type safety
-- **View Transitions** - client-side navigation without a SPA framework
+- **[The journal](https://tarlow.space/blog/)** - essays and product notes on local-first software, agents, and building slowly.
+- **[Work](https://tarlow.space/projects/)** - the projects, what they do, and where each one stands.
+- **[About](https://tarlow.space/about/)** - the longer story, plus what I am working on now.
 
-## Theme
+No accounts, no comments, no feed to refresh. If you want new posts, there is an [RSS feed](https://tarlow.space/rss.xml).
 
-**Field Journal** - a dark-only night sky. Deep ground (`#05070C`), warm bone type (`#EFE8DB`), brass accents (`#CFAE7B`), Instrument Serif for display and Inter for reading. A fixed star canvas, one editorial home page, a compact journal, and no instrument-panel chrome.
+## How it is built
 
-## Prerequisites
+A static site, generated at build time and served as plain HTML. Fonts are self-hosted, so visiting costs no third-party requests. The one script that is not mine is Google Analytics, and it loads nothing until a visitor accepts it.
 
-- **Node.js 24** or newer (`.nvmrc` is the deployment source of truth)
-- **npm** (a `package-lock.json` is committed, so use `npm ci --legacy-peer-deps` for reproducible installs)
+- **Astro 6** for the build and the content collections
+- **Tailwind CSS 3** for styling and tokens
+- **TypeScript** where it earns its keep
+- **View Transitions** so moving between pages does not reload the sky
 
-## Commands
+The site is dark-only by design. One palette, one night sky, and a star field that stops moving when your system asks it to.
 
-| Command | Action |
-|---|---|
-| `npm install` | Install dependencies (use `npm ci --legacy-peer-deps` in CI) |
-| `npm run dev` | Start the dev server at `localhost:4321` |
-| `npm run build` | Build the production site to `./dist/` |
-| `npm run preview` | Preview the production build |
-| `npm run check` | Type-check Astro files |
-| `npm run lint` | ESLint all files |
-| `npm run lint:fix` | ESLint auto-fix |
-| `npm run images` | Regenerate responsive WebP variants |
-| `npm run fonts` | Refresh the self-hosted Inter and Instrument Serif files |
-| `npm run og:image` | Regenerate the social card, touch icon, and favicon fallbacks |
-| `npm run astro` | Run any Astro CLI command |
+## Running it locally
 
-## Project Structure
+You need Node 24 or newer.
+
+```sh
+npm ci --legacy-peer-deps
+npm run dev
+```
+
+The site runs at `localhost:4321`. `npm run build` writes the production site to `dist/`, and a push to `main` builds and deploys it to GitHub Pages.
+
+## Layout
 
 ```
-public/                 Static assets (fonts, images, favicon, CNAME)
 src/
-  components/           Field Journal chrome, search, cards, and utilities
-  content/              Content collections (blog, projects)
-  layouts/              BaseLayout
-  lib/                  Content, atlas, reading time, and site helpers
-  pages/                Routes
-  styles/               Tokens, Field Journal layout, and prose
-astro.config.mjs
-tailwind.config.mjs
-tsconfig.json
+  components/   navigation, cards, search, the sky
+  content/      posts and project notes (Markdown)
+  layouts/      the shared page shell
+  lib/          dates, excerpts, tag helpers
+  pages/        routes
+  styles/       tokens, prose, layout
+public/         fonts, images, favicon
 ```
 
-## Pages
+Posts are Markdown files in `src/content/blog/`, and project notes are in `src/content/projects/`. Drafts are hidden in production and visible in development.
 
-| Route | Description |
-|---|---|
-| `/` | Field Journal home: split hero, latest note, recent entries, selected work, four thread links, and Now |
-| `/blog` | Paginated journal with compact live full-text search and tags; no sidebar |
-| `/blog/page/:page` | Journal pages 2+ |
-| `/blog/:slug` | Long-form entry with a 68ch measure, reading progress, tags, sharing, and two nearby notes |
-| `/blog/tags` | Tag index |
-| `/blog/tags/:tag` | Entries filtered by tag |
-| `/projects` | Featured project and the full work index grouped by year |
-| `/projects/:slug` | Project detail |
-| `/about` | A look in the past: chapters, practice, Now, and contact, with the full story kept intact |
-| Any unmatched route | Custom 404 |
-| `/rss.xml` | RSS feed via `@astrojs/rss` |
-| `/search-index.json` | Plain-text post bodies fetched by search on first interaction |
+## The writing
 
-## Content
+The words and images are mine. The code is public because the site is built in the open and deployed from this repo.
 
-Blog posts and projects are Markdown files in Astro content collections.
-
-- **Blog**: `src/content/blog/`
-- **Projects**: `src/content/projects/`
-
-See [AGENTS.md](AGENTS.md) for schemas, tag rules, and contribution conventions.
-
-### Drafts
-
-Posts and projects with `draft: true` are excluded from production builds but visible in development. Publishing is removing the flag.
-
-## Deployment
-
-Pushing to `main` triggers the [GitHub Actions workflow](.github/workflows/deploy.yml), which builds the site and deploys it to **GitHub Pages** via `actions/deploy-pages`.
-
-- **Site URL**: https://tarlow.space (custom domain via `public/CNAME`)
-- **Cache headers**: `public/_headers` (kept for hosts that read it; GitHub Pages ignores it)
-
-## External Services
-
-- **Google Analytics** (`G-H879GPJ4GM`) - consent-gated; nothing loads until the visitor allows analytics.
-- **Bluesky** - share buttons use bsky.app intent URLs; no API calls.
-- **Fonts** - Inter and Instrument Serif are self-hosted in `public/fonts/`; no Google Fonts request at runtime.
+Working notes for the agents that help me maintain it live in [AGENTS.md](AGENTS.md).
