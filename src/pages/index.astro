@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import { getPublicBlog, getPublicProjects } from '../lib/posts'
 import { dateParts } from '../lib/dates'
 import { readingMinutes } from '../lib/reading'
-import { NOW } from '../lib/site'
+import { NOW, nowMonth } from '../lib/site'
 import ContentImage from '../components/ContentImage.astro'
 
 const posts = await getPublicBlog()
@@ -244,7 +244,7 @@ const jsonLd = [
 
       <section class="fj-now" aria-labelledby="now-title">
         <div class="fj-now-copy">
-          <p class="label">Now / {NOW.label}</p>
+          <p class="label"><span>Now / <span data-now-month>{nowMonth()}</span></span></p>
           <h2 id="now-title">Where I am today.</h2>
           <p>
             A long break from tech helped shape my purpose: helping others grow while building with

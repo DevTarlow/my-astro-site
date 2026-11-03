@@ -1,7 +1,7 @@
 ---
 /**
  * Small global behaviours: the header's scrolled state, the local Portland
- * clock, and the article reading-progress line.
+ * clock and month label, and the article reading-progress line.
  *
  * The script is delegated and re-entrant. It installs one set of window
  * listeners for the life of the tab and simply re-reads the current DOM after a
@@ -22,6 +22,26 @@
       } catch {
         return ''
       }
+    }
+
+    function monthLabel () {
+      try {
+        return new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/Los_Angeles',
+          year: 'numeric',
+          month: 'long',
+        }).format(new Date())
+      } catch {
+        return ''
+      }
+    }
+
+    function updateNowMonth () {
+      const value = monthLabel()
+      if (!value) return
+      document.querySelectorAll('[data-now-month]').forEach(function (node) {
+        node.textContent = value
+      })
     }
 
     function updateClock () {
@@ -60,15 +80,20 @@
     if (!window.__siteChromeInit) {
       window.__siteChromeInit = true
       window.addEventListener('scroll', onScroll, { passive: true })
-      window.setInterval(updateClock, 30000)
+      window.setInterval(function () {
+        updateClock()
+        updateNowMonth()
+      }, 30000)
       document.addEventListener('astro:page-load', function () {
         updateClock()
+        updateNowMonth()
         updateHeader()
         updateProgress()
       })
     }
 
     updateClock()
+    updateNowMonth()
     updateHeader()
     updateProgress()
   })()

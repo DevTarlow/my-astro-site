@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import ContentImage from '../components/ContentImage.astro'
-import { NOW } from '../lib/site'
+import { NOW, nowMonth } from '../lib/site'
 ---
 
 <BaseLayout
@@ -165,7 +165,7 @@ import { NOW } from '../lib/site'
 
       <section class="about-now" aria-labelledby="about-now-title">
         <div>
-          <p class="label"><span class="label-line" aria-hidden="true"></span>Now / {NOW.label}</p>
+          <p class="label"><span class="label-line" aria-hidden="true"></span><span>Now / <span data-now-month>{nowMonth()}</span></span></p>
           <h2 id="about-now-title">Where I am <em>today.</em></h2>
           <p class="now-sub">
             Same builder. Same love of automation. A different mindset about what the work is for.

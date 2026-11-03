@@ -1,9 +1,9 @@
 ---
-import { NOW } from '../lib/site'
+import { NOW, nowMonth } from '../lib/site'
 ---
 
 <div class="now-card">
-  <p class="label">Now / {NOW.label}</p>
+  <p class="label"><span>Now / <span data-now-month>{nowMonth()}</span></span></p>
   <ul class="now-list">
     <li>
       <span class="now-key">Building</span>
