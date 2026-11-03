@@ -43,7 +43,7 @@ Twelve dollars, once. Sprite sheets, GIFs and presets you make are yours to use 
 
 ## Try It On One Sprite
 
-If you have pixel art sitting in a folder, bring one sprite in and switch on squash and stretch. Play around with the different features and you will find all types of useful juice for your game.
+If you have pixel art sitting in a folder, bring one sprite in and switch on squash and stretch. Then add a hit flash, an outline, and a few of those eighteen particle kinds until the landing has some weight.
 
 It's out now, and live on itch.
 

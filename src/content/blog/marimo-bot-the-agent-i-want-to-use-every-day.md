@@ -73,7 +73,7 @@ Only the Linux AppImage has been built and run. The Windows and macOS installers
 
 I'm not going to put a date on stable, because I would break it. When I call it stable, I mean I've used it for a while and haven't lost anything. That's the bar.
 
-Until then I'm sharing the journey as I build it. The source is public on [GitHub](https://github.com/DevTarlow/marimo-bot) under Apache-2.0, the design for the new core is in [docs/harness-v2.md](https://github.com/DevTarlow/marimo-bot/blob/main/docs/harness-v2.md), and there's a [project page](/projects/marimo-bot/) with the full feature list.
+Until then I'm sharing the build as I go. The source is public on [GitHub](https://github.com/DevTarlow/marimo-bot) under Apache-2.0, the design for the new core is in [docs/harness-v2.md](https://github.com/DevTarlow/marimo-bot/blob/main/docs/harness-v2.md), and there's a [project page](/projects/marimo-bot/) with the full feature list.
 
 What would you hand off first? If you're building your own agent, start with the task that annoys you every week, give it a folder to work in, and make it ask before it touches anything.
 

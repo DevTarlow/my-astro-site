@@ -15,9 +15,9 @@ It shows my focus for the day, the tasks that are actually mine today, and the n
 
 ## The Dashboard Before This One
 
-I built a dashboard a few weeks back that talked to Hermes Agent. It pulled my tasks, my notes and my session history onto one page, and it had a dispatch button that turned a task into a real chat session with an agent. I wrote the whole thing up in [How My Dashboard Talks to My Agents - One Click From Task to Done](/blog/how-my-dashboard-talks-to-my-agents/).
+I built a dashboard a few weeks back that talked to Hermes Agent. It pulled my tasks, my notes and my session history onto one page, and it had a dispatch button that turned a task into a real chat session with an agent. I wrote it up in [How My Dashboard Talks to My Agents - One Click From Task to Done](/blog/how-my-dashboard-talks-to-my-agents/).
 
-Then my stack shifted. Hermes Agent went behind me, Marimo Desktop took its place, and I told that story in [How My Stack Shifted Again - From Hermes Agent to a Harness of My Own](/blog/how-my-stack-shifted-again/). The old dashboard was still pointed at a world that no longer existed. So I started again, this time from Marimo Desktop outward.
+Then my stack shifted. Hermes Agent went away, Marimo Desktop took its place, and I told that story in [How My Stack Shifted Again - From Hermes Agent to a Harness of My Own](/blog/how-my-stack-shifted-again/). The old dashboard was still pointed at a world that no longer existed. So I started again, this time from Marimo Desktop outward.
 
 The new one is Lichen.
 
@@ -29,7 +29,7 @@ The modules are the parts of my week I kept losing track of. Today. Tasks. Notes
 
 ## The Daily Pages
 
-Today is the one I open. Tasks is the one I close things in which helps guide my agent Marimo.
+Today is the one I open. Tasks is the one I close things in, which is how I guide Marimo.
 
 Tasks holds everything with a project, a priority, a due date and any extra context I typed in. Click a task and it becomes work. Notes is the scratch pad that survives the day: a half-formed idea, a line I want to use, the reason I changed something. Prompts is where the instructions that repeat live. The ones I got tired of retyping. I used to keep those in a folder with names I could not remember. Now they have a screen.
 
@@ -41,7 +41,7 @@ Blog is the other half of my writing. Hoshi drafts, I edit, and the post ends up
 
 Discord and Gateways is where my agents and I meet in the middle. Messages come in from the outside through a gateway, and I read and answer them without opening a second app. Social is the same idea pointed outward, drafts and posts in one column.
 
-Growth displays my current project sign-ups and sales, that's one worth checking.
+Growth shows my current project sign-ups and sales. That one I check.
 
 Then Marimo the agent, one tab over from the work it is helping with. I can ask it something, hand it a task, or watch it run. Between the tabs, it gives me back a chunk of the day I used to lose to switching windows.
 
@@ -75,15 +75,13 @@ For a long time a system like this meant a subscription, someone else's roadmap,
 
 I think that is where this goes. Everyone with a workflow they care about ends up with a small system of their own. Not because it is fashionable. Because we can build and fix almost anything now, and once you can, the store-bought version stops making sense.
 
-If you have been waiting for someone to build the dashboard you want, start with one page. One thing it reads. Watch which tab you open first every morning, and grow it from there.
-
 My wife started this way and now she also made her own dashboard that hooks into her Hermes Agent.
+
+If you have been waiting for someone to build the dashboard you want, start with one page. One thing it reads. Watch which tab you open first every morning, and grow it from there.
 
 *Lichen is early days and currently under development.*
 
 So am I :D
-
-Good things take work, and my dashboard is a constant work in progress.
 
 Keep growing and building.
 
