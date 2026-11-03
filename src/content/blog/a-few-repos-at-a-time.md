@@ -66,7 +66,7 @@ And the person on the other end does not see the roadmap. They see the thing you
 
 X Buddy is the SkyBuddy idea taken more seriously, with keyword highlights in a color you pick, negative keywords that hide what you never want to see, feed rules by follower and engagement counts up to 20 of them, and six reply tones from a model on my machine. Nothing leaves the browser except the call to my own server.
 
-It is not on the Chrome Web Store, and the repo is not public yet. It works, and it is still rough. X changes its site and a selector breaks, so I fix it.
+It is not on the Chrome Web Store yet, but the source is on [GitHub](https://github.com/DevTarlow/xbuddy). It works, and it is still rough. X changes its site and a selector breaks, so I fix it.
 
 I built it to help me grow on itch and keep my feed aimed at what I want to see. I will use it for real when I switch gears to marketing. Right now the work is the foundation: the repos, the details, and the habit of slowing down enough to see them.
 

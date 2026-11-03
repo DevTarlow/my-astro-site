@@ -13,6 +13,7 @@ description: >-
   A Chrome extension for X that glows keywords, hides what you do not want,
   filters by follower and engagement counts, and drafts replies with a model on
   your own machine.
+github: https://github.com/DevTarlow/xbuddy
 ---
 
 X is a feed I want to use on purpose. Most days it is a firehose, and the posts I came for are somewhere in it.
@@ -29,9 +30,9 @@ Negative keywords hide matching posts completely. Negative filtering starts on, 
 
 Feed rules work on counts: followers, following, comments, likes and reposts. Each rule is fewer than, more than, or between two numbers, and it either hides or highlights. You can keep up to 20. A hide rule wins over a highlight rule.
 
-![Feed Rules in the X Buddy popup](/images/x-buddy-feed-rules.png)
-
 And a master toggle pauses everything without losing your settings. Each list has search, five-item pages and a Clear All button. Select a word or hashtag on X, right-click, and it adds to either list, which is the part I use most when I am watching a topic for a while.
+
+![Feed Rules in the X Buddy popup](/images/x-buddy-feed-rules.png)
 
 Magic Reply has six tones: Generic, Agree, Connect, Disagree, Funny and Informative. Each tone has its own prompt you can edit. A reply length slider keeps drafts short, lets them run longer, or hands the length to the model.
 
@@ -47,10 +48,23 @@ There are no accounts and no tracking. Keywords and posts go to the model on you
 
 ## Where it is now
 
-X Buddy is under active development. But it is not on the Chrome Web Store, and the repository is not public yet, so there is nothing to install from this page.
+X Buddy is under active development. It is not on the Chrome Web Store yet, so you load it unpacked from the repository.
 
-It works, and it is rough in places, and X changes its site a lot, so a selector breaks now and then and I fix it.
+It works, and it is rough in places. But X changes its site a lot, so a selector breaks now and then and I fix it.
+
+## Install
+
+You need Chrome 111 or newer and a local OpenAI-compatible server.
+
+1. Clone the repository.
+2. Open `chrome://extensions` and turn on Developer mode.
+3. Click Load unpacked and pick the folder you cloned.
+4. Open `https://x.com`.
+
+Settings points Magic Reply at `http://localhost:8080` by default. Change the URL, port and model there if your server uses something else.
 
 I built it to help me grow on itch and keep my feed aimed at what I want to see. I will use it actively when I switch gears to marketing. Right now I am working on getting a solid foundation set back up after years away.
 
 I wrote about the switch from SkyBuddy in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/). The old extension is on its [project page](/projects/skybuddy/), kept as the archive.
+
+[Get X Buddy on GitHub →](https://github.com/DevTarlow/xbuddy)
