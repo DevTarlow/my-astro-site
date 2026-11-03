@@ -647,6 +647,42 @@ body[data-view='about'] #sky {
   border-bottom: 0;
 }
 
+.fj-all {
+  display: flex;
+  margin-top: 26px;
+}
+
+.fj-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.fj-all-btn span {
+  color: var(--brass);
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.fj-all-btn:hover {
+  color: var(--brass-bright);
+  border-color: rgba(207, 174, 123, 0.45);
+  background: rgba(207, 174, 123, 0.05);
+}
+
+.fj-all-btn:hover span {
+  color: var(--brass-bright);
+  transform: translateX(3px);
+}
+
 .fj-work-thumb {
   width: 78px;
   height: 52px;
@@ -2060,6 +2096,11 @@ body[data-view='about'] #sky {
 
   .fj-work-status {
     display: none;
+  }
+
+  .fj-all-btn {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .fj-thread {
