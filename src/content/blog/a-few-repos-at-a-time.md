@@ -4,7 +4,7 @@ pubDate: 2026-11-03
 draft: false
 description: >-
   I dropped SkyBuddy and CopySprout to work on a few repos at a time. Here is
-  why slowing down changes the details, and why X Buddy replaced the old
+  why slowing down changes the details, and why XBuddy replaced the old
   extension.
 tags: [workflow, browser-extensions]
 featuredimage: /images/x-buddy-popup.png
@@ -18,7 +18,7 @@ I have been away from building for years, and coming back did not make me patien
 
 I dropped two of them.
 
-SkyBuddy is retired. It was a Chrome extension for Bluesky: keyword glow, negative keywords, Magic Reply drafts from a local model. I replaced it with X Buddy, which does the same work for X with more under it. Feed rules are the new part, and there are six reply tones instead of five.
+SkyBuddy is retired. It was a Chrome extension for Bluesky: keyword glow, negative keywords, Magic Reply drafts from a local model. I replaced it with XBuddy, which does the same work for X with more under it. Feed rules are the new part, and there are six reply tones instead of five.
 
 CopySprout is discontinued. It was the AI writing tool for Etsy sellers, sixteen tools built to sound like a person instead of a brochure, and it was a subscription, which asks for attention every month. I would rather spend that attention on fewer things and make them better.
 
@@ -62,9 +62,9 @@ With fewer places to look, I find more.
 
 And the person on the other end does not see the roadmap. They see the thing you shipped. If it was rushed, they feel it, even when they cannot name it. Fewer projects means the thing they open has had a second pass.
 
-## Where X Buddy is
+## Where XBuddy is
 
-X Buddy is the SkyBuddy idea taken more seriously, with keyword highlights in a color you pick, negative keywords that hide what you never want to see, feed rules by follower and engagement counts up to 20 of them, and six reply tones from a model on my machine. Nothing leaves the browser except the call to my own server.
+XBuddy is the SkyBuddy idea taken more seriously, with keyword highlights in a color you pick, negative keywords that hide what you never want to see, feed rules by follower and engagement counts up to 20 of them, and six reply tones from a model on my machine. Nothing leaves the browser except the call to my own server.
 
 It is not on the Chrome Web Store yet, but the source is on [GitHub](https://github.com/DevTarlow/xbuddy). It works, and it is still rough. X changes its site and a selector breaks, so I fix it.
 
@@ -72,7 +72,7 @@ I built it to help me grow on itch and keep my feed aimed at what I want to see.
 
 That foundation is the reason I dropped the other two. The attention had to come from somewhere.
 
-There is a longer article on X Buddy coming. For now the [project page](/projects/x-buddy/) has the details, and the [SkyBuddy page](/projects/skybuddy/) is still there as the archive. CopySprout has a [page](/projects/copy-sprout/) too, with the story of how it was built.
+There is a longer article on XBuddy coming. For now the [project page](/projects/x-buddy/) has the details, and the [SkyBuddy page](/projects/skybuddy/) is still there as the archive. CopySprout has a [page](/projects/copy-sprout/) too, with the story of how it was built.
 
 ## What I would tell you
 

@@ -1,5 +1,5 @@
 ---
-title: X Buddy - Chrome Extension
+title: XBuddy - Chrome Extension
 pubDate: 2026-11-03
 draft: false
 category: Development
@@ -18,7 +18,7 @@ github: https://github.com/DevTarlow/xbuddy
 
 X is a feed I want to use on purpose. Most days it is a firehose, and the posts I came for are somewhere in it.
 
-X Buddy is a Chrome extension that gives the feed rules, with keywords you care about glowing in a color you pick, keywords you never want to see hiding the post, and feed rules that hide or highlight posts by the author's follower count or by the comments, likes and reposts on the post.
+XBuddy is a Chrome extension that gives the feed rules, with keywords you care about glowing in a color you pick, keywords you never want to see hiding the post, and feed rules that hide or highlight posts by the author's follower count or by the comments, likes and reposts on the post.
 
 Then there are the replies. Open a reply, pick a tone, and a model on your own machine writes a draft into the composer. You edit it before you post.
 
@@ -32,11 +32,11 @@ Feed rules work on counts: followers, following, comments, likes and reposts. Ea
 
 And a master toggle pauses everything without losing your settings. Each list has search, five-item pages and a Clear All button. Select a word or hashtag on X, right-click, and it adds to either list, which is the part I use most when I am watching a topic for a while.
 
-![Feed Rules in the X Buddy popup](/images/x-buddy-feed-rules.png)
+![Feed Rules in the XBuddy popup](/images/x-buddy-feed-rules.png)
 
 Magic Reply has six tones: Generic, Agree, Connect, Disagree, Funny and Informative. Each tone has its own prompt you can edit. A reply length slider keeps drafts short, lets them run longer, or hands the length to the model.
 
-![The X Buddy popup with positive and negative keyword lists](/images/x-buddy-popup.png)
+![The XBuddy popup with positive and negative keyword lists](/images/x-buddy-popup.png)
 
 ## Local, not a service
 
@@ -48,7 +48,7 @@ There are no accounts and no tracking. Keywords and posts go to the model on you
 
 ## Where it is now
 
-X Buddy is under active development. It is not on the Chrome Web Store yet, so you load it unpacked from the repository.
+XBuddy is under active development. It is not on the Chrome Web Store yet, so you load it unpacked from the repository.
 
 It works, and it is rough in places. But X changes its site a lot, so a selector breaks now and then and I fix it.
 
@@ -67,4 +67,4 @@ I built it to help me grow on itch and keep my feed aimed at what I want to see.
 
 I wrote about the switch from SkyBuddy in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/). The old extension is on its [project page](/projects/skybuddy/), kept as the archive.
 
-[Get X Buddy on GitHub →](https://github.com/DevTarlow/xbuddy)
+[Get XBuddy on GitHub →](https://github.com/DevTarlow/xbuddy)

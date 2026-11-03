@@ -16,7 +16,7 @@ description: >-
 image: /images/skybuddy-magic-reply.png
 ---
 
-**SkyBuddy is retired.** Its development moved to [X Buddy](/projects/x-buddy/), a Chrome extension for X that does the same work with more to it. I wrote about the switch in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/).
+**SkyBuddy is retired.** Its development moved to [XBuddy](/projects/x-buddy/), a Chrome extension for X that does the same work with more to it. I wrote about the switch in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/).
 
 I wanted a way to monitor Bluesky for topics I actually care about without having to scroll endlessly or hand my data over to some third-party API.
 
@@ -70,6 +70,6 @@ This is what led me to build the extension.
 
 ## Where It Went
 
-SkyBuddy is retired. Its development moved to [X Buddy](/projects/x-buddy/), and the source is no longer public.
+SkyBuddy is retired. Its development moved to [XBuddy](/projects/x-buddy/), and the source is no longer public.
 
 [Read about the switch →](/blog/a-few-repos-at-a-time/)
