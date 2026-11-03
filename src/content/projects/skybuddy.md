@@ -14,8 +14,9 @@ description: >-
   A Chrome extension for Bluesky that highlights keywords, filters noise, and
   drafts AI-powered replies using a local LLM - all privacy-first.
 image: /images/skybuddy-magic-reply.png
-github: https://github.com/DevTarlow/SkyBuddy
 ---
+
+**SkyBuddy is retired.** Its development moved to [X Buddy](/projects/x-buddy/), a Chrome extension for X that does the same work with more to it. I wrote about the switch in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/).
 
 I wanted a way to monitor Bluesky for topics I actually care about without having to scroll endlessly or hand my data over to some third-party API.
 
@@ -67,15 +68,8 @@ This is what led me to build the extension.
 
 - 7/4/2026 | v1.0.0 alpha - Keyword highlighting, negative filtering, Magic Reply with 5 tones, right-click integration, export/import, and full LLM backend support.
 
-## Get the Project
+## Where It Went
 
-SkyBuddy is under active development but the source is available now.
+SkyBuddy is retired. Its development moved to [X Buddy](/projects/x-buddy/), and the source is no longer public.
 
-If you want to download the repo, load it unpacked in Chrome, and point it at your local LLM.
-
-<a href="https://github.com/DevTarlow/SkyBuddy" class="project-link" target="_blank" rel="noopener noreferrer">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-  </svg>
-  View on GitHub
-</a>
+[Read about the switch →](/blog/a-few-repos-at-a-time/)

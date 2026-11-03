@@ -16,7 +16,7 @@ const selectedProjects = [
   'pixel-juice-studio',
   'background-swapper',
   'moss-toolbox',
-  'copy-sprout',
+  'x-buddy',
 ]
   .map((id) => projectsById.get(id))
   .filter((project): project is NonNullable<typeof project> => Boolean(project))
@@ -38,14 +38,15 @@ const workTaglines: Record<string, string> = {
   'pixel-juice-studio': 'A browser tool for game juice. One file, nothing to install.',
   'background-swapper': 'A DeepSeek Harness plugin for your own photos.',
   'moss-toolbox': 'AI tools that know your business.',
-  'copy-sprout': 'Plain-language writing tools for Etsy sellers.',
+  'x-buddy': 'Keyword glow, feed rules, and reply drafts for X.',
 }
 
-// The Pixel Juice project hero is an animated GIF. Use its static banner for
-// the tiny home thumbnail so the row stays light.
+// The Pixel Juice project hero is an animated GIF, and X Buddy has no hero
+// image. Use static thumbnails for the tiny home row so it stays light.
 const workImages: Record<string, string> = {
   'pixel-juice-studio': '/images/pixel-juice-studio-banner.png',
   'background-swapper': '/images/background-swapper-blurred-space.png',
+  'x-buddy': '/images/x-buddy-popup.png',
 }
 
 // The four threads are the real tags behind the journal. Counts are per tag,
