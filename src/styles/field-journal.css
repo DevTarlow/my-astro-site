@@ -412,11 +412,14 @@ body[data-view='about'] #sky {
   white-space: nowrap;
 }
 
+.fj-portrait-block {
+  width: min(100%, 240px);
+  justify-self: end;
+}
+
 .fj-portrait {
   position: relative;
-  width: min(100%, 240px);
   margin: 0;
-  justify-self: end;
 }
 
 .fj-portrait::before {
@@ -453,6 +456,41 @@ body[data-view='about'] #sky {
 .fj-portrait figcaption span:last-child {
   color: var(--faint);
   text-align: right;
+}
+
+.fj-portrait-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.fj-portrait-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line-soft);
+  border-radius: 50%;
+  color: var(--muted);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.fj-portrait-socials a:hover,
+.fj-portrait-socials a:focus-visible {
+  border-radius: 50%;
+  border-color: rgba(207, 174, 123, 0.55);
+  background: rgba(207, 174, 123, 0.07);
+  color: var(--brass-bright);
+}
+
+.fj-portrait-socials svg {
+  display: block;
 }
 
 .fj-section {
@@ -1935,7 +1973,7 @@ body[data-view='about'] #sky {
     padding-top: 48px;
   }
 
-  .fj-portrait {
+  .fj-portrait-block {
     width: 190px;
     justify-self: start;
     margin-left: 8px;
