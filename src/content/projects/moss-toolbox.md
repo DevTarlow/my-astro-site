@@ -17,6 +17,8 @@ description: >-
 image: /images/moss-toolbox-ai-tools.png
 ---
 
+**Moss Toolbox is under construction.** The current toolbox is online while I rebuild it, but the revamp is paused for now. Development will pick up again later.
+
 Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool starts from it instead of asking the same questions again.
 
 The tools cover the jobs that eat a seller's time. Review Response Generator writes three replies to a customer review in your tone, and Customer Reply Generator does the same for messages. Product Listing Writer turns a saved product into titles, a description, the features, and the tags. AI Image Prompt Generator writes prompts for Midjourney, Flux, or whatever image tool you use. AI Image Studio makes an image from a description, then keeps editing it while you say what to change.
@@ -34,6 +36,6 @@ Here's how it works:
 3. **Pick a tool.** It starts from what you saved and only asks for what's new.
 4. **Get something you can use.** Paste it, tweak it, or send it. The tool takes its price from your credits when it runs.
 
-New tools land as I build them, and the credits work on all of them. Moss Toolbox is built by Moss AI Studio.
+New tools land as I build them, and the credits work on all of them. While the revamp is paused, nothing new is landing, and the ones above are what's there. Moss Toolbox is built by Moss AI Studio.
 
-[Try Moss Toolbox →](https://mosstoolbox.com/)
+[See the current Moss Toolbox →](https://mosstoolbox.com/)
