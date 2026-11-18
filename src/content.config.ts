@@ -24,9 +24,11 @@ const projects = defineCollection({
     image: z.string().optional(),
     github: z.string().optional(),
     url: z.string().optional(),
+    /** Status line shown as a callout on the project page, e.g. paused or retired. */
+    notice: z.string().optional(),
     featured: z.boolean().optional(),
     draft: z.boolean().optional(),
-    category: z.enum(['Launched', 'Development']).optional(),
+    category: z.enum(['Launched', 'Development', 'Paused']).optional(),
   }),
 })
 

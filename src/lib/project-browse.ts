@@ -56,5 +56,9 @@ export function groupByYear(rows: ProjectDisplay[]) {
   return [...years.entries()].sort((a, b) => Number(b[0]) - Number(a[0]))
 }
 
-export const categoryClass = (category: string | undefined) =>
-  category === 'Launched' ? 'category-pill category-pill-launched' : 'category-pill category-pill-development'
+/** Pill styling per project state. `Paused` is outlined brass, `Launched` filled. */
+export const categoryClass = (category: string | undefined) => {
+  if (category === 'Launched') return 'category-pill category-pill-launched'
+  if (category === 'Paused') return 'category-pill category-pill-paused'
+  return 'category-pill category-pill-development'
+}

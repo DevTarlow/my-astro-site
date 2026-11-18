@@ -2,7 +2,7 @@
 title: Moss Toolbox - AI Tools That Know Your Business
 pubDate: 2026-09-01
 draft: false
-category: Launched
+category: Paused
 url: https://mosstoolbox.com/
 tags:
   - ai-tools
@@ -15,9 +15,11 @@ description: >-
   tool starts from it. 20 free credits to start, then packs from $3 that never
   expire.
 image: /images/moss-toolbox-ai-tools.png
+notice: >-
+  Moss Toolbox is under construction. The current toolbox is online while I
+  rebuild it, but the revamp is paused for now. Development will pick up again
+  later.
 ---
-
-**Moss Toolbox is under construction.** The current toolbox is online while I rebuild it, but the revamp is paused for now. Development will pick up again later.
 
 Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool starts from it instead of asking the same questions again.
 

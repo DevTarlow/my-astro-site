@@ -4398,6 +4398,13 @@ html {
   color: var(--muted);
 }
 
+/* Outlined rather than filled: the work exists but is not moving right now. */
+.category-pill-paused {
+  border-color: rgba(207, 174, 123, 0.28);
+  color: var(--brass);
+  background: transparent;
+}
+
 .projects-featured {
   padding-bottom: clamp(44px, 6vw, 76px);
   border-bottom: 1px solid var(--line-soft);

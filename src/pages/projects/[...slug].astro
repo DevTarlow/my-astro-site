@@ -26,9 +26,11 @@ const date = dateParts(project.data.pubDate)
 const tags = project.data.tags ?? []
 
 // CreativeWork rather than BlogPosting: a project page is not an article.
+// A paused product is still a shipped application, so it keeps SoftwareApplication.
+const isApplication = project.data.category === 'Launched' || project.data.category === 'Paused'
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': project.data.category === 'Launched' ? 'SoftwareApplication' : 'CreativeWork',
+  '@type': isApplication ? 'SoftwareApplication' : 'CreativeWork',
   name: project.data.title,
   description: project.data.description,
   datePublished: project.data.pubDate.toISOString(),
@@ -89,6 +91,15 @@ const jsonLd = {
           </div>
         </div>
       </header>
+
+      {
+        project.data.notice && (
+          <aside class="project-notice" aria-label="Project status">
+            <p class="project-notice-label">Status</p>
+            <p class="project-notice-copy">{project.data.notice}</p>
+          </aside>
+        )
+      }
 
       {
         project.data.image && (
