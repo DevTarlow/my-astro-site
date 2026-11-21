@@ -20,7 +20,11 @@ const selectedProjects = [
 ]
   .map((id) => projectsById.get(id))
   .filter((project): project is NonNullable<typeof project> => Boolean(project))
-const workProjects = selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 5)
+// The home section reads newest first, so the order stays tied to the dates
+// rather than to the order of the ids above.
+const workProjects = (selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 5)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+)
 
 const latestPost = posts[0]!
 const recent = posts.slice(1, 4)
