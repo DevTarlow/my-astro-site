@@ -11,7 +11,7 @@ export async function GET(context) {
 
   return rss({
     title: 'Tarlow.space',
-    description: 'Field notes from Tarlow, a solo developer in Portland, Oregon. Local-first tools, a slower way of building, and a look in the past.',
+    description: 'Notes and projects from Tarlow, a solo developer in Portland, Oregon. Local-first tools, AI agents, and software builds.',
     site: context.site,
     items: posts.map((post) => ({
       title: post.data.title,

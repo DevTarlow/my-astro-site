@@ -74,8 +74,8 @@ const card = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
   <text x="${PAD}" y="94" font-family="${SANS}" font-size="16" font-weight="600" letter-spacing="6" fill="${BRASS}">TARLOW.SPACE / FIELD NOTES</text>
   <text x="${PAD - 5}" y="258" font-family="${SERIF}" font-size="126" letter-spacing="-5" fill="${INK}">Tarlow.</text>
   <rect x="${PAD}" y="304" width="76" height="2" fill="${BRASS}" opacity="0.75"/>
-  <text x="${PAD}" y="384" font-family="${SERIF}" font-size="45" font-style="italic" letter-spacing="-1" fill="${BRASS}">Quiet tools, a slower life.</text>
-  <text x="${PAD}" y="456" font-family="${SANS}" font-size="24" fill="${MUTED}">Local-first software, agents, and the long way back.</text>
+  <text x="${PAD}" y="384" font-family="${SERIF}" font-size="45" font-style="italic" letter-spacing="-1" fill="${BRASS}">Local tools and dev notes.</text>
+  <text x="${PAD}" y="456" font-family="${SANS}" font-size="24" fill="${MUTED}">Local-first software, AI agents, and project logs.</text>
   <line x1="${PAD}" y1="548" x2="${W - PAD}" y2="548" stroke="${INK}" stroke-opacity="0.12"/>
   <text x="${PAD}" y="584" font-family="${SANS}" font-size="18" font-weight="600" letter-spacing="2" fill="${BRASS}">tarlow.space</text>
   <text x="${W - PAD}" y="584" font-family="${SANS}" font-size="16" letter-spacing="2" fill="${MUTED}" text-anchor="end">PORTLAND, OREGON / 45.52 N</text>

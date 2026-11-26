@@ -13,16 +13,15 @@ export function nowMonth(date: Date = new Date()): string {
 }
 
 /**
- * Draft "Now" copy, drawn from the About page and the Moss AI Studio origin
- * story. These are the lines to edit first when the season changes. The month
- * label is not here on purpose - it comes from `nowMonth()`.
+ * Editable "Now" copy rendered on the home and About pages. The month label
+ * comes from `nowMonth()`.
  */
 export const NOW = {
   building: [
     { label: 'Marimo Bot', href: 'https://marimobot.com/' },
-    { label: 'Moss Toolbox', href: 'https://mossaistudio.com/' },
+    { label: 'Moss AI Studio', href: 'https://mossaistudio.com/' },
   ],
-  practicing: 'Awareness, patience, getting outside',
+  practicing: 'Testing local models, getting outside',
   home: 'Portland, Oregon',
   openTo: 'New builds + good conversations',
 } as const

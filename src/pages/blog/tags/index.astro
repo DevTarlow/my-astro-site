@@ -13,15 +13,15 @@ for (const post of posts) {
 const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
 ---
 
-<BaseLayout title="Tags" description="Browse Tarlow's field notes by topic." view="page">
+<BaseLayout title="Tags" description="Browse Tarlow's blog posts by topic." view="page">
   <main id="main-content">
     <div class="page-shell">
       <header class="page-head">
         <p class="label"><span class="label-line" aria-hidden="true"></span>Journal / tags</p>
         <div class="page-head-row">
-          <h1>Follow a <em>thread.</em></h1>
+          <h1>Browse by <em>topic.</em></h1>
           <div class="page-head-aside">
-            <p>A small set of recurring threads, carried across the journal. Start anywhere.</p>
+            <p>Every tag used across the journal. Pick one to filter the posts.</p>
             <p><a class="text-link" href="/blog/">Back to the journal</a></p>
           </div>
         </div>
