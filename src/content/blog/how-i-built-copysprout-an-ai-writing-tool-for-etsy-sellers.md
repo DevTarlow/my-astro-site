@@ -6,77 +6,66 @@ tags:
   - launches
   - etsy
 description: >-
-  CopySprout is my subscription AI writing tool for Etsy sellers. Here is
-  how I built it, why I went with a subscription, and what I learned
-  shipping my first SaaS solo.
+  CopySprout is my subscription AI writing tool for Etsy sellers. Here is how I
+  built it, why it uses a subscription, and what shipping my first solo SaaS
+  taught me.
 featuredimage: /images/copy-sprout-hero-section.png
 ---
 
-A few weeks after I launched [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/), I kept coming back to the same thought. I had built a tool that tells you when a listing looks like AI. But the sellers behind real shops have the opposite problem. They make beautiful things. And writing is the hardest part of selling them.
+A few weeks after launching [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/), I noticed the other side of the Etsy problem. Handmade Checker helps shoppers spot fake AI listings, while real sellers who actually make things by hand have the opposite headache: writing all the product descriptions, shop announcements, renewals, and social posts takes forever when they would rather be making their products.
 
-Product descriptions. Shop announcements. Renewals. Social posts. Every word of it is a wall for someone who would rather be making stuff.
-
-Most AI writing tools are built for marketers. They spit out hype. Words like "elevate" and "unleash." Etsy sellers don't need that. They need plain words that sound like them.
+Most AI writing tools are aimed at marketers and spit out stiff ad copy full of buzzwords like "unleash" and "supercharge." Etsy sellers don't need that. They just need plain words that sound like a real shop owner.
 
 So I built [CopySprout](https://copysprout.app/).
 
 [![CopySprout Logo](/images/copy-sprout-logo-white.png)](https://copysprout.app/)
 
-### What CopySprout Is
+## What CopySprout does
 
-CopySprout is a subscription AI writing tool for Etsy sellers. Sixteen tools for the everyday parts of running a shop. Product descriptions, renewals, announcements, and more. Every tool uses AI to write the way a real person talks.
+CopySprout is a subscription AI writing tool built specifically for Etsy sellers, with sixteen focused tools for everyday shop tasks like product descriptions, renewals, announcements, and review replies.
 
 ![CopySprout Tools](/images/copy-sprout-tools.png)
 
-Here's how it works:
+Here is how it works:
 
-1. **Pick a tool.** Product description, renewal, shop announcement, whatever you're working on.
-2. **Answer a few questions.** What do you make, who is it for, what should it say. No marketing speak required.
-3. **Get writing you can edit.** It comes back ready to paste or tweak.
-4. **Try again if it's not right.** One click, a fresh take.
+1. Pick a tool (product description, renewal, announcement, or review reply).
+2. Answer a few plain questions about what you make, who buys it, and what you want to mention.
+3. Get a draft you can paste straight in or edit, or click once to try another take.
 
-No jargon. No "content strategy." No tone sliders. Just writing you can use.
+No marketing jargon and no complicated prompt engineering.
 
 ![CopySprout Review Response](/images/review-response.png)
 
-### Why I Went With a Subscription
+## Why I went with a subscription
 
-I've been shipping software since 2014. For a long time that meant one-time licenses and zip files. You paid once, you got the file, and that was that.
+I have been shipping software since 2014, and for most of that time I sold one-time licenses and zip files. CopySprout uses a subscription for two practical reasons.
 
-CopySprout works differently, and it's on purpose. Two reasons.
+First, every generation calls a hosted AI model and costs me money per request. If I charged a single one-time fee, heavy users would cost more than the sale within a few months and the product wouldn't stay sustainable.
 
-First, every creation costs me money. Each one is a call to an AI model, and I pay for every call. A one-time price would mean paying for those calls forever, off a single sale. That math falls apart fast, and the product would quietly die. A subscription is what keeps it running.
+Second, a subscription keeps the incentives honest: I have to keep paying for the API, fixing bugs, and improving the tools every month, and if you stop getting value out of it, you cancel.
 
-Second, a subscription is better for the life of the product. It means I can keep paying for the AI, keep fixing things, keep making the tools better. It only works if the tool keeps earning its place every month. If it stops being useful, you cancel. Fair.
+Instead of a limited free tier, there is a trial and two straightforward plans:
 
-So no free tier, no feature gating. Just a trial, then a simple choice:
+- 7-day free trial: 100 creations, card at checkout, cancel anytime
+- $4.99/month: 500 creations a month
+- $49.99/year: two months free
 
-- **7-day free trial** - 100 creations, card at checkout, cancels anytime
-- **$4.99/month** - 500 creations a month
-- **$49.99/year** - two months free
+## How I built it
 
-The pricing is honest because the product is honest. If you stop getting value, you cancel. Simple.
+CopySprout runs on Astro and Tailwind for the frontend, Firebase for auth, database, and cloud functions, and Stripe for billing. The AI generation calls DeepSeek from the server so prompts and keys stay out of the browser.
 
-### How I Built It
+## What I learned shipping it
 
-CopySprout runs on one stack. [Astro](https://astro.build) and Tailwind for the app itself, Firebase for auth, database, and functions, and Stripe for payments. The AI generation runs on DeepSeek, with the prompts living server-side so the logic stays out of the browser.
+Building CopySprout solo taught me three things right away:
 
-### What I Learned
+- **Ship the core tools first:** I cut extra features that sounded nice on paper and shipped only the tools sellers actually use week to week.
+- **Keep the UI as plain as the output:** The hardest part was keeping marketing language out of the app itself. If the tool is supposed to write like a real person, the interface should talk like one too.
+- **Test the full payment flow yourself:** I paid for my own subscription, went through checkout, signed up, and hit the quota limits myself. Any friction you feel as the developer will be ten times worse for a real customer.
 
-Building CopySprout solo taught me more than any project I've shipped since 2014:
+## What is next
 
-- **Ship fast, skip the rest.** I cut every feature that wasn't core. The tools that shipped are the ones sellers actually need, not the ones that sounded impressive.
-- **Plain language is a feature.** The hardest part wasn't the AI. It was keeping the product itself free of jargon. If the tool is supposed to write like a person, the tool should talk like one too.
-- **Walk the whole path yourself.** I paid for my own product, went through checkout, signed up, hit quota. If there's friction in your own flow, your customers will feel it ten times worse.
+To be upfront about where things stand: CopySprout is live and finished, and it does not have paying customers yet. Now comes the part I can't code my way through, which is getting it in front of the Etsy sellers who actually need it.
 
-### What's Next
+If you run an Etsy shop and hate staring at a blank description box, give it a look: [Try CopySprout](https://copysprout.app)
 
-Here's the honest part: It doesn't have customers yet. CopySprout is live, it's finished, and now comes the part I can't build my way through. Getting it in front of the sellers who need it. I'll keep writing about that as it happens.
-
-If you sell on Etsy and you've ever stared at a blank description box, I built this for you.
-
-[Try CopySprout →](https://copysprout.app)
-
----
-
-*P.S. CopySprout is the second public product from [Moss AI Studio](https://mossaistudio.com) - visit my shop to check out more apps. The first was [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/).*
+*P.S. CopySprout is the second public product from [Moss AI Studio](https://mossaistudio.com). The first was [Handmade Checker](/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/).*

@@ -17,44 +17,26 @@ github: https://github.com/DevTarlow/crunchr
 url: https://tarlow.itch.io/crunchr
 ---
 
-An early build of a game works. Every button still sounds like the default beep.
+When you have an early game build running, every placeholder button and jump usually ends up with the same generic beep until you go digging for sound packs.
 
-Crunchr is the small tool I made for that gap. Pick a click, a footstep, a jump, a coin or a spell zap, shape it in the browser with the six sliders, and download the result as a WAV or an MP3. Eighteen sounds in five groups: clicks, footsteps, items, movement and magic.
+I built Crunchr to fill that gap in the browser. Pick from eighteen sounds across five groups (Clicks, Footsteps, Items, Movement, and Magic), tweak them with six sliders, and export as a WAV or MP3 with no uploads, no samples, and no account.
 
-Everything is generated in the browser. No samples, no uploads, no account.
+## Picking and shaping sounds
 
-## Pick a sound
+Movement covers jumps, landings, and hits; Magic covers zaps, shimmers, power-ups, and whooshes; and the rest cover everyday interactions like mechanical clicks, wooden buttons, cloth rustles, coins, squishes, and crunches. Clicking any sound chip plays it, and tapping the same chip again generates a fresh variation at the same slider settings.
 
-The groups are Clicks, Footsteps, Items, Movement and Magic. Movement has a jump, a landing and a hit. Magic has a zap, a shimmer, a power-up and a whoosh. And the rest cover the everyday parts of a game: a mechanical click, a wooden button, a cloth rustle, a coin, a squish, a crunch.
+Six sliders shape the sound (length, pitch, punch, body, roughness, and fade), updating the waveform live as you drag. A seventh Variation control only applies when exporting a batch of ten, shifting each copy slightly so a row of footsteps doesn't sound identical. Reset brings everything back to defaults.
 
-Picking a sound plays it. Tap the same chip again and you get a new take with the same sliders, which is how I find a footstep that does not sound like the one before it.
+## Exporting one sound or ten
 
-## Shape it
-
-Six sliders do the work: length, pitch, punch, body, roughness and fade. Each one updates the wave while you drag, so you hear the change as you make it.
-
-Variation is the seventh control, and it only affects the batch of ten. It changes each copy a little. So a row of footsteps has some life in it. At 0% the sliders stay where they are, and every sound still changes a little.
-
-Reset puts the sliders back to the preset defaults.
-
-## One sound, or ten
-
-Save gives you WAV or MP3. WAV is lossless and the one to use in a game. MP3 is smaller and plays anywhere, with a small delay at the start.
+You can save a lossless WAV (best for game engines) or a smaller MP3.
 
 ![Crunchr's Save panel with one sound and a ZIP of ten versions](/images/crunchr-ten-versions.png)
 
-One sound is exactly what you hear. Ten versions is a ZIP with ten numbered files and small differences between them. Then the numbered row plays each take on its own, and the gap between them is a preview setting only, so the ZIP always has ten separate files.
+Single save exports the exact sound you just auditioned. Ten versions exports a ZIP with ten numbered takes that differ slightly from one another (the preview gap slider only controls playback on the page, not the exported files). Because the waveform, preview, and download all use the same seeded render, what you hear on screen is what lands in the file.
 
-The wave, the audition and the exported file all come from the same seeded render, so what you hear on the page is what you download.
+## Scope and offline behavior
 
-## What it does not do
+Crunchr generates one sound effect at a time. It won't record audio, edit existing clips, or save project files; the exported WAVs and MP3s are the output. Once the page loads, it keeps working offline, remembers your last sound and slider positions in the browser, and every sound you export is yours to use commercially under the MIT-licensed project.
 
-It does one sound at a time.
-
-And it will not record, edit or clean up audio you already have. There is no project file. The WAVs and MP3s are what you keep.
-
-## Offline and yours
-
-The app runs in the browser, and once the page is open it keeps working with the wifi off. Your last sound and slider positions stay in that browser. The sounds you make are yours, including in games you sell.
-
-The code is MIT licensed. [Try Crunchr on itch.io →](https://tarlow.itch.io/crunchr)
+[Try Crunchr on itch.io](https://tarlow.itch.io/crunchr)

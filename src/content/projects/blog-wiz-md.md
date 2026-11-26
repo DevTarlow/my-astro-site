@@ -12,51 +12,39 @@ tags:
   - local-first
   - editor
 description: >-
-  Blog Wiz MD is a minimal, self-hosted markdown editor I built for my Astro
-  blog that works with blog posts, project posts, and has note taking.
+  A minimal, self-hosted markdown editor I built for my Astro blog to handle
+  blog posts, project pages, and notes in one place.
 image: /images/blog-wiz-md-screenshot.png
 ---
-I wanted a place where I could easily edit markdown files for my blog posts and projects without having to dive through code and folders to draft up a post.
 
-This is what led me to create the app.
+I wanted a clean place to draft markdown files for my blog posts and projects without digging through source folders inside a code editor every time I wanted to write.
 
-**Blog Wiz MD** is a minimal, self-hosted markdown editor I built for my Astro blog that works with blog posts, project posts, and has note taking. Keeping everything for drafting and publishing in one place.
+So I built Blog Wiz MD, a self-hosted markdown editor tailored to my Astro blog that keeps blog posts, project pages, and quick notes together in one app.
 
 ![blog-wiz-md-screenshot](/images/blog-wiz-md-screenshot.png)
 
-## Features:
+## Features
 
-**Notes mode** — local SQLite-backed documents
-- Create, delete, and organize documents into folders
-- Drag-and-drop documents between folders
-- Pin/unpin notes
-- Search Notes
-- CodeMirror 6 editor with syntax highlighting, line numbers, and line wrapping
-- Live markdown preview with split-pane view (resizable)
-- Auto-save
-- Word count and estimated reading time
+**Notes mode** (local SQLite-backed documents):
+- Create, delete, search, pin/unpin, and drag-and-drop notes across folders
+- CodeMirror 6 editor with syntax highlighting, line numbers, line wrapping, and auto-save
+- Resizable split-pane live markdown preview, word count, and reading time
 
-**Blog mode** — edit Astro blog posts directly on the filesystem
-- Browse, create, edit, and delete `.md` / `.mdoc` / `.mdx` files
-- Frontmatter editor: title, pubDate, draft toggle, description, tags, heroImage
+**Blog mode** (edits Astro content directly on disk):
+- Browse, create, edit, and delete `.md`, `.mdoc`, and `.mdx` files
+- Frontmatter editor for title, `pubDate`, draft toggle, description, tags, and hero image
 - Auto-generated slugs for new posts
 
-**Images mode** — manage blog images
-- Browse images from a configured directory
-- Upload via file picker or drag-and-drop (max 10MB)
-- Rename, delete images
-- Copy markdown embed codes (`![alt](/images/...)`)
-- Drag images directly from the browser into the post editor
+**Images mode**:
+- Browse a configured image folder, upload up to 10MB via picker or drag-and-drop, and rename or delete files
+- Copy markdown image embeds or drag images straight into the post editor
 
-**General**
-- Light/dark theme (system preference detection + manual toggle)
-- Table of Contents sidebar (auto-parsed from headings, click to scroll)
-- Editor-to-preview scroll sync
-- Collapsible sidebar
+**General**:
+- Light/dark theme toggle, auto-parsed Table of Contents sidebar, scroll sync, and collapsible sidebar
 
-## Tech Stack
+## Tech stack
 
-| Layer | |
+| Layer | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router, React 19) |
 | Language | TypeScript 5 (strict) |
@@ -67,10 +55,6 @@ This is what led me to create the app.
 | Icons | Lucide React |
 | Testing | Vitest, Testing Library |
 
-## Recent Updates:
+## Status
 
-- 5/18/2026 | Initial 1.0.0 alpha project under development.
-
-## Get the Project
-
-> Project Under Development - Check back soon!
+- 5/18/2026 | Initial `1.0.0` alpha under active development.

@@ -1,80 +1,54 @@
 ---
 title: 'From Idea to GitHub: Launching the Sunshine Family Dashboard'
-description: 'How and why I created the Sunshine Family Dashboard. A simple private, self-hosted digital dashboard to keep your family organized and your data/lifestyle off the internet. '
+description: 'How and why I built the Sunshine Family Dashboard, a private self-hosted dashboard to keep family notes, meals, and schedules on your own machine.'
 pubDate: 2026-04-28
 tags: [dashboards, web-development]
 featuredimage: /images/sunshine-family-dashboard-dining-out-to-do-grocery-list.jpg
 ---
-## Sunshine Family Dashboard Launched!
+
+## Sunshine Family Dashboard is on GitHub
 
 ![Screenshot](/images/sunshine-family-dashboard-screenshot.png)
 
-I am excited to share my first public project on GitHub, the [Sunshine Family Dashboard](https://github.com/DevTarlow/sunshine-family-dashboard).
+I just put my first public project on GitHub: the [Sunshine Family Dashboard](https://github.com/DevTarlow/sunshine-family-dashboard).
 
-It's been a lot of fun developing this dashboard and I never thought that I would be here on my new blog talking about it, but here I am! We did it! The blog and the dashboard are not an idea anymore. They are both here are ready to grow.
+It has been a lot of fun building this, and it feels good to finally have both the blog and the dashboard out in the open instead of sitting in local folders.
 
-The **Sunshine Family Dashboard** is a local, lightweight, and private dashboard that you and your family can use to stay in the loop with each other.
+The Sunshine Family Dashboard is a lightweight, self-hosted dashboard that you and your family can run on your own network to stay on the same page.
 
-I built this as a project to dive deeper into new systems and to create a tool that both my wife and I would find useful.
+I built it because I wanted to get comfortable with newer tools while making something my wife and I would actually open every day. I figured if it ended up being useful enough for us to stick with, other families might want to run it too. If even one other household gets some value out of it, that makes sharing it worth it.
 
-I figured, if we find it useful and end up using it everyday then maybe some people will too. So I started working on it and reiterating on it over time until we found it useful.
+## How we got it built fast
 
-And, if I can help one person or family that's a win for me at the end of the day.
+While building this out, I leaned on [GitHub Copilot in VS Code](https://github.com/features/copilot), [Gemini](https://gemini.google/about/), and local models running in [LM Studio](https://lmstudio.ai/).
 
-So I published it.
+For me, the slowest part was not typing out components. It was deciding what should actually go on the screen and what features were worth keeping. Asking myself those questions while using it with my wife made it obvious what stayed and what got cut, so we did not waste time building panels nobody opened.
 
-### **The future is here...**
+## Why local-first matters
 
-I kept thinking that while I was building out the family dashboard.
+We wanted our data to stay ours. When an app tracks your daily notes, tasks, meal plans, and routines, that is a lot of personal information about your household.
 
-With the help of modern tools like [Github Copilot for VsCode](https://github.com/features/copilot), [Gemini](https://gemini.google/about/), and my local models running on [LM Studio](https://lmstudio.ai/). I was able to figure out some of the points that once slowed me down or grinded me to a halt.
+So we kept the dashboard local-first. Everything sits on your own machine in a local Prisma database, and you can delete it whenever you want without worrying about who else is storing it.
 
-Really, asking question to myself in my head was the slowest part of building the whole system out. What should it look like? What features did I want it to have? These were all questions I asked myself.
+Only two panels reach outside your local network:
 
-These questions led to choices and those choices led to features being built in minutes rather than hours or weeks. Bringing together ideas into features that both my wife and I found useful helped smooth the process and make it fun.
+- **Weather:** sends a request to [OpenWeatherMap](https://openweathermap.org/) to pull current conditions.
+- **Live Camera Snapshot:** an optional panel that takes a single camera URL and uses a cachebuster to grab a fresh image on each refresh. We use it to check the beach weather.
 
-Collaborating with her helped me understand what features to keep and what to get rid of or simply not waste time building out. Keeping the whole process simple, fast, and effective.
+Everything else stays on your device.
 
-### Why Local-First Matters
-
-We wanted to keep our data ours for this project, especially the tracking of all our activities, notes, tasks, and meal plans. Essentially, you can track and paint a picture where someone is or who they are with this access to some of this information.
-
-This is why we took a local-first approach to a lot of the features on the dashboard. To keep those habits and behaviors something for you to learn from, not large companies or prying eyes.
-
-The data stored by the app sits securely on your device using a local Prisma database and can be deleted at anytime.
-
-The only two features that connect outside your local network at the **Weather** panel, which uses an API request to pull the weather data from  [OpenWeatherMap](https://openweathermap.org/)
-
-And, the **Live Camera Snapshot** panel, which is also optional but really useful to keep tabs on your favorite camera. It takes single cam image (which usually sites save to the same url) and uses cachebuster to have a new image each refresh from the same URL. We use it to see how the beach weather is.
-
-Everything else, lives on your device.
-
-### Features Built for Real Life
+## Features built for real life
 
 ![Screenshot](/images/sunshine-family-dashboard-screenshot-notes-meal-prep.jpg)
 
-Having a place where my wife and I can collaborate has been amazing.
+Having one shared spot for the house has been really helpful. We use it to stay accountable on workouts, check the beach camera, track the weather, plan weekly dinners, and see what leftovers are in the fridge *(along with the date they went in, so no more guessing on unlabeled containers)*.
 
-We can keep each other motived with showing accountability for exercising, get a hourly snapshot of the beach, see the current weather, track and plan our dinners, and easily see what's in the fridge that we need to eat *(and the date it was stored, no more labels on containers!)*.
+The little day-to-day interactions are what make it stick. For example: I usually plan out the weekly dinners, and if my wife wants to add something to a meal or let me know she picked up salmon, she drops a quick note right on the dashboard. Or if we both get busy and decide to go out to eat, we just drag that night's dinner over to the next day.
 
-Using it has kept us more in the flow with each other. For example, I like to plan the dinners and sometimes my wife wants to add something to the meal or let me know she picked up the salmon, so she just put's a note.
+If you hook up your own local LLM, the dashboard can also suggest dinner ideas that are not already on your weekly list, give you custom toast alerts, and automatically add matching emojis to items in the Meal Prep Fridge panel.
 
-I really like the ability to move dinners around by dragging them to a different day. Because sometimes we are either both too busy or we just go out to eat but both want to still move the dinner to the next day. So we just drag it over.
+Instead of trying to remember what is in the fridge, what we spent eating out, or what needs to happen tonight, we just check one screen. If you give it a try, I hope you and your family get as much use out of it as we do.
 
-Need a dinner idea for something not already mentioned on your Weekly Dinners list? If you hooked up your local LLM you can request dinner ideas and get some fun toast alerts when using some of the other panels.
-
-The local LLM also powers getting related emojis for the Meal Prep Fridge panel.
-
-And keep everyone on the same page when it comes to notes, eating out costs, and what's for dinner. These features help streamline decisions and keep the important things noted so you don't have to waste time/energy remembering them. Just check-in to the dashboard!
-
-### A Single Source of Truth for the Household
-
-With features like what's in the fridge, notes, links, grocery lists, this weeks dinner plans and tracking our dining out expenses. The family dashboard has been a useful tool we both use each day.
-
-And now, we can finally take the guesswork out of what's for dinner? or what did I have to do this evening? type of questions. It helps keep us more connected and most of all helps us flow better with each other every day.
-
-If you give it a try, I hope you and your family get as much use out of it as we do.
-
-## Check out the project page:
+## Check out the project page
 
 > [Sunshine Family Dashboard - Project Page](/projects/sunshine-family-dashboard/)

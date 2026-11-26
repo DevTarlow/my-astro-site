@@ -17,50 +17,38 @@ github: https://github.com/DevTarlow/bliptalk-studio
 url: https://tarlow.itch.io/bliptalk-studio
 ---
 
-A character in a game needs a voice. Recording one is a whole afternoon with a microphone, a quiet room, and a take you will probably redo, and for a text box that types out one letter at a time, that is more than the job needs.
+Recording voice lines for a game takes a microphone, a quiet room, and retakes, which is way overkill when all your text box needs is a clean retro blip per character.
 
-BlipTalk Studio is the smaller version. Type a line, pick a voice, press play, and the line types itself out with a blip per character. Then export the whole line as a WAV, or a pack of single blips your game code can trigger.
-
-And it runs in the browser, it is free, and the text you type never leaves your machine.
+BlipTalk Studio handles that in the browser. Type a line, pick a voice, hit play, and it types out the line with a blip on each character. Then you export either the full line as a WAV or a five-blip pack your game code can trigger directly. It is free, runs locally in the browser, and nothing you type leaves your machine.
 
 ## Three voices
 
-**8-Bit Chiptune** is the NES and Game Boy sound. One short pitched tone per character, the thing you hear under every RPG text box.
+- **8-Bit Chiptune:** the classic NES and Game Boy style, playing one short pitched tone per character.
+- **Animalese:** fast chatter that mimics speech rhythm by giving each letter a short syllable without speaking real words.
+- **Retro Noise / Robotic:** buzzy, metallic tones like a broken speaker for robots, terminals, or villains.
 
-**Animalese** is fast chatter that copies the rhythm of speech. Each letter gets a short syllable, so the voice sounds like it is talking without saying words.
+None of these are text-to-speech; they give you the sound effects a game plays while dialogue types onto the screen.
 
-**Retro Noise / Robotic** is buzzy and metallic, like a voice through a broken speaker. Robots, computers, villains, station announcements.
+## What you can tweak
 
-None of them are text-to-speech. You will not get a sentence you can understand. You get the sound a game plays while the sentence types.
+There are five starting presets (Cozy Animal, Sarcastic Robot, 8-Bit Hero, Dark Wizard, and Fairy Whispers) plus controls for base pitch, speed, pitch variation, volume, envelope decay, formant or crush, and waveform. Every slider also has a number box so you can type exact values like `180 ms` instead of fighting a mouse drag.
 
-## What you can change
+Punctuation intonation is worth flipping on: question marks rise 150 Hz, exclamations rise 100 Hz, and periods or commas drop pitch with a slight pause afterward so typed dialogue feels more spoken. (Animalese ignores envelope decay because it follows the speed slider, and 8-Bit Chiptune ignores formant since there is no vowel filter to shape.)
 
-Five presets do the first pass: Cozy Animal, Sarcastic Robot, 8-Bit Hero, Dark Wizard and Fairy Whispers. Load one and adjust from there.
+## What you export
 
-The controls are base pitch, speed, pitch variation, volume, envelope decay, formant or crush, and waveform. Every slider has a number box beside it, so you can type 180 ms instead of dragging to it.
-
-Punctuation intonation is the one worth turning on, because a question mark rises 150 Hz, an exclamation rises 100 Hz, and a full stop or comma falls with a longer pause after each. So a line of dialogue starts to sound like it is being said instead of typed.
-
-Animalese ignores envelope decay, because its blips follow the speed setting. 8-Bit Chiptune ignores formant, since there is no vowel to shape.
-
-## What you get
-
-Export WAV File saves the whole line as a mono WAV. It drops into Unity, Godot, GameMaker, RPG Maker, or anything else that reads a WAV.
+Export WAV File saves the whole line as a mono WAV ready for Unity, Godot, GameMaker, RPG Maker, or any engine that plays WAVs.
 
 ![BlipTalk Studio with a line in the dialogue preview, the voice controls, and the export buttons](/images/bliptalk-studio-playback.png)
 
-Then there is the Blip Pack. It is the better fit when your game types the sentence out.
-
-Export Blip Pack saves five single-character blips, and the pitched voices give you a five-note scale while Animalese gives you the five vowels, so you can trigger them as the text types out and the voice follows the sentence instead of running on its own. There is a ZIP option if you would rather have all five in one download.
+If your game types text out character by character at runtime, Export Blip Pack saves five single blips (a five-note scale for pitched voices, or five vowels for Animalese), with a ZIP option so you can grab all five in one click.
 
 ## Good to know
 
-The sounds you make are yours, including in commercial games. No credit needed.
-
-Your last line is kept for the tab, so a refresh does not lose it. Voice settings and your own presets stay in this browser, and you can export them to a file and import them somewhere else.
+Any sounds you generate are yours to use commercially with no credit required. Your last typed line stays in the current tab across refreshes, and custom presets stay in browser storage with JSON export/import if you move machines.
 
 ![BlipTalk Studio's three voice tabs and the dialogue preview](/images/bliptalk-studio-interface.png)
 
-The app is React, Vite, Tailwind and the Web Audio API, and all the sound is synthesized at runtime from oscillators, formant filters and noise, with no samples and no model involved.
+Built with React, Vite, Tailwind, and the Web Audio API, synthesizing everything at runtime from oscillators, formant filters, and noise with no audio samples or AI models involved.
 
-[Play BlipTalk Studio on itch.io →](https://tarlow.itch.io/bliptalk-studio)
+[Play BlipTalk Studio on itch.io](https://tarlow.itch.io/bliptalk-studio)

@@ -9,31 +9,22 @@ tags:
   - ai-detection
   - tool
 description: >-
-  A Chrome extension that checks any Etsy listing in one click and tells you
-  if it was likely written and made by AI. Free to start, with a Pro plan
-  for heavier use.
+  A Chrome extension that checks any Etsy listing in one click and flags
+  whether it looks handmade or AI-generated. Free to start, with a Pro plan for
+  heavier use.
 image: /images/handmade-checker-screenshot.png
 ---
 
-It started with a specific frustration.
+This started when I was shopping on Etsy for a handmade gift and kept running into listings that looked off: identical phrasing patterns, generic structure, and telltale AI image artifacts.
 
-I was shopping on Etsy for a gift, something handmade with character, and I kept running into listings that felt off. Same cadence, same structure, same AI-style writing, product after product. It was getting harder and harder to tell what was actually handmade.
+So I built **Handmade Checker**, a Chrome extension that uses Google Gemini to evaluate an Etsy listing's images, title patterns, and description signals in one click and return a 0-100 score.
 
-So I built Handmade Checker.
+Here is how it works:
 
-**Handmade Checker** is a Chrome extension that analyzes any Etsy listing in one click and tells you how likely it is to be handmade. It uses Google Gemini AI to read the listing, the images, and the description patterns, then gives you a score from 0 to 100.
+1. Open any Etsy listing page and click "Check Listing" right below Add to Cart.
+2. Get a color-coded score (green for likely handmade, orange or red for likely AI-generated).
+3. Read the breakdown showing which image, title, and description signals drove the score.
 
-Here's how it works:
+No copying URLs or switching tabs. It is free to start with 10 checks a day, and Pro is $4/month or $48/year for 100 checks/day, full breakdowns, check history, and auto-checking on listing pages.
 
-1. **Browse Etsy normally.** Go to any listing page.
-2. **Click "Check Listing."** The button sits right below Add to Cart.
-3. **Get a score.** Green means it reads as handmade. Orange or red means it likely came from AI.
-4. **Read the breakdown.** The extension shows you why it scored that way, from image signals to title and description patterns.
-
-No copy-paste, no extra tabs. One click.
-
-It's free to start with 10 checks a day. For heavier use, Pro is $4 a month or $48 a year, with 100 checks a day, full explanations, check history, and auto-check on listing pages.
-
-Etsy's whole premise is handmade goods. This tool is my way of giving shoppers a little control back, one listing at a time.
-
-[Add Handmade Checker to Chrome →](https://chrome.google.com/webstore/detail/daedaojhakngamgnmhkhgchnidijjbld)
+[Add Handmade Checker to Chrome](https://chrome.google.com/webstore/detail/daedaojhakngamgnmhkhgchnidijjbld)

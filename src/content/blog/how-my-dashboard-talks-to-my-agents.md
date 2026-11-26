@@ -7,36 +7,36 @@ tags:
   - dashboards
   - workflow
 description: >-
-  I built a dashboard that pulls my whole day into one place. Then I wired it
-  to my AI agents so a task can go from a checkbox to a working chat session
-  with one click. Here is how it works and why I built it.
+  I built a local dashboard to pull my tasks, notes, and product metrics into
+  one screen, then wired it to my agents so any task launches a chat session in
+  one click.
 featuredimage: /images/hermes-custom-dashboard-tarlow.png
 ---
 
-I run my work through a small team of AI agents now. One handles my plans and reviews, one turns plans into shipped code, one does research, one handles social. I wrote about [how I got here](/blog/how-my-coding-workflow-changed/) a couple weeks back.
+Right now I run most of my work through a small group of AI agents (plans/reviews, coding, research, and social), which I wrote about in [my workflow post](/blog/how-my-coding-workflow-changed/).
 
-The catch: my work lived in too many places. Tasks in one app, notes in another, signups for my products scattered across a few databases, chat sessions buried in a desktop app. Every morning I spent the first hour re-gathering context I already had, just spread out. So I built a dashboard to pull it all into one place. Then I went one step further and wired it straight to my agents.
+The annoying part was that my context was scattered everywhere. Tasks sat in one app, notes in another, product signups across separate databases, and agent sessions buried inside a desktop app. Every morning I spent the first hour just pulling information together that I already had.
 
-### Why I Built It
+So I built a local dashboard to put it all on one page, and then wired it directly to my agents.
 
-The dashboard is a single page that opens to my day. Greeting, my focus for today, my top tasks, and a row of numbers that tell me how the day is going: sessions started, messages sent, tasks done, commits made. Each number also shows yesterday's figure in grey, so I can see at a glance whether I'm moving or stalling.
+## Why I built it
 
-It reads from the same places I work. It watches my repos and counts commits. It reads my Hermes session history and shows how much I actually got done. It pulls signup counts from my products (CopySprout, Moss Toolbox, Handmade Checker, GameScout) so I don't have to log into four backends to know how the week is going. It tracks my task streak, my goals, even my scheduled automations and their last run status. Everything in one tab instead of a dozen bookmarks.
+The main page opens straight to my day: a greeting, today's focus, my top tasks, and a row of daily counters for sessions started, messages sent, tasks finished, and commits made. Each counter shows yesterday's number next to it in grey so I can tell quickly if I am making progress or stalling out.
 
-That part alone was worth building. But the piece I keep coming back to is the dispatch button.
+Because it runs on my own machine, it reads straight from the places I already work. It watches my repos for commits, reads my Hermes session history, tracks my task streak and scheduled automations, and pulls signup counts across CopySprout, Moss Toolbox, Handmade Checker, and GameScout so I don't have to log into four separate backends just to check the week's numbers.
 
-### The One-Click Dispatch
+## One-click task dispatch
 
-On the tasks page, every task has a button. Click it and that task becomes a real chat session with my main agent, named after the task, with the details attached: project, priority, due date, any extra context I typed in. The agent starts working immediately. If I click it again later, it continues the same session instead of starting a fresh one, so the work stays in one thread with its full history.
+The feature I use the most is the dispatch button on the tasks page.
 
-The first version waited for the agent to finish before it let go. That meant long tasks would sit spinning in the browser, and anything running over fifteen minutes got killed mid-flight. I changed it to fire-and-forget: the click launches the agent in the background and the dashboard moves on. The work happens in its own session, visible in the desktop app, and I can hand a task to a specific agent from there if it needs one.
+Click it on any task and it opens a real chat session with my main agent, named after the task, with the project, priority, due date, and notes already attached. The agent starts working right away. If I click the same task again later, it resumes that existing session instead of starting from scratch, so all the context stays in one thread.
 
-It sounds like plumbing, because it is. But it's the plumbing I get the most use out of. A thought goes in as a checkbox, and a finished piece of work comes out the other end with its own home. No copying task text into a chat, no re-explaining what the task is, no hunting for where that work ended up.
+My first version waited for the agent to finish before returning, which meant long tasks sat spinning in the browser and anything over fifteen minutes got killed mid-run. Switching it to fire-and-forget fixed that: clicking dispatch starts the session in the background, shows up in the desktop app, and lets me keep moving or hand the task off to a specific agent if needed.
 
-### Everything in One Place
+It is simple plumbing, but it saves me from copying task descriptions into chat boxes, re-explaining the background, and losing track of where a piece of work ended up.
 
-The dashboard also remembers the stuff I'd normally lose. Daily check-ins keep a streak going. Notes, projects, and a waiting list for things I'm blocked on. It reads my working memory and lets me search across all my past conversations. There's even a spot for my dreams, which has become a fun morning habit.
+## Everything in one place
 
-None of it is complicated on purpose. It's a FastAPI app with a single-page frontend, running on my own machine, reading the data my agents already produce. The point was never to build something impressive. The point was to stop re-collecting context every morning and have one place where everything shows up.
+The dashboard also holds daily check-ins, notes, project status, a waiting list for blocked tasks, searchable chat history across past conversations, and even a spot for my 2am agent dreams.
 
-These tools are at their best when they connect to each other. My agents already know how I work. Now my to-do list knows how to reach them.
+Under the hood it is just a FastAPI backend with a single-page frontend running locally on my machine and reading the files my agents already write. I didn't want anything complicated, just one tab where everything meets so I stop wasting my mornings re-collecting context.

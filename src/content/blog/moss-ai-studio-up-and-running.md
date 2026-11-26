@@ -6,67 +6,41 @@ tags:
   - launches
   - local-first
 description: >-
-  Moss AI Studio is a one-man studio for AI tools and custom software. Here's
-  what it is now, and the journey that got me here.
+  Moss AI Studio is my one-person shop for AI tools and custom software. Here is
+  what it covers and how it grew out of my recent builds.
 featuredimage: /images/moss-ai-studio-hero.png
 ---
 
-For the last few months, this blog has been my workshop.
+For the last few months, this blog has mostly been my notebook for experiments: running [Gemma 4 locally](https://tarlow.space/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/), keeping data on my own hardware, and building tools like family dashboards and Chrome extensions.
 
-I've written about running [Gemma 4 locally](https://tarlow.space/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/), building tools that keep my data on my own hardware, and experimenting with everything from family dashboards to Chrome extensions.
+Each project started from the same question: what can I build with AI that actually saves someone time or solves an annoying everyday problem? Putting those builds under one roof is what turned into [Moss AI Studio](https://mossaistudio.com).
 
-Each post was a project, and each project was me answering the same question over and over: what can I build with AI that actually makes life easier, not just for me. But for others?
+## Where it started
 
-All of that work has been building toward something bigger than any single tool.
+I have been shipping software since 2014, starting with tools for myself and then for other people who ran into the same bottlenecks.
 
-Meet [Moss AI Studio](https://mossaistudio.com).
+When local models got good enough to run at home, I wrote about [using Gemma 4 locally](https://tarlow.space/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/) so you keep your privacy, control your own costs, and don't depend on one company leaving their pricing unchanged. That led to the [Sunshine Family Dashboard](https://github.com/DevTarlow/sunshine-family-dashboard) that my wife and I use daily, [SkyBuddy](https://tarlow.space/blog/project-talk-skybuddy-bluesky-faster-than-thought/) for Bluesky, and local agents running on my machine. At first none of them were meant to be products. They were just useful.
 
-### Where it started
+## The first public product
 
-I've been shipping software since 2014. I started building things for myself, then for other people who needed the same thing. That habit never really went away, it just changed shape as the tools changed.
+[Handmade Checker](https://tarlow.space/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/) was the first one I put out publicly. After seeing AI-generated listings flood Etsy and people online frustrated trying to spot what was actually handmade, I built a Chrome extension that checks any listing in one click and went live with it on the Chrome Web Store in July.
 
-When AI models got good enough to run on your own hardware, something clicked for me. I wrote about [taking control with Gemma 4](https://tarlow.space/blog/taking-control-how-gemma-4-powers-my-local-ai-ecosystem/) - running models locally instead of renting access to them. You get your privacy back, you control the costs, and you're not at the mercy of some company changing the rules on you.
+At the end of that post I mentioned Moss AI Studio for the first time, and now the main site is up and running.
 
-That led to a string of projects. The [Sunshine Family Dashboard](https://github.com/DevTarlow/sunshine-family-dashboard), which my wife and I use every day. [SkyBuddy](https://tarlow.space/blog/project-talk-skybuddy-bluesky-faster-than-thought/), my Bluesky engagement extension. Automations and agents running on my own hardware. None of them were meant to be businesses. They were meant to be useful.
+## What Moss AI Studio is now
 
-But somewhere along the way, I realized the same approach could help other people too.
+Moss AI Studio is just me: one developer in Portland building practical AI tools and custom software without enterprise pricing or agency overhead.
 
-### The first public product
+Each public tool gets its own home, like Handmade Checker at `handmadechecker.com` and CopySprout (my upcoming Etsy writing tool) at `copysprout.app`. Alongside those tools, I also take on custom builds for small businesses that need an automation, an AI integration, or a specific internal tool.
 
-[Handmade Checker](https://tarlow.space/blog/handmade-checker-is-live-scan-etsy-listings-for-ai-generated-content-in-one-click/) was the turning point. It started with a frustration - AI-generated listings flooding Etsy, seeing post after post on social media about people getting ripped off, and sometimes making it impossible to tell what was actually handmade. So I built a Chrome extension that checks any listing and tells you, in one click, whether it's likely handmade or AI-generated.
+## How I build
 
-It went live on the Chrome Web Store last month in July. And at the end of that post, I made a small promise: Handmade Checker is the first public product from Moss AI Studio. Don't stop there. Stay focused and keep building.
+I build with AI right alongside me: local models for anything private, cloud APIs when I need heavier lifting, and fast iteration in between. My [May setup post](https://tarlow.space/blog/vibe-coding-setup-may-2026-my-go-to-stack/) covered the early version of that workflow, and I plan to write another post soon on why I have been using the DeepSeek API directly for coding sessions.
 
-That wasn't just a tagline. It was the plan taking shape.
+The process stays simple: find a real problem, build a tool that handles it cleanly, ship it, listen to feedback, and improve it.
 
-### What Moss AI Studio is now
+## What is next
 
-So what is it, exactly?
+Right now I am finishing up CopySprout for Etsy sellers (titles, descriptions, tags, review replies, and announcements with Etsy's rules baked in) and will share a full post on it soon.
 
-Moss AI Studio is me. One developer in Portland, building AI tools and custom software without the enterprise price tag or agency overhead. No team, no bloated process. Just building things that work, and supporting them directly.
-
-Every product gets its own home. Handmade Checker lives at handmadechecker.com. CopySprout, my Etsy writing assistant, will live at copysprout.app. Each site stands on its own, and each product gets the focus it deserves.
-
-The studio also does custom builds. If a business needs automation, an AI integration, or a tool that doesn't exist yet, I build it. Same approach, same philosophy - practical software that solves a real problem.
-
-### How I build
-
-I build with AI at my side. Local models for anything private, API models for the heavy lifting, and a lot of vibe coding in between. I wrote about my [current setup](https://tarlow.space/blog/vibe-coding-setup-may-2026-my-go-to-stack/) a few months back, and it's only gotten faster since. I will write a new post about some of my recent reasons I swap to the Deepseek API directly during sessions.
-
-But, the workflow is simple. Find a real problem. Build a tool that solves it. Ship it. Get feedback. Improve it. Repeat. Just steady progress. With my mindset and goals leading the way.
-
-### What's next
-
-CopySprout is in the works right now - a writing tool for Etsy sellers that handles titles, descriptions, tags, reviews, and more, with Etsy's rules built right in so you don't have to learn them. I'll have a full post on it soon, so stay tuned for that one.
-
-Beyond that, more products on the same foundation, and more custom work for people who need something built. The studio is new, but it's real, it's running, and it's ready to help people.
-
-### Come take a look
-
-The studio is up at [mossaistudio.com](https://mossaistudio.com). You can see the products, read about how I work, and reach me directly if you have something in mind.
-
-It's been a long road from my [3 year break from tech](https://mossaistudio.com/blog/the-story-behind-moss-ai-studio/), a new blog, and a handful of local experiments, to a real studio with real products. But every step of it is documented right here, and the best part is, this is just the beginning!
-
-Keep dreaming, keep creating, and most of all don't stop being you.
-
-~ Tarlow
+If you want to see what is live or reach out about a custom build, check out [mossaistudio.com](https://mossaistudio.com). It has been a long road back from my [3-year break from tech](https://mossaistudio.com/blog/the-story-behind-moss-ai-studio/), and it feels good to have a real studio site up with working products on it.

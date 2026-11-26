@@ -11,65 +11,51 @@ tags:
   - keyword-filter
   - tool
 description: >-
-  A Chrome extension for Bluesky that highlights keywords, filters noise, and
-  drafts AI-powered replies using a local LLM - all privacy-first.
+  A Chrome extension for Bluesky that highlights keywords, hides noise, and
+  drafts replies using a local LLM on your own machine.
 image: /images/skybuddy-magic-reply.png
 ---
 
-**SkyBuddy is retired.** Its development moved to [XBuddy](/projects/x-buddy/), a Chrome extension for X that does the same work with more to it. I wrote about the switch in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/).
+**SkyBuddy is retired.** I moved that work over to [XBuddy](/projects/x-buddy/) for X, which expands on the same ideas. I wrote about why I retired SkyBuddy in [A Few Repos at a Time](/blog/a-few-repos-at-a-time/).
 
-I wanted a way to monitor Bluesky for topics I actually care about without having to scroll endlessly or hand my data over to some third-party API.
+I built SkyBuddy because I wanted to spot Bluesky posts I cared about without endless scrolling or sending my feed through a third-party cloud API. It ran on `bsky.app`, highlighted posts matching positive keywords with a colored glow, hid posts matching negative keywords, and added a Magic Reply button powered by a local LLM.
 
-This is what led me to build the extension.
+## Features
 
-**SkyBuddy** is a Chrome extension that runs on `bsky.app` and watches for posts matching your keywords. The matching posts get a configurable glow highlight so they stand out from the other posts. Posts you don't want to see get hidden entirely. And when you want to join the conversation, there's a Magic Reply button that drafts replies through your own local LLM.
-
-
-## Features:
-
-**Keyword Monitoring** - two independent keyword lists with toggles. Positive keywords give posts a configurable glow color (default blue). Negative keywords hide posts entirely with `display: none`. Each list has its own search, pagination, and clear button. Keywords are matched case-insensitively via substring.
+**Keyword monitoring:** Two toggleable keyword lists with search, pagination, and clear buttons, matching case-insensitively to either glow posts in a chosen color or hide them with `display: none`.
 
 ![SkyBuddy Screenshot](/images/skybuddy-screenshot.png)
 
-**Magic Reply with Tones** - injects a button into Bluesky reply dialogs. Click it and SkyBuddy extracts the post text, sends it to your local LLM with a tone-specific system prompt, and inserts the generated reply into the composer. Five tones to choose from - Generic, Agree, Disagree, Funny, Informative - each with its own editable prompt that you can customize or restore to default.
+**Magic Reply with tones:** Adds a button in Bluesky reply dialogs that reads the post, runs a tone prompt (Generic, Agree, Disagree, Funny, or Informative) against your local LLM, and drops the draft into the composer for editing. All five prompts are customizable.
 
 ![SkyBuddy Screenshot](/images/skybuddy-magic-reply.png)
 
-**Privacy & Control** - a master toggle pauses everything without losing your settings. Full-config export/import as a versioned JSON file covers keywords, toggles, LLM config, tone prompts, temperature, max tokens, and glow color. No telemetry, no third-party API calls, no data leaving your machine except to the LLM endpoint you configure.
+**Privacy and controls:** Includes a master pause toggle, right-click hashtag insertion into either list, versioned JSON export/import for all settings and prompts, and zero telemetry or cloud calls outside your configured local model endpoint.
 
 ![SkyBuddy Master Toggle](/images/skybuddy-master-toggle.png)
-
-**Right-Click Integration** - right-click any hashtag on Bluesky to add it to your positive or negative keyword list. A toast notification confirms the action.
 
 ![SkyBuddy Keyword Insert](/images/skybuddy-keyword-insert.png)
 
-
-**Multiple Backend Support** - works with OpenAI-compatible endpoints (llama.cpp, LM Studio, LocalAI) and Ollama. Configure the URL, model name, temperature, and max tokens from the popup.
+**Local LLM backends:** Supports OpenAI-compatible servers (`llama.cpp`, LM Studio, LocalAI) and Ollama with configurable URL, model, temperature, max tokens, and a live connection indicator dot in the popup header.
 
 ![SkyBuddy LLM Settings](/images/skybuddy-llm-settings.png)
 
-**LLM Status Indicator** - the popup header shows a live connection status dot with the LLM endpoint so you always know if your backend is reachable.
+## Tech stack
 
-![SkyBuddy Master Toggle](/images/skybuddy-master-toggle.png)
-
-## Tech Stack
-
-| Layer | |
+| Layer | Choice |
 |---|---|
 | Platform | Chrome Extension Manifest V3 |
 | Language | Vanilla JavaScript (no framework) |
 | Storage | `chrome.storage.local` |
-| DOM Observation | MutationObserver (rAF-throttled) |
+| DOM Observation | MutationObserver (`rAF`-throttled) |
 | Styling | CSS custom properties, inline popup styles |
 | LLM APIs | OpenAI-compatible `/v1/chat/completions` + Ollama `/api/chat` |
-| Build | None - loaded unpacked, no bundler |
+| Build | None (loaded unpacked, no bundler) |
 
-## Recent Updates:
+## Status
 
-- 7/4/2026 | v1.0.0 alpha - Keyword highlighting, negative filtering, Magic Reply with 5 tones, right-click integration, export/import, and full LLM backend support.
+- 7/4/2026 | `v1.0.0` alpha: Keyword highlighting, negative filtering, Magic Reply with 5 tones, right-click insertion, export/import, and local LLM backend support.
 
-## Where It Went
+SkyBuddy is retired and the source is no longer public; active development moved to [XBuddy](/projects/x-buddy/).
 
-SkyBuddy is retired. Its development moved to [XBuddy](/projects/x-buddy/), and the source is no longer public.
-
-[Read about the switch →](/blog/a-few-repos-at-a-time/)
+[Read about the switch](/blog/a-few-repos-at-a-time/)

@@ -6,69 +6,47 @@ tags:
   - agents
   - workflow
 description: >-
-  I built a cron job that dreams at 2am. Here's what happens when your AI
-  works the night shift, and the strange insights that come from it.
+  I set up a 2am cron job that lets Hermes Agent wander through my memory and
+  recent work without a task list, then sends me a short morning summary.
 featuredimage: /images/how-i-built-an-ai-that-dreams-for-me.jpg
 ---
 
-A cron job on my machine wakes up at 2am every night. It does not check email. It does not run backups. It dreams.
+Every night at 2am a cron job wakes up on my machine. It doesn't check email or run backups. I set it up to dream.
 
-I built this thing because I wanted to see what an AI would come up with if I gave it the night shift. Not a task list. Not a prompt to optimize something. Just: here is everything you know about me, here is what I have been working on, now go wander for three minutes and write down what you see.
+I wanted to see what an AI would come up with if I gave it a night shift with no task list and no optimization goal. The prompt basically says: here is everything you know about me and what I have been working on lately, take three minutes to wander through it and write down what stands out.
 
-It is one of the strangest tools I have ever made. And the one I look forward to reading the most.
+It is probably the weirdest tool I have built, and also the one I look forward to reading most in the morning.
 
-### What It Is
+## What it actually does
 
-Every night at 2am, a session of Hermes Agent spins up. It reads my memory, checks what I have been working on lately, looks at recent conversations, and then it just... thinks. For three minutes. No self-editing, no task list, no optimization goal. It thinks in images and metaphors, writes down whatever comes.
+At 2am, a Hermes Agent session spins up, reads my memory files, checks my recent projects and conversations, and spends three minutes writing free-form notes without worrying about staying practical. It saves a three-to-four-page dream report locally, usually ending with a few concrete ties back to what I am building.
 
-The output lands in a file on my machine. A dream report. Three to four pages of free-form narrative, usually with a few insights at the end that connect it back to real projects.
+At 7am, a second cron job reads that report and sends me three short highlights (one or two sentences each) grounded in what I am working on that week.
 
-At 7am, another cron reads that report and sends me a short message with the highlights. Three ideas, one or two sentences each, grounded in whatever I am actually building that week.
+## What shows up in the reports
 
-That is the whole thing. A machine that dreams at night and leaves me a note in the morning.
+The first morning I read one, I laughed out loud. It wrote about a workshop lit by screens at 2am with a clipboard hanging on the wall that held every line I had ever copied, calling it a tool that lives in the house instead of the storefront.
 
-### What It Is Like
+I had just finished building a GNOME clipboard history extension, so it knew about that, but the framing hit close. Out of everything I had built, that extension was the tool I opened every single day because I built it out of my own annoyance.
 
-The first morning I read one, I laughed. It was talking about a workshop lit by screens at 2am, with a clipboard on the wall that held every line I had ever copied. It described the clipboard as a tool that lives in the house, not in the storefront.
+A lot of the reports circle around the same night crew: the YouTube watcher checking view counts at 9pm, the dream job at 2am, backups at 3:30am, and my check-in at 7am. On another night it wrote about a "garden of small judgments" (saved posts, rejected drafts, copy edits), which turned into a real idea I am working on: building a taste profile from edits I keep or throw out so first drafts land closer to my actual voice.
 
-I had just finished building a clipboard history extension for GNOME. The dream knew that. But it reframed the whole thing. It said the extension was the only tool in my portfolio that I use every single day, on my own machine, annoyed into existence. It said that was the rarest artifact I own.
+## The clipboard crash story
 
-That stuck with me.
+One week's dream report opened with the clipboard extension again, joking that I built a box one night and it nearly threw me out of the house.
 
-The dreams keep coming back to the same themes. The night crew: the YouTube watcher that whispers view counts at 9pm, the dream at 2am, the backup at 3:30am, the check-in at 7am. Bots that used to work for strangers while they slept, now working for me while I sleep. The dream wrote that line and I have not stopped thinking about it.
+That actually happened. I stayed up too late on that GNOME extension, misnamed a keybinding against its schema, crashed the shell, disabled all my extensions, and forced a logout before fixing it. The report took that mess and pointed out that my best product lane is local-first, one-time-price tools born out of my own daily friction rather than scanning forums for startup ideas.
 
-Another night it saw a garden of small judgments. Thumbs up, thumbs down, recycled hearts. My taste, growing as data, nobody watering it. That became an idea I am still working on: a taste profile distilled from every post I have saved or rejected, every copy edit I have made, so future drafts land closer to my voice on the first pass.
+## Looking back at the automation setup
 
-### The Clipboard That Nearly Threw Me Out of the House
+What makes this setup funny to me is that I have been building automation tools since my BoosterBots days. Back then, the scripts and bots ran overnight for customers doing social and marketing work. Now that same automation mindset is pointed inward: one script watches store numbers, one runs backups, one writes dream notes, and one summarizes the morning for me.
 
-This week's dream report opened with the clipboard again. It said I built the box myself one night, and it nearly threw me out of the house. A keybinding name that did not match its schema, the shell crashed, all extensions disabled, forced logout. I fixed it and made it crash-proof.
+One report even caught a real gap in the crew: the Moss Toolbox free-tier funnel went live on September 4, and I had no overnight job diffing signups, credit spends, and free-to-paid conversions. That went straight onto my to-do list.
 
-That part is true. I did stay up too late on a GNOME extension that broke my desktop because I named a keybinding wrong. The dream took that frustration and turned it into a metaphor for the whole lane of tools I am building. Local-first, one-time price, zero server cost, opened daily. The clipboard manager is a crowded market, the dream said, but the pattern is the seed. The next product comes from my own workflow annoyance, not from a pain scan.
+## Why I keep it running
 
-I did not think of that before the dream wrote it down.
+A dreaming cron job is obviously not a product I am trying to sell. In the middle of a week spent fixing bugs and wiring up dashboards, it is just the one piece of writing about my work that still surprises me and connects dots I hadn't noticed.
 
-### The Night Shift Workshop
+If you run a local assistant or agent, try giving it a loose overnight job with no specific deliverable and see what turns up in your morning summary.
 
-Here is what gets me about the whole setup. I have been automating things since BoosterBots. Back then the bots worked for other people. Social media tools, marketing automation, things that ran while my customers slept.
-
-Now they work for me. One watches the store at night. One sweeps the dreams. One keeps the copies safe. One reads the pulse back to me in the morning.
-
-The automation DNA did not die. It turned inward.
-
-The dream pointed out that there is one more watcher missing from the 2am crew. The Toolbox free-tier funnel went live on September 4, and there is no night watchman for it. No nightly pulse that diffs signups, credit spends, and the free-to-paid conversion tick. The dream said the night crew should watch the door where customers come in.
-
-That is on my list now.
-
-### Why This Matters
-
-I know how this sounds. A cron job that dreams. It is not a product, not something I can sell. Just a weird little ritual that leaves me a note every morning.
-
-But in a week of shipping features and fixing bugs and staring at dashboards, the dream report is the only piece of writing about my work that surprises me. It connects things I did not know were connected. It reframes problems I thought were about one thing into problems about something else entirely.
-
-And it does it while I sleep.
-
-If you have an AI assistant, try giving it the night shift. Not a task. Not a prompt. Just: here is what I am working on, go think about it, write down what you see. You might be surprised by what shows up in the morning.
-
----
-
-*P.S. Hermes Agent is the AI that dreams for me every night. It also handles my morning check-in, my backups, and a dozen other small jobs that keep the house running. The clipboard extension is a personal project for now. The dream says to keep it that way until I know if the lane has legs.*
+*P.S. Hermes Agent runs the 2am dream job along with my morning check-ins and backups. The GNOME clipboard extension is staying a personal tool for now while I see if it makes sense to polish later.*

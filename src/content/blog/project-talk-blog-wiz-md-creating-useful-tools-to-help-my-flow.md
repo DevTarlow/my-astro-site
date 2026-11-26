@@ -7,66 +7,39 @@ tags:
   - workflow
   - local-first
 description: >-
-  Removing Barriers for writing and publishing on my Astro blog. This is why I
-  created a tool to update my Astro Blog.
+  Why I built Blog Wiz MD, a simple local-first markdown editor for writing and
+  publishing posts on my Astro blog without breaking my flow.
 featuredimage: /images/blog-wiz-md-screenshot.png
 ---
-## Removing Barriers & Staying in The Flow
 
-While making my **Astro** blog I thought to myself;
+## Getting friction out of my writing flow
 
-> "I will have fun writing my blog posts in VS Code, learning markdown along the way. It will be different but should be fine"
+When I started this Astro blog, I figured I would enjoy writing posts right inside VS Code while learning more markdown along the way.
 
-I soon noticed, I wasn't even drawn to open up **VS Code** to draft up a post, I don't know maybe it was the fact that it felt like I wasn't writing but rather coding.
+It didn't really stick. Every time I opened VS Code to draft a post, it felt like I was sitting down to code instead of write. Even stripping the UI down to zen mode didn't fix that feeling.
 
-I tried turning my **VS Code** setup into more of a *zen mode* with less distractions and toolbars but the flow still did not feel right...
+Next I tried drafting in Obsidian and copying posts over to the blog, which also felt clunky. I looked into hooking Obsidian straight up to the repo and even tested Syncthing to keep drafts synced between my desktop and laptop, but none of those setups felt integrated the way I wanted.
 
-I then thought;
+It reminded me of something my dad used to tell me:
 
-> "Wait a second! I will just use Obsidian to write my posts then copy them over to my blog!"
+> "If you want something done right, then you gotta do it yourself."
 
-The flow once again, just did not feel right. It was clunky. There was something missing.
+So I started building my own markdown editor to manage my blog posts and projects: **Blog Wiz MD**.
 
-### The Bridge That Connected It All
-
-I then dove into research and found ways to connect **Obsidian** directly to my blog as well as some other editors that work with markdown.
-
-I even tried using **Syncthing** and sharing a folder, because I wanted to work locally on my desktop and laptop with my blog content. But once again, everything was just too clunky or not integrated the way I wanted.
-
-So I remember something my father told me a long time ago, he said;
-
-> "If you want something done right, then you gotta do it yourself"
-
-He meant, if you want it done **your way** then you gotta **do it yourself**.
-
-So I began Vibe-Coding my own tool to manage my blog posts and projects called **Blog Wiz MD**. 
-
-## Vibe-Coding Blog Wiz MD
+## Building Blog Wiz MD
 
 ![blog-wiz-md-screenshot](/images/blog-wiz-md-screenshot.png)
 
-### One Step Led To The Next
+I took the rough idea into Gemini to flesh out the spec, then passed the plan to my OpenCode agent ([my May coding setup is here](/blog/vibe-coding-setup-may-2026-my-go-to-stack/)) to scaffold the app. Within a day of building and fixing bugs, most of the core features I wanted were working.
 
-I started with the raw idea and fed it to **Gemini**, then started refining it into a full prompt to give to my **OpenCode** agent ([learn more about my vibe coding setup here](/blog/vibe-coding-setup-may-2026-my-go-to-stack/)) to scaffold it all up.
+Then came the real test: actually writing inside it.
 
-Within a day of implementations and bug fixes, I already had most features I was looking for now built in.
+I spun up the app and started drafting notes for future posts, and right away it felt natural. The words came out easily, and I actually wrote the first draft of this post inside the editor while testing it.
 
-Now, came the fun part. Testing/using it!
+Then I lost the whole draft because I was writing inside an app I was actively modifying while it ran. That is on me for trusting an in-progress dev build without saving a copy elsewhere. Fortunately I had taken a screenshot while testing, so I didn't lose everything.
 
-I spun up the app and there I was already taking notes for my future blog posts and writing like I had been using the app for months, it felt nice.
+## What Blog Wiz MD is
 
-The writing became more fluid and the words and thoughts starting pouring out to what you see here. *(This blog post was made while I was testing the editor)*
+**Blog Wiz MD** is a minimal, self-hosted markdown editor built for Astro blogs. It handles blog posts, project entries, and quick notes in one place, and it is still under active testing and development.
 
-**Then booom! I lost this blog post. Sad, I know.**
-
-But that's what I get for writing in an actively changing development environment. Aye, I felt comfy... haha.
-
-Luckily, I had the screenshot I took so not *all* the content from this post was lost. *Remember to back up your work!*
-
-## What is Blog Wiz MD?
-
-**Blog Wiz MD** is a minimal, self-hosted markdown editor I built for Astro blogs that works with my blog posts, projects, and has note taking.
-
-*As of this post it is still currently undergoing testing and still in development.*
-
-**For the full list of features check out the project page:** [Blog Wiz MD](/projects/blog-wiz-md/)
+Check out the full feature list on the project page: [Blog Wiz MD](/projects/blog-wiz-md/)

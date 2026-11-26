@@ -1,71 +1,41 @@
 ---
 title: How My Stack Shifted Again - From Hermes Agent to a Harness of My Own
 pubDate: 2026-09-17
-description: I moved my stack again. The DeepSeek harness for projects, DeepSeek v4.1 Flash through the direct API, and my own agentic harness Marimo Desktop. Here is what changed, and why the low cost matters.
+description: Moving to the DeepSeek Harness for coding projects, DeepSeek v4.1 Flash through the direct API, and my own Marimo Desktop harness for everything else.
 tags: [agents, models]
 featuredimage: /images/marimo-desktop-screenshot.png
 ---
 
 I moved my stack again.
 
-In May it was VS Code with the OpenChamber plugin, and me steering every line. In August that gave way to Hermes Agent, and I wrote about how I stopped opening the editor. Now the ground has shifted a second time.
+Back in May I was coding inside VS Code with OpenChamber and steering every line. By August I had moved to Hermes Agent and stopped opening the editor altogether. Now I am running the DeepSeek Harness for coding projects and using my own Marimo Desktop app to handle the rest.
 
-The short version: I am working inside the DeepSeek Harness for projects and development, and then using Marimo Desktop to bridge the gaps.
+## What changed
 
-## What Changed
+OpenCode and the third-party harnesses are behind me now. For a long time my setup was a pile of separate tools that didn't talk to each other, and I spent more time and money than I want to admit patching the gaps between them.
 
-OpenCode and the third-party harnesses are behind me now. For a long stretch my setup was a pile of parts that each did one job well and knew nothing about the others. I spent more time and money than I want to admit patching the seams between them.
+Hermes Agent was the first setup that held my context and projects together in one place, which I wrote about in [how my coding workflow changed](/blog/how-my-coding-workflow-changed/). Marimo Desktop takes that a step further as a harness I built myself. It isn't meant for heavy coding (that is what the DeepSeek Harness is for); it handles my daily assistant tasks with my own tools, skills, memory, and agent profiles.
 
-Hermes Agent was the first setup that felt like one piece. It held my context, it remembered how I work, and it kept the projects in one place. That is why I wrote about it a few weeks back in [How My Coding Workflow Changed - From VS Code to a Team of Agents](/blog/how-my-coding-workflow-changed/).
+My first agent inside it is Hoshi, my blogging and social assistant, which I trained on my past posts so drafts start closer to how I talk. I still proofread, edit, and put the final post together myself, and whenever something in the workflow bugs me, I can fix it directly because I own the codebase.
 
-Marimo Desktop is the next step in the same direction. It is my own agentic harness, so the fit is closer. It's not built to handle my coding. That's what the DeepSeek Harness is for.
+## The two-model setup
 
-It was built to bridge the gaps and automate tasks while ultimately being my assistant. Right now, it has tools, skills, memory, identity, and agent profiles.
+Underneath it all I run DeepSeek v4.1 Flash through the direct API. The cost is low enough that I don't hesitate to hand off long debugging runs or multi-step features without watching a usage meter all day.
 
-My first agent is Hoshi, my blogging and social media assistant. The agent learned how I write by analyzing my previous posts and building out a voice profile and reusable skill. Now I can turn to Hoshi when I need content.
+During peak hours I sometimes switch to OpenRouter and fall back to the older DeepSeek v4 Flash 0731 for smaller tasks that don't need as much reasoning. That keeps costs low and avoids slowdowns while saving DeepSeek v4.1 Flash for the heavier jobs.
 
-I always proofread, edit, and compose the final draft, so it's always me behind the wheel. I know what goes in, and what comes out, while keeping the base organized, simple, and customized to me.
+## Tradeoffs with a more autonomous model
 
-When something about the workflow annoys me, I change it, because I am the one holding the wrench.
+DeepSeek v4.1 Flash works much more autonomously than earlier models, which is both good and bad.
 
-## The Two Model Setup
+When I hand it a clear refactor or a batch of straightforward fixes, not stopping to ask questions is great. When I am working on something exploratory where I want to steer the shape of the feature, I still have to step in and guide it carefully. Like any tool, it comes down to picking the right jobs for it.
 
-Underneath it all sits DeepSeek. I run it direct through the API with DeepSeek v4.1 Flash, and the cost is super low. That matters more than it sounds. A low cost model I am happy to hand work to all day gives me peace of mind that I can run long tasks, dive into bugs, and implement new features without worry.
+## Why this setup feels lighter
 
-During peak times I switch over to OpenRouter and run the older DeepSeek v4 Flash 0731. Same family, two roads to it. The older model is one I already know, and there is comfort in having it on the shelf when I want it. Especially for smaller tasks that do not take as much reasoning effort.
+The two biggest improvements are cost and having fewer moving parts to babysit. Running one coding harness, one assistant harness I built myself, and a cheap direct API means less time gluing tools together and more time shipping.
 
-Not only does this save money, it also saves time. I just make sure to keep my longer more complicated tasks for DeepSeek v4.1 Flash.
+If you are juggling a messy stack right now, try stripping it back to the smallest setup that gets your work done and adding pieces only when you actually feel the gap. Anthropic's [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) post is a good read on keeping agent setups simple before scaling them up.
 
-## More Agentic, Both Ways
+Things move fast in this space, so we will see what changes next month, though for now I am happy staying right here... I think :D
 
-DeepSeek v4.1 Flash feels more agentic than what I was on before. It gets more done without me stepping in to steer it.
-
-That is a good thing and a bad thing, and I mean both halves.
-
-When a model needs no steering, it also does not stop to ask. On some work that is exactly right. A refactor with clear edges and a well-defined prompt. A batch of small fixes where I already know the shape of the answer. Other work wants a hand on the wheel, and there I would rather do the steering myself.
-
-So far it has been really good. The trick is choosing when and what to use it for. That is true of every tool in the house, and this one just makes the choice obvious.
-
-## Why It Feels Good
-
-Two things stand out. The cost, and the quiet.
-
-The cost is easy to explain. Low through the direct API, and a fallback for the busy hours. I can work the way I want without watching a meter.
-
-The quiet is harder to put down. For a long time my setup was a pile I kept re-gluing. Now it is one agent harness I built, one model I trust, and one modular coding harness. Fewer moving pieces means less time tending the machine and more time on the actual work.
-
-It has been a breath of fresh air, and it feels good.
-
-If you are mid-shuffle yourself, I know the feeling. Try starting from a minimal point and then building up from there. Watch what you stop worrying about and what really matters to you. You don't need 1,000 plugins or a million lines of agent code to get what you need done. You just need something that works. For you.
-
-Anthropic's [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) is a good starting place to learn about the importance of starting small. Building up with what you need, then taking flight.
-
-For now I am staying here a while... I think :D
-
-The landscape is moving fast, we will have to wait and see what happens next month.
-
-Until then, don't stop building.
-
----
-
-*P.S. Marimo Desktop is my own agentic harness, early days and currently under development. DeepSeek v4.1 Flash through the direct API is my daily driver. Peak hours go to the older DeepSeek v4 Flash 0731 through OpenRouter.*
+*P.S. Marimo Desktop is my own agentic harness and still early in development. DeepSeek v4.1 Flash on the direct API is my daily driver, with DeepSeek v4 Flash 0731 on OpenRouter as my peak-hour fallback.*

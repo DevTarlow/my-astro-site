@@ -10,26 +10,23 @@ tags:
   - electron
   - tool
 description: >-
-  A desktop app that tracks itch.io stats over time - ratings, jam ranks,
-  views, downloads, and earnings - on your own machine. Pay once, keep it
-  forever.
+  A desktop app that tracks itch.io stats over time (ratings, jam ranks, views,
+  downloads, and earnings) on your own machine. Pay once, keep it.
 image: /images/indie-game-scout-wide-img.png
 ---
 
-itch.io only shows you today's numbers. Views today, downloads today, maybe a rating. No history, no trend, no way to know if your game is actually doing better than last week.
+itch.io only shows you today's snapshot (today's views, today's downloads, and current rating) with no built-in chart to show whether a build or update is doing better than last week.
 
-IndieGameScout fixes that. It's a desktop app that checks the stats you care about, every day, on your own computer, and charts them over time.
+IndieGameScout is a desktop app that checks the itch.io pages you watch every day on your own computer and builds a local history over time.
 
-Here's what it can do:
+Here is what it does:
 
-1. **Watch any game.** Paste any itch.io game link - yours, a friend's, one that's doing well - and follow its rating, rating count, and price day by day.
-2. **Follow jams.** Add any jam's results page and watch the top 20 shuffle around as votes come in. Pin your entry and follow your climb up the list.
-3. **Track every game you've made.** Connect your itch.io account with a private link from your settings and it pulls in views, downloads, purchases, and earnings for everything you've published.
+1. Watch any game by pasting its itch.io link (yours, a friend's, or another game) to track ratings, rating count, and price changes day by day.
+2. Follow game jams by adding a jam's results page to watch the top 20 shift as votes come in, or pin your own entry to follow its rank.
+3. Track your own games using a private link from your itch.io settings to pull views, downloads, purchases, and earnings locally.
 
-Your data lives in files on your own machine. No account, no cloud, no subscription. Pay once, $12 or more if you want to support the work, and it's yours forever. It checks on its own every 12 hours, or whenever you hit Refresh.
+All data sits in files on your own drive with no cloud account and no subscription. It costs $12 minimum (pay-what-you-want), checks automatically every 12 hours or on manual Refresh, and runs on Windows, macOS, and Linux with built-in updates.
 
-It runs on Windows, macOS, and Linux. Updates install themselves, so fixes reach you without any work on your end.
+[Get IndieGameScout on itch.io](https://tarlow.itch.io/indiegamescout-itchio-stats-tracker)
 
-[Get IndieGameScout on itch.io →](https://tarlow.itch.io/indiegamescout-itchio-stats-tracker)
-
-I wrote about why I built it and why this one is pay-once instead of a subscription here: [How I Built IndieGameScout](/blog/how-i-built-indiegamescout-an-itch-io-stats-tracker/).
+I wrote more about why I built it as a pay-once desktop app in [How I Built IndieGameScout](/blog/how-i-built-indiegamescout-an-itch-io-stats-tracker/).

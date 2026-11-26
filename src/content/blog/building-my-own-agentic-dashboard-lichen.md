@@ -1,88 +1,58 @@
 ---
 title: Building My Own Agentic Dashboard - Lichen, and the Agent Living Inside It
 pubDate: 2026-09-27
-description: I built a dashboard that talked to Hermes Agent. This one grew out of Marimo Desktop, and it has its own agent built in. Here is what Lichen does for me.
+description: Lichen grew out of Marimo Desktop as a local browser dashboard with its own built-in agent. Here is how I use it to run my day.
 tags: [agents, models, local-first, dashboards]
 featuredimage: /images/Lichen-Agentic-Dashboard.png
 draft: false
 ---
 
-There is a page in Lichen called Today. It is the first thing I open in the morning.
+There is a page in Lichen called Today that has become the first thing I open every morning.
 
-It shows my focus for the day, the tasks that are actually mine today, and the notes I left for myself last night. Under that sit the numbers I care about: what my agents did overnight, what shipped, what is waiting on me. I read it the way I used to read email.
+It shows my focus for the day, the tasks I actually need to get done, and any notes I left myself the night before, along with overnight agent stats, what shipped, and what is waiting on my approval. I basically read it the way I used to read email.
 
 ![Lichen Agentic Dashboard](/images/Lichen-Agentic-Dashboard.png)
 
-## The Dashboard Before This One
+## The dashboard before this one
 
-I built a dashboard a few weeks back that talked to Hermes Agent. It pulled my tasks, my notes and my session history onto one page, and it had a dispatch button that turned a task into a real chat session with an agent. I wrote it up in [How My Dashboard Talks to My Agents - One Click From Task to Done](/blog/how-my-dashboard-talks-to-my-agents/).
+A few weeks ago I built a dashboard wired to Hermes Agent that pulled my tasks, notes, and session history onto one page with a one-click dispatch button ([wrote about it here](/blog/how-my-dashboard-talks-to-my-agents/)).
 
-Then my stack shifted. Hermes Agent went away, Marimo Desktop took its place, and I told that story in [How My Stack Shifted Again - From Hermes Agent to a Harness of My Own](/blog/how-my-stack-shifted-again/). The old dashboard was still pointed at a world that no longer existed. So I started again, this time from Marimo Desktop outward.
+Then my stack changed when I moved off Hermes Agent onto Marimo Desktop ([covered in this post](/blog/how-my-stack-shifted-again/)), so the old dashboard was pointing at tools I wasn't using anymore. Instead of patching it, I rebuilt from Marimo Desktop outward and called the new one Lichen.
 
-The new one is Lichen.
+## What Lichen is
 
-## What Lichen Is
+Lichen is a local browser dashboard with a Marimo agent built straight into it. Rather than bolting chat onto the side, the agent shares the same modules I work in all day: Today, Tasks, Notes, Prompts, Blog, Discord and Gateways, Social, Growth, and the Marimo tab itself.
 
-Lichen is my agentic dashboard that runs locally in the web browser, and there is a Marimo agent living inside it. Not bolted on. Built in. The same harness that bridges gaps for me during the day now has a room in the house it can work from.
+## The daily pages
 
-The modules are the parts of my week I kept losing track of. Today. Tasks. Notes. Prompts. Blog. Discord and Gateways. Social. Growth. Marimo.
+Today is where I start, and Tasks is where I track and close work with projects, priorities, due dates, and context. Clicking a task dispatches it as work.
 
-## The Daily Pages
+Notes is my scratchpad for half-formed ideas or quick reminders about why I changed something, and Prompts holds the instructions I got tired of digging out of random folders. Nothing fancy, just the pages I actually open.
 
-Today is the one I open. Tasks is the one I close things in, which is how I guide Marimo.
+## Content, gateways, and growth
 
-Tasks holds everything with a project, a priority, a due date and any extra context I typed in. Click a task and it becomes work. Notes is the scratch pad that survives the day: a half-formed idea, a line I want to use, the reason I changed something. Prompts is where the instructions that repeat live. The ones I got tired of retyping. I used to keep those in a folder with names I could not remember. Now they have a screen.
+The Blog tab holds Hoshi's drafts alongside my edit queue so writing sits right next to my tasks instead of feeling like a separate chore. Discord and Gateways lets me read and answer outside messages without opening extra apps, Social handles post drafts in one column, and Growth tracks signups and sales across my projects.
 
-None of this is complicated on purpose. That is the point.
+Having the Marimo tab one click away from all of that saves me a big chunk of time I used to lose bouncing between windows.
 
-## The Outside Pieces
+## Routing models underneath
 
-Blog is the other half of my writing. Hoshi drafts, I edit, and the post ends up here. Having that queue in the same window as my tasks means I stop pretending writing is a separate job.
+DeepSeek handles the thinking: direct API for heavy jobs, and OpenRouter when I want to avoid peak-hour slowdowns or swap in another model. Because the provider routing lives inside Lichen, Marimo just asks for a model and Lichen routes it cleanly without changing how the agent runs.
 
-Discord and Gateways is where my agents and I meet in the middle. Messages come in from the outside through a gateway, and I read and answer them without opening a second app. Social is the same idea pointed outward, drafts and posts in one column.
+## Jobs that run overnight
 
-Growth shows my current project sign-ups and sales. That one I check.
+Setting up scheduled jobs used to mean writing cron expressions and getting them wrong twice before they ran properly. Now I just ask in chat:
 
-Then Marimo the agent, one tab over from the work it is helping with. I can ask it something, hand it a task, or watch it run. Between the tabs, it gives me back a chunk of the day I used to lose to switching windows.
+> "Take the overnight list of things I forgot to do, send me a discord message every morning at 8am with how I can fit them into my current schedule."
 
-## The Models Underneath
+Marimo knows the modules in Lichen, wires up the job, and replies with what it scheduled. In the morning the overnight numbers, draft posts, and cleanups are waiting for me, and if a job ever fails, the error shows up right in the Marimo tab.
 
-DeepSeek runs the thinking. Direct through the API for the heavy work, and OpenRouter when I want to avoid peak times or pull in a model from somewhere else.
+## Changing it whenever I want
 
-I keep the provider routing inside Lichen. Marimo asks for a model and Lichen decides which provider answers and hands back the result. I can swap the provider for a task without touching how the agent talks, and OpenRouter sits on the shelf until a day I need it.
+The biggest difference from off-the-shelf tools is that I own every piece of Lichen. If a page annoys me, I rewrite it. If a module stops being useful, I pull it out. Several tabs started out as a single text box and a button before earning a full page.
 
-## The Jobs That Run While I Sleep
+For a long time, getting a workflow like this meant paying for a SaaS subscription and waiting on someone else's roadmap. Being able to build and tweak your own tools changes that tradeoff completely. Even my wife built her own dashboard hooked into her Hermes Agent after seeing how well it worked.
 
-Scheduling used to mean a cron line I would get wrong twice before it worked. Now I ask for it in the chat panel.
+If you have been waiting for someone else to build the exact dashboard you want, start with one page reading one thing you check every morning and grow it from there.
 
-"Take the overnight list of things I forgot to do, send me a discord message every morning at 8am with how I can fit them into my current schedule."
-
-Marimo sets the job up for me. It knows the modules in the house, so it can point the job at the right one and tell me what it set running. I get that back as a normal reply in the chat, same as anything else I ask for.
-
-What comes back is waiting in the dashboard before I open it. The overnight numbers on Today, the posts Hoshi drafted, the cleanup I do not want to think about. A job that fails writes its error where I will see it in the Marimo tab.
-
-None of that is run by me at the time it happens. I describe the job once, Marimo sets it up, and we move on.
-
-## I Can Change It
-
-This is the part the old dashboard never had. Lichen is mine from the shell inward. A page that annoys me gets rewritten. A module I stop using gets pulled out. Some of these started as one text box and a button before they earned a tab.
-
-When something is wrong, I change it. I am the one holding the wrench.
-
-## Why This Feels Like the Future
-
-For a long time a system like this meant a subscription, someone else's roadmap, and a request form. That trade is over. You can build the thing you actually use, and change it the week your habits change.
-
-I think that is where this goes. Everyone with a workflow they care about ends up with a small system of their own. Not because it is fashionable. Because we can build and fix almost anything now, and once you can, the store-bought version stops making sense.
-
-My wife started this way and now she also made her own dashboard that hooks into her Hermes Agent.
-
-If you have been waiting for someone to build the dashboard you want, start with one page. One thing it reads. Watch which tab you open first every morning, and grow it from there.
-
-*Lichen is early days and currently under development.*
-
-So am I :D
-
-Keep growing and building.
-
-~ Tarlow
+*Lichen is early days and still in development (and so am I :D).*

@@ -12,32 +12,27 @@ tags:
   - tool
 description: >-
   AI tools for small businesses. Fill in your business profile once and every
-  tool starts from it. 20 free credits to start, then packs from $3 that never
-  expire.
+  tool starts from it. 20 free credits to start, then non-expiring packs from $3.
 image: /images/moss-toolbox-ai-tools.png
 notice: >-
   Moss Toolbox is under construction. The current toolbox is online while I
-  rebuild it, but the revamp is paused for now. Development will pick up again
-  later.
+  work on a revamp, and development is paused for now.
 ---
 
-Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool starts from it instead of asking the same questions again.
+Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool loads it automatically instead of asking you to re-explain your business every session.
 
-The tools cover the jobs that eat a seller's time. Review Response Generator writes three replies to a customer review in your tone, and Customer Reply Generator does the same for messages. Product Listing Writer turns a saved product into titles, a description, the features, and the tags. AI Image Prompt Generator writes prompts for Midjourney, Flux, or whatever image tool you use. AI Image Studio makes an image from a description, then keeps editing it while you say what to change.
+The tools focus on the repetitive writing jobs that eat up a seller's week: Review Response Generator (three replies in your tone), Customer Reply Generator, Product Listing Writer (titles, description, features, and tags from a saved product), AI Image Prompt Generator (for Midjourney, Flux, or other image tools), and AI Image Studio (generate and iterate on product images with plain text instructions).
 
-The toolbox runs on credits. A new account starts with 20 free credits, no card needed. After that you buy a pack when you need one, and credits never expire. $3 for 100, $5 for 250, or $7 for 500. There is no subscription, and each tool shows its price before it runs. Most tools cost one credit. AI Image Studio costs five per image, whether you create one or change one.
+New accounts start with 20 free credits and no card required. After that, credit packs never expire ($3 for 100, $5 for 250, or $7 for 500) with no subscription. Most tools cost 1 credit per run, AI Image Studio costs 5 credits per image, and every tool shows its cost before running.
 
-The toolbox grew out of where I've been. Before this I ran BoosterBots, a software company building Windows automation for internet marketers. The tools worked and people paid for them, but they fought the platforms they ran on, and I didn't want to spend my life making software that could get shut down at any moment.
+Before this I ran BoosterBots, building Windows automation software for internet marketers. Those tools worked, but fighting platform changes meant any tool could break overnight, and I didn't want to go back to that cycle. Moss Toolbox focuses on tools that help you write, prepare, and present your own products.
 
-I stepped back for a while, and when I came back I knew what I didn't want to build: anything that works by fighting a platform or getting around a rule. Moss Toolbox is the opposite of that. Every tool here helps you make something, write something, or sell something better.
+Here is how it works:
 
-Here's how it works:
+1. Create an account and start with 20 free credits.
+2. Fill in your business profile once (name, products, audience, writing style, logo, and colors).
+3. Pick a tool, add whatever is specific to the task, and generate copy or images you can edit and use.
 
-1. **Create an account.** You get 20 free credits to try any tool, no card needed.
-2. **Fill in your business profile.** Your name, what you sell, who buys it, how you write, your logo and colours, and the answers you give again and again. It takes a few minutes, and you only do it once.
-3. **Pick a tool.** It starts from what you saved and only asks for what's new.
-4. **Get something you can use.** Paste it, tweak it, or send it. The tool takes its price from your credits when it runs.
+While the revamp is paused, the existing tools above remain online as-is. Moss Toolbox is part of Moss AI Studio.
 
-New tools land as I build them, and the credits work on all of them. While the revamp is paused, nothing new is landing, and the ones above are what's there. Moss Toolbox is built by Moss AI Studio.
-
-[See the current Moss Toolbox →](https://mosstoolbox.com/)
+[See the current Moss Toolbox](https://mosstoolbox.com/)
