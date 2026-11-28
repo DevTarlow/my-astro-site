@@ -15,8 +15,8 @@ description: >-
   tool starts from it. 20 free credits to start, then non-expiring packs from $3.
 image: /images/moss-toolbox-ai-tools.png
 notice: >-
-  Moss Toolbox is under construction. The current toolbox is online while I
-  work on a revamp, and development is paused for now.
+  Moss Toolbox is paused and has evolved into Moss Photo Studio. The old
+  mosstoolbox.com domain now forwards to mossphotostudio.com.
 ---
 
 Moss Toolbox is a set of AI tools for small businesses. You fill in your business profile once, and every tool loads it automatically instead of asking you to re-explain your business every session.
@@ -33,6 +33,4 @@ Here is how it works:
 2. Fill in your business profile once (name, products, audience, writing style, logo, and colors).
 3. Pick a tool, add whatever is specific to the task, and generate copy or images you can edit and use.
 
-While the revamp is paused, the existing tools above remain online as-is. Moss Toolbox is part of Moss AI Studio.
-
-[See the current Moss Toolbox](https://mosstoolbox.com/)
+Moss Toolbox is paused and has evolved into [Moss Photo Studio](/projects/moss-photo-studio/), a focused web app for product photography and marketplace listings. Its old `mosstoolbox.com` domain now forwards directly to [mossphotostudio.com](https://mossphotostudio.com/).
