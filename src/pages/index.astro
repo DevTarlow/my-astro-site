@@ -12,10 +12,10 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 const allProjects = await getPublicProjects()
 const projectsById = new Map(allProjects.map((project) => [project.id, project]))
 const selectedProjects = [
+  'moss-photo-studio',
   'marimo-bot',
   'pixel-juice-studio',
   'background-swapper',
-  'moss-toolbox',
   'x-buddy',
 ]
   .map((id) => projectsById.get(id))
@@ -38,10 +38,10 @@ const firstSentence = (text: string) => text.split(/(?<=[.!?])\s/)[0]
 // Short editorial lines for the five projects on the home page. The full
 // project descriptions live on /projects/.
 const workTaglines: Record<string, string> = {
+  'moss-photo-studio': 'Turn one product photo into a full listing set and shop copy.',
   'marimo-bot': 'A desktop agent that grows with you.',
   'pixel-juice-studio': 'A browser tool for game juice. One file, nothing to install.',
   'background-swapper': 'A DeepSeek Harness plugin for your own photos.',
-  'moss-toolbox': 'AI tools that know your business.',
   'x-buddy': 'Keyword glow, feed rules, and reply drafts for X.',
 }
 
@@ -112,7 +112,7 @@ const jsonLd = [
             </a>
             <a class="small-link" href="/projects/">See what I'm building</a>
           </div>
-          <p class="fj-current">Currently testing local models and harnesses, and finishing up the last phases of my next project, launching soon.</p>
+          <p class="fj-current">Currently testing local models and harnesses, and polishing Moss Photo Studio now that it is live.</p>
         </div>
 
         <div class="fj-portrait-block">
@@ -295,7 +295,7 @@ const jsonLd = [
           <p class="label"><span>Now / <span data-now-month>{nowMonth()}</span></span></p>
           <h2 id="now-title">What I am up to right now.</h2>
           <p>
-            Testing local models and harnesses, wrapping up the final phases of my next project, and keeping
+            Testing local models and harnesses, improving Moss Photo Studio from real feedback, and keeping
             things simple.
           </p>
           <a class="text-link" href="/about/">

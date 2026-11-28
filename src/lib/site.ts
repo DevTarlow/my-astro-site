@@ -18,6 +18,7 @@ export function nowMonth(date: Date = new Date()): string {
  */
 export const NOW = {
   building: [
+    { label: 'Moss Photo Studio', href: 'https://mossphotostudio.com/' },
     { label: 'Marimo Bot', href: 'https://marimobot.com/' },
     { label: 'Moss AI Studio', href: 'https://mossaistudio.com/' },
   ],
