@@ -2,7 +2,7 @@
 title: Marimo Bot - A Desktop Agent That Grows With You
 pubDate: 2026-10-19
 draft: false
-featured: true
+featured: false
 category: Development
 github: https://github.com/DevTarlow/marimo-bot
 url: https://marimobot.com/
